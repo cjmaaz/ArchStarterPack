@@ -350,7 +350,7 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed contribution guidelines.
 
 ---
 
-**Repository:** [https://github.com/yourusername/ArchStarterPack](https://github.com/yourusername/ArchStarterPack)
+**Repository:** [https://github.com/cjmaaz/ArchStarterPack](https://github.com/cjmaaz/ArchStarterPack)
 
 **Note:** These configurations are tested on specific hardware (ASUS X507UF) and software (CachyOS). While they should work on similar systems, always review and adapt configurations to your specific hardware and requirements.
 
