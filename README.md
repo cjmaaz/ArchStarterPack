@@ -322,6 +322,7 @@ For comprehensive troubleshooting guides, common issues, and frequently asked qu
 - [Troubleshooting Guide](docs/TROUBLESHOOTING.md) - Solutions to common problems
 - [FAQ](docs/FAQ.md) - Frequently asked questions
 - [Glossary](docs/GLOSSARY.md) - Technical terms explained
+- [Learning Resources](docs/LEARNING_RESOURCES.md) - Curated educational materials
 
 ## License
 
