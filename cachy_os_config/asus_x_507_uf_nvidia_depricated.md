@@ -258,7 +258,3 @@ Reboot.
 - On Optimus laptops, HDMI is wired to NVIDIA GPU, while eDP is wired to Intel iGPU.
 - GRUB cannot select HDMI directly; disabling eDP + enabling early NVIDIA KMS forces HDMI.
 - This configuration turns the laptop into a “desktop-only” system.
-
----
-
-# End of README

@@ -320,14 +320,3 @@ NVIDIA-SMI has failed because it couldn't communicate with the driver
 STOP — reinstall NVIDIA drivers.
 
 ---
-
-# README Complete
-
-This guide is now ready for distribution or GitHub upload.
-I can also generate:
-- thermald custom PL1/PL2 tuning
-- KDE compositor optimization
-- NVIDIA PRIME performance presets
-- Battery-only GPU disable script
-
-
