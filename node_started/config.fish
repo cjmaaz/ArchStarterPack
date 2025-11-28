@@ -3,6 +3,9 @@
 # Purpose: Minimal NVM setup for Fish shell without fisher/bass dependencies
 # See: nvm-fish-readme.md for full documentation
 
+# Existing Logic (to load cachyos details in terminal)
+source /usr/share/cachyos-fish-config/cachyos-config.fish
+
 # Set NVM directory for compatibility with bash-based NVM
 set -gx NVM_DIR "$HOME/.nvm"
 
