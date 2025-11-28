@@ -12,6 +12,8 @@ A curated collection of configuration files, setup guides, and optimization scri
   - [Node.js Development Setup](#3-nodejs-development-setup)
 - [Project Structure](#project-structure)
 - [Quick Start](#quick-start)
+- [Troubleshooting & FAQ](#troubleshooting--faq)
+- [License](#license)
 - [Contributing](#contributing)
 
 ## Overview
@@ -37,7 +39,9 @@ ArchStarterPack is a collection of production-ready configuration files and comp
 
 ### 1. CachyOS Configuration
 
-**Location:** [`cachy_os_config/`](cachy_os_config/)
+**Location:** [`cachy_os_config/`](cachy_os_config/)  
+**Difficulty:** Intermediate to Advanced  
+**Time Required:** 30-60 minutes  
 
 Comprehensive guides for configuring and optimizing CachyOS on ASUS X507UF (Intel i5-8250U + Intel UHD 620 + NVIDIA MX130) hardware. These configurations provide maximum performance when plugged in and power efficiency on battery.
 
@@ -51,7 +55,7 @@ Comprehensive guides for configuring and optimizing CachyOS on ASUS X507UF (Inte
   - Thermal management with `thermald`
   - Battery care settings (charge thresholds)
 
-- **[External Monitor-Only Setup](cachy_os_config/asus_x_507_uf_nvidia_depricated.md)** - Configure laptop to use external display exclusively
+- **[External Monitor-Only Setup](cachy_os_config/asus_x_507_uf_nvidia_deprecated.md)** - Configure laptop to use external display exclusively
   - NVIDIA Optimus configuration
   - Disable internal eDP display
   - Early KMS (Kernel Mode Setting)
@@ -99,7 +103,9 @@ cat asus_x_507_uf_readme.md
 
 ### 2. LogiOps - Logitech Mouse Configuration
 
-**Location:** [`logiops/`](logiops/)
+**Location:** [`logiops/`](logiops/)  
+**Difficulty:** Intermediate  
+**Time Required:** 20-30 minutes  
 
 Configuration and setup guide for Logitech MX Master 3S mouse using LogiOps on Linux. Provides gesture controls, button remapping, and scroll wheel optimization.
 
@@ -168,7 +174,9 @@ sudo systemctl enable --now logid
 
 ### 3. Node.js Development Setup
 
-**Location:** [`node_started/`](node_started/)
+**Location:** [`node_started/`](node_started/)  
+**Difficulty:** Beginner to Intermediate  
+**Time Required:** 10-15 minutes  
 
 Minimal, clean configuration for NVM (Node Version Manager) in Fish shell. No bloated plugins, no unnecessary dependencies—just what you need to get Node.js working reliably.
 
@@ -232,12 +240,21 @@ nvm --version
 
 ```
 ArchStarterPack/
+├── .github/
+│   ├── ISSUE_TEMPLATE.md               # Bug report template
+│   └── PULL_REQUEST_TEMPLATE.md        # PR template
 ├── cachy_os_config/
 │   ├── asus_x_507_uf_readme.md         # Main performance & power guide
-│   ├── asus_x_507_uf_nvidia_depricated.md  # External monitor setup
-│   ├── extract.md                      # Diagnostics toolkit
+│   ├── asus_x_507_uf_nvidia_deprecated.md  # External monitor setup
+│   ├── diagnostics.sh                   # System diagnostics tool
+│   ├── extract.md                      # Diagnostics toolkit documentation
 │   ├── optional_extract.md             # Advanced diagnostics
+│   ├── GRUB_PARAMETERS.md              # Detailed kernel parameter explanations
 │   └── grub                            # GRUB configuration file
+├── docs/
+│   ├── FAQ.md                          # Frequently asked questions
+│   ├── TROUBLESHOOTING.md              # Common issues and solutions
+│   └── GLOSSARY.md                     # Technical terms glossary
 ├── logiops/
 │   ├── readme.md                       # LogiOps setup guide
 │   └── logid.cfg                       # MX Master 3S configuration
@@ -245,10 +262,27 @@ ArchStarterPack/
 │   ├── nvm-fish-readme.md              # NVM Fish setup guide
 │   ├── config.fish                     # Minimal Fish config
 │   └── nvm.fish                        # NVM Fish functions
+├── check-prerequisites.sh               # System compatibility checker
+├── CHANGELOG.md                         # Version history and changes
+├── CONTRIBUTING.md                      # Contribution guidelines
+├── LICENSE                              # MIT License
 └── README.md                           # This file
 ```
 
 ## Quick Start
+
+**Before you begin, verify your system compatibility:**
+
+```bash
+git clone https://github.com/yourusername/ArchStarterPack.git
+cd ArchStarterPack
+chmod +x check-prerequisites.sh
+./check-prerequisites.sh
+```
+
+This will check if your system meets all requirements for the configuration modules.
+
+---
 
 1. **Clone the repository:**
    ```bash
@@ -256,19 +290,42 @@ ArchStarterPack/
    cd ArchStarterPack
    ```
 
-2. **Choose your configuration module:**
+2. **Check prerequisites:**
+   ```bash
+   ./check-prerequisites.sh
+   ```
+
+3. **Choose your configuration module:**
    - For system optimization: `cd cachy_os_config/`
    - For mouse configuration: `cd logiops/`
    - For Node.js setup: `cd node_started/`
 
-3. **Read the documentation:**
+4. **Read the documentation:**
    Each module contains detailed README files with step-by-step instructions.
 
-4. **Follow safety guidelines:**
+5. **Follow safety guidelines:**
    - Always read the full guide before executing commands
    - Run safety checks where indicated
    - Back up existing configurations
    - Test in a safe environment first
+
+**Quick Diagnostics:**
+If you encounter issues, run the diagnostics tool:
+```bash
+cd cachy_os_config/
+./diagnostics.sh
+```
+
+## Troubleshooting & FAQ
+
+For comprehensive troubleshooting guides, common issues, and frequently asked questions, see:
+- [Troubleshooting Guide](docs/TROUBLESHOOTING.md) - Solutions to common problems
+- [FAQ](docs/FAQ.md) - Frequently asked questions
+- [Glossary](docs/GLOSSARY.md) - Technical terms explained
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## Contributing
 
@@ -277,8 +334,9 @@ Contributions are welcome! If you have improvements, additional configurations, 
 1. Fork the repository
 2. Create a feature branch (`git checkout -b feature/improvement`)
 3. Commit your changes (`git commit -am 'Add new configuration'`)
-4. Push to the branch (`git push origin feature/improvement`)
-5. Open a Pull Request
+4. Commit your changes with descriptive messages
+5. Push to the branch (`git push origin feature/improvement`)
+6. Open a Pull Request
 
 **Guidelines:**
 - Document all configurations thoroughly
@@ -287,7 +345,11 @@ Contributions are welcome! If you have improvements, additional configurations, 
 - Follow existing documentation style
 - Explain the "why" behind configuration choices
 
+See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed contribution guidelines.
+
 ---
+
+**Repository:** [https://github.com/yourusername/ArchStarterPack](https://github.com/yourusername/ArchStarterPack)
 
 **Note:** These configurations are tested on specific hardware (ASUS X507UF) and software (CachyOS). While they should work on similar systems, always review and adapt configurations to your specific hardware and requirements.
 

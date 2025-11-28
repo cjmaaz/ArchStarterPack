@@ -1,12 +1,61 @@
 
 # ASUS X507UF + CachyOS (KDE Plasma) External Monitor-Only & NVIDIA Optimization Guide
 
+> **⚠️ DEPRECATED CONFIGURATION**  
+> **This configuration is provided for specialized use cases only.**  
+>   
+> **Use this guide ONLY if:**
+> - You exclusively use an external monitor and never use the laptop screen
+> - Your laptop is permanently docked/connected to an external display
+> - You want to reduce power consumption by completely disabling the internal display
+>
+> **For most users:** Use the main [Performance & Power Optimization Guide](asus_x_507_uf_readme.md) instead, which provides optimal performance while maintaining display flexibility.
+>
+> **Why is this deprecated?**  
+> Disabling the internal display at the driver level makes troubleshooting difficult and removes flexibility. Modern power management (TLP + thermald) can achieve similar battery efficiency without permanently disabling hardware.
+
+---
+
+**Last Updated:** November 2025  
+**Tested On:** CachyOS (KDE Plasma 6.x), Linux Kernel 6.x, NVIDIA Driver 550+  
+**Difficulty:** Advanced  
+**Time Required:** 45-60 minutes
+
+---
+
 This README documents all steps performed to configure:
 - Full NVIDIA support (MX130 + Intel UHD 620 Optimus)
 - Disable internal laptop screen (eDP-1)
 - Make HDMI external monitor the only active display (GRUB → Boot → Login → KDE)
 - Performance tuning for always-plugged usage
 - Thermal + driver setup
+
+---
+
+## ⚠️ Before You Begin: Critical Backups
+
+**WARNING: These changes modify critical system files. Create backups first!**
+
+```bash
+# Backup GRUB configuration
+sudo cp /etc/default/grub /etc/default/grub.backup.$(date +%Y%m%d)
+
+# Backup mkinitcpio configuration
+sudo cp /etc/mkinitcpio.conf /etc/mkinitcpio.conf.backup.$(date +%Y%m%d)
+
+# Backup modprobe configurations
+sudo cp -r /etc/modprobe.d /etc/modprobe.d.backup.$(date +%Y%m%d)
+
+# Backup X11 configurations (if they exist)
+[ -d /etc/X11/xorg.conf.d ] && sudo cp -r /etc/X11/xorg.conf.d /etc/X11/xorg.conf.d.backup.$(date +%Y%m%d)
+
+echo "✓ Backups created successfully"
+```
+
+**Recovery Plan:**
+- Keep a bootable USB ready in case the internal display is needed
+- Test external monitor connection before proceeding
+- Have access to these instructions from another device
 
 ---
 
@@ -222,20 +271,28 @@ You should only see HDMI-A-1 active.
 
 ## 11. Rollback Instructions
 
+**IMPORTANT: Follow these steps carefully to restore your system**
+
 ### Remove GRUB kernel args
 Edit:
 ```bash
 sudo nano /etc/default/grub
 ```
 
-Remove:
+Remove these parameters from `GRUB_CMDLINE_LINUX_DEFAULT`:
 ```
-nvidia_drm.modeset=1 video=eDP-1:d
+nvidia_drm.modeset=1 nvidia.NVreg_UsePageAttributeTable=1 video=eDP-1:d
 ```
 
 Apply:
 ```bash
 sudo grub-mkconfig -o /boot/grub/grub.cfg
+```
+
+### Remove NVIDIA Early Loading
+```bash
+sudo rm /etc/mkinitcpio.conf.d/nvidia.conf
+sudo mkinitcpio -P
 ```
 
 ### Remove Intel display block
@@ -249,11 +306,61 @@ sudo mkinitcpio -P
 sudo rm /etc/X11/xorg.conf.d/20-disable-edp.conf
 ```
 
-Reboot.
+### Remove NVIDIA environment variable
+```bash
+rm ~/.config/environment.d/99-nvidia.conf
+```
+
+### Restore from Backup (Alternative Method)
+```bash
+# Restore GRUB from backup
+sudo cp /etc/default/grub.backup.* /etc/default/grub
+sudo grub-mkconfig -o /boot/grub/grub.cfg
+
+# Restore modprobe from backup  
+sudo rm -rf /etc/modprobe.d
+sudo cp -r /etc/modprobe.d.backup.* /etc/modprobe.d
+
+# Restore mkinitcpio from backup
+sudo cp /etc/mkinitcpio.conf.backup.* /etc/mkinitcpio.conf
+sudo mkinitcpio -P
+
+# Restore X11 from backup (if it exists)
+[ -d /etc/X11/xorg.conf.d.backup.* ] && sudo rm -rf /etc/X11/xorg.conf.d && sudo cp -r /etc/X11/xorg.conf.d.backup.* /etc/X11/xorg.conf.d
+```
+
+Reboot:
+```bash
+sudo reboot
+```
+
+After reboot, both internal and external displays should work normally.
 
 ---
 
-## 12. Notes
+## 12. Troubleshooting
+
+### Issue: Black screen after applying changes
+**Solution:**
+1. Boot into recovery mode (select from GRUB menu)
+2. Mount root filesystem as read-write: `mount -o remount,rw /`
+3. Follow rollback instructions above
+4. Reboot
+
+### Issue: External monitor not detected
+**Solution:**
+- Verify HDMI cable is connected before booting
+- Check `xrandr` output: `xrandr --listproviders`
+- Verify NVIDIA driver is loaded: `lsmod | grep nvidia`
+
+### Issue: Can't see GRUB menu
+**Solution:**
+- Press ESC repeatedly during boot to show GRUB menu
+- Edit GRUB timeout: `GRUB_TIMEOUT=5` in `/etc/default/grub`
+
+---
+
+## 13. Notes
 
 - On Optimus laptops, HDMI is wired to NVIDIA GPU, while eDP is wired to Intel iGPU.
 - GRUB cannot select HDMI directly; disabling eDP + enabling early NVIDIA KMS forces HDMI.

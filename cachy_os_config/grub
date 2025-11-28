@@ -1,9 +1,32 @@
 # GRUB boot loader configuration
+# Last Updated: November 2025
+# Hardware: ASUS X507UF (Intel i5-8250U + Intel UHD 620 + NVIDIA MX130)
+# Purpose: Performance + External Monitor Setup
+# See GRUB_PARAMETERS.md for detailed parameter explanations
 
+# Boot the first menu entry by default
 GRUB_DEFAULT=0
+
+# Show menu for 2 seconds (press ESC for more time)
 GRUB_TIMEOUT='2'
+
+# Distribution name shown in GRUB menu
 GRUB_DISTRIBUTOR='CachyOS'
+
+# Kernel parameters - See GRUB_PARAMETERS.md for detailed explanations
+# Key parameters:
+#   - nowatchdog: Disable hardware watchdog (reduces overhead)
+#   - intel_pstate=active: Use Intel P-State driver for better CPU management
+#   - i915.enable_guc=3: Enable Intel GPU microcontroller (power efficiency)
+#   - nvidia.NVreg_DynamicPowerManagement=3: NVIDIA dynamic power management
+#   - nvme_load=YES: Early NVMe driver loading
+#   - zswap.enabled=0: Disable compressed swap cache
+#   - nvidia_drm.modeset=1: Enable NVIDIA kernel mode setting
+#   - nvidia.NVreg_UsePageAttributeTable=1: Improve NVIDIA memory performance
+#   - video=eDP-1:d: Disable internal laptop display (external monitor only)
 GRUB_CMDLINE_LINUX_DEFAULT='nowatchdog intel_pstate=active i915.enable_guc=3 nvidia.NVreg_DynamicPowerManagement=3 nvme_load=YES zswap.enabled=0 splash loglevel=3 nvidia_drm.modeset=1 nvidia.NVreg_UsePageAttributeTable=1 video=eDP-1:d'
+
+# Additional kernel parameters (usually empty for Arch)
 GRUB_CMDLINE_LINUX=""
 
 # Preload both GPT and MBR modules so that they are not missed

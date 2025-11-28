@@ -1,5 +1,12 @@
 # ASUS X507UF – CachyOS Performance & Power Optimization README
 
+**Last Updated:** November 2025  
+**Tested On:** CachyOS (KDE Plasma 6.x), Linux Kernel 6.x  
+**Difficulty:** Intermediate  
+**Time Required:** 30-60 minutes
+
+---
+
 This README provides a complete, ordered, and safe guide for configuring your ASUS VivoBook X507UF (Intel i5‑8250U + Intel UHD 620 + NVIDIA MX130) for:
 
 - 🔥 **Maximum performance when plugged in (AC mode)**
@@ -8,6 +15,33 @@ This README provides a complete, ordered, and safe guide for configuring your AS
 - ⚙️ **Correct kernel parameters** (GRUB config provided)
 
 All commands are based on your hardware logs, sensor outputs, and driver status.
+
+---
+
+## ⚠️ Before You Begin: Backup & Safety
+
+**IMPORTANT: Create backups before making any changes**
+
+```bash
+# Backup current GRUB configuration
+sudo cp /etc/default/grub /etc/default/grub.backup.$(date +%Y%m%d)
+
+# Backup existing TLP config (if it exists)
+[ -f /etc/tlp.conf ] && sudo cp /etc/tlp.conf /etc/tlp.conf.backup.$(date +%Y%m%d)
+
+# Backup current modprobe settings
+sudo cp -r /etc/modprobe.d /etc/modprobe.d.backup.$(date +%Y%m%d)
+
+# Backup mkinitcpio config
+sudo cp /etc/mkinitcpio.conf /etc/mkinitcpio.conf.backup.$(date +%Y%m%d)
+
+echo "✓ Backups created successfully"
+```
+
+**Safe Points to Stop:**
+- After each numbered section, you can safely reboot and test
+- If something doesn't work, use the rollback instructions at the end
+- Keep this terminal open to reference commands
 
 ---
 
@@ -144,7 +178,7 @@ It includes:
 Replace your GRUB defaults with this:
 
 ```bash
-gksudo nano /etc/default/grub
+sudo nano /etc/default/grub
 ```
 
 Paste:
@@ -215,7 +249,63 @@ sudo nvidia-smi -q | egrep -i "Persistence|Power Management"
 
 ---
 
-# 12. Notes About Your ASUS X507UF Fan
+# 12. Rollback Instructions
+
+If you need to undo these changes and restore your system to its original state:
+
+### Restore GRUB Configuration
+```bash
+# Restore backup
+sudo cp /etc/default/grub.backup.* /etc/default/grub
+
+# Or manually edit to remove added kernel parameters
+sudo nano /etc/default/grub
+# Remove: intel_pstate=active i915.enable_guc=3 nvidia.NVreg_DynamicPowerManagement=3
+
+# Apply changes
+sudo grub-mkconfig -o /boot/grub/grub.cfg
+```
+
+### Remove TLP Custom Config
+```bash
+sudo rm /etc/tlp.d/01-custom.conf
+sudo systemctl restart tlp
+```
+
+### Remove NVIDIA Power Config
+```bash
+sudo rm /etc/modprobe.d/nvidia-power.conf
+sudo mkinitcpio -P
+```
+
+### Remove SSD Scheduler Rules
+```bash
+sudo rm /etc/udev/rules.d/60-ssd.rules
+sudo udevadm control --reload
+```
+
+### Disable Services (if needed)
+```bash
+sudo systemctl disable --now tlp
+sudo systemctl disable --now thermald
+```
+
+### Restore from Full Backup
+```bash
+# If you created the full backup at the beginning:
+sudo cp /etc/default/grub.backup.YYYYMMDD /etc/default/grub
+sudo cp /etc/modprobe.d.backup.YYYYMMDD/* /etc/modprobe.d/
+sudo cp /etc/mkinitcpio.conf.backup.YYYYMMDD /etc/mkinitcpio.conf
+
+# Rebuild and reboot
+sudo mkinitcpio -P
+sudo grub-mkconfig -o /boot/grub/grub.cfg
+sudo reboot
+```
+
+---
+
+# 13. Notes About Your ASUS X507UF Fan
 Your hardware exposes:
 - `fan1_input` (RPM)
 - `pwm1_enable = 2` (BIOS-controlled)
