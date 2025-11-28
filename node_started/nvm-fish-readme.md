@@ -1,94 +1,80 @@
+README — Minimal setup: Bare minimal config.fish + nvm function for Fish (Arch pacman nvm)
 
-# README — Full Guide: Fix Fish Shell Startup Errors and Make `node`/`nvm` Work Correctly  
-### (Arch Linux / CachyOS — pacman `nvm` — **No fisher / No bass required**)
+Goal
+----
+Provide the **bare minimum** `~/.config/fish/config.fish` and `~/.config/fish/functions/nvm.fish` needed to:
+- avoid startup errors in fish (including VSCode integrated terminal),
+- make `nvm` and `node` available in interactive fish sessions,
+- avoid requiring `fisher` or `bass`.
 
-This document contains:
+Assumptions
+-----------
+- You installed `nvm` via pacman (`sudo pacman -S nvm`) and `/usr/share/nvm/init-nvm.sh` exists.
+- You have set a default node alias in nvm (see step 4).
+- You prefer a simple, minimal config — no CachyOS extras.
 
-- ✔ Full reliable setup for **Fish**, **Zsh**, and **Bash**
-- ✔ Complete replacement for `bass` (**no plugins needed**)
-- ✔ Startup error fixes for `csource` / `bass`
-- ✔ Persistently working `node` and `npm` across restarts
-- ✔ Debugging steps for every major setup component
-- ✔ Safe, copy‑paste‑ready file contents (no risky `cat >` blocks)
+What files to create (exact paths)
+----------------------------------
+1) ~/.config/fish/config.fish
+2) ~/.config/fish/functions/nvm.fish
 
----
+File contents — copy-paste these exact blocks into the files named above.
 
-# 🔧 **0) Backup & Prepare (Safe commands)**
+1) ~/.config/fish/config.fish  (minimal)
+----------------------------------------
+# Minimal fish config for NVM (bare minimum)
+# Feel free to add your own customizations below.
 
-Run these BEFORE creating any files:
+# Ensure NVM_DIR is exported for compatibility
+set -gx NVM_DIR "$HOME/.nvm"
 
-```bash
-mkdir -p ~/.config/fish/conf.d ~/.config/fish/functions
-cp -v ~/.config/fish/config.fish{,.bak} 2>/dev/null || echo "config.fish not found (skipping backup)"
-```
+# Load nvm into this fish session if the loader function exists
+if type -q nvm
+    # If a fish-friendly nvm wrapper exists, prefer it
+    # (this is kept for backwards-compatibility)
+    nvm --version > /dev/null 2>&1; or true
+end
 
-This ensures your configuration is backed up and prevents breaking your shell.
+# If we have our custom nvm function (nvm.fish) that syncs environment, call it
+if type -q nvm-load
+    nvm-load
+end
 
----
+# You can add other fish configuration below
+# e.g. set -gx EDITOR nvim
 
-# 🔧 **1) Fix Fish Startup Errors — Create Shim: `00-nvm-shim.fish`**
+2) ~/.config/fish/functions/nvm.fish  (minimal wrapper + loader)
+----------------------------------------------------------------
+# Minimal nvm wrapper and loader for fish (no bass / no fisher)
+# Place this file at: ~/.config/fish/functions/nvm.fish
+# It does two things:
+#  - Provides a convenience `nvm` wrapper that forwards to bash
+#  - Provides `nvm-load` that syncs the PATH/NVM_* env into fish (so `node` works)
 
-**File:** `~/.config/fish/conf.d/00-nvm-shim.fish`  
-**Purpose:**  
-Fixes startup errors:
-
-- `Unknown command: csource`  
-- `Unknown command: bass`  
-
-This shim ensures Fish never breaks on startup again.
-
-Paste this exact file:
-
-```fish
-# 00-nvm-shim.fish — prevent "Unknown command: csource/bass" startup errors.
-# Loaded early so these commands always exist.
-
-# --- Safe csource fallback ---
-if not type -q csource
-    function csource --description 'safe csource fallback (sources file if it exists)'
-        if test -n "$argv[1]" -a -f "$argv[1]"
-            source "$argv[1]"
+function nvm --description 'Run nvm via bash and sync environment into fish'
+    # forward the command to bash, then sync environment afterwards
+    set -l out (bash -ic "source /usr/share/nvm/init-nvm.sh >/dev/null 2>&1; nvm $argv; echo __NVM_SYNC__ && env" 2>/dev/null)
+    # If the marker exists, sync variables after marker
+    set -l idx (contains -i "__NVM_SYNC__" $out)
+    if test $idx -gt 0
+        set -l env_after $out[(math $idx + 1)..-1]
+        for line in $env_after
+            if string match -rq '^PATH=' $line
+                set -gx PATH (string split -r '=' -- $line)[2]
+            else if string match -rq '^NVM_BIN=' $line
+                set -gx NVM_BIN (string split -r '=' -- $line)[2]
+            else if string match -rq '^NVM_DIR=' $line
+                set -gx NVM_DIR (string split -r '=' -- $line)[2]
+            end
         end
     end
 end
 
-# --- Minimal bass shim (no fisher needed) ---
-# Runs bash commands, then syncs environment into fish.
-if not type -q bass
-    function bass --description 'shim for bass to prevent startup errors and load nvm'
-        set -l bash_cmd (string join ' ' $argv)
-        bash -lc "$bash_cmd"
-        if type -q nvm-load
-            nvm-load >/dev/null 2>&1
-        end
-        return $status
-    end
-end
-```
-
----
-
-# 🔧 **2) Load Node/NVM Into Fish (bass‑free) — Create Loader: `nvm-load.fish`**
-
-**File:** `~/.config/fish/functions/nvm-load.fish`  
-**Purpose:**  
-Loads NVM and the selected default Node version into the Fish environment **every time** Fish starts.
-
-Paste:
-
-```fish
-# nvm-load.fish — Load NVM + Node into Fish without bass/fisher.
-function nvm-load --description 'Load NVM into fish (bash-sourced nvm, sync PATH)'
+function nvm-load --description 'Load NVM into fish by sourcing packaged init in bash and syncing env'
     if test ! -f /usr/share/nvm/init-nvm.sh
         return 0
     end
-
-    set -l out (bash -lc '
-        source /usr/share/nvm/init-nvm.sh >/dev/null 2>&1
-        nvm use default >/dev/null 2>&1
-        env
-    ' 2>/dev/null)
-
+    set -l out (bash -lc 'source /usr/share/nvm/init-nvm.sh >/dev/null 2>&1; nvm use default >/dev/null 2>&1; env' 2>/dev/null)
     for line in $out
         if string match -rq '^PATH=' $line
             set -gx PATH (string split -r '=' -- $line)[2]
@@ -99,192 +85,49 @@ function nvm-load --description 'Load NVM into fish (bash-sourced nvm, sync PATH
         end
     end
 end
-```
 
----
+How to use
+----------
+1. Save the two files exactly at the paths above (create directories if needed):
+   mkdir -p ~/.config/fish/functions
 
-# 🔧 **3) Update Your Fish Config — Call `nvm-load`**
+2. Reload your shell:
+   exec fish
 
-Open:
+3. Test:
+   node -v
+   nvm --version
+   nvm list
 
-`~/.config/fish/config.fish`
+If node is not found, run:
+   nvm-load; node -v; which node
 
-Add this block **at the bottom**:
-
-```fish
-# Auto-load Node/NVM for fish
-if type -q nvm-load
-    nvm-load
-end
-```
-
-This ensures `node` is available on every Fish session.
-
----
-
-# 🔧 **4) Make Node/NVM Work in Zsh**
-
-Append this to `~/.zshrc`:
-
-```zsh
-# nvm (pacman init)
-export NVM_DIR="$HOME/.nvm"
-if [ -s "/usr/share/nvm/init-nvm.sh" ]; then
-  . "/usr/share/nvm/init-nvm.sh"
-  nvm use default >/dev/null 2>&1 || true
-fi
-```
-
----
-
-# 🔧 **5) Make Node/NVM Work in Bash**
-
-Append this to `~/.bashrc`:
-
-```bash
-# nvm (pacman init)
-export NVM_DIR="$HOME/.nvm"
-if [ -s "/usr/share/nvm/init-nvm.sh" ]; then
-  . "/usr/share/nvm/init-nvm.sh"
-  nvm use default >/dev/null 2>&1 || true
-fi
-```
-
----
-
-# 🔧 **6) Set Default Node Version (Run Once)**
-
-Run this in *bash* (important):
-
-```bash
+Set default Node (one-time)
+---------------------------
+If you haven't set a default alias yet, run this once in bash:
 bash -ic 'source /usr/share/nvm/init-nvm.sh && nvm install --lts && nvm alias default lts/*'
-```
 
-This ensures:
+Why this minimal approach works
+-------------------------------
+- `nvm` is a bash script and requires bash to set PATH variables. The wrapper calls bash and then syncs PATH into fish.
+- `nvm-load` runs at session start (if you call it) to ensure `node` and `npm` are available.
+- No need for fisher/bass; this keeps your setup minimal and package-manager-friendly.
 
-- NVM installs LTS  
-- `default` points to LTS  
-- Fish and Zsh sessions automatically use it  
+Troubleshooting
+---------------
+- If VSCode still shows `Unknown command: csource` or `bass`:
+  - Check that you do not have any stray `csource` or `bass` lines in your config.fish.
+  - Ensure VSCode uses the same $HOME and is not connected to a container/remote host.
+  - As a fallback, you can create ~/.config/fish/conf.d/00-nvm-shim.fish with safe stubs for csource/bass.
 
----
+- If `node -v` prints a version but a new integrated terminal in VSCode doesn't find node:
+  - Try setting terminal to use login shell (add args ["-l"]) in VSCode terminal profile.
 
-# 🧪 **7) Test Everything**
+- To debug, run within fish:
+  type -q nvm-load; and nvm-load; echo $PATH; which node
 
-### Fish test:
-```bash
-exec fish -c "node -v; which node"
-```
-
-### Zsh test:
-```bash
-exec zsh -c "node -v; which node"
-```
-
-### Bash test:
-```bash
-bash -ic "node -v; which node"
-```
-
-Expected:
-
-- `node -v` prints your version  
-- `which node` points to:  
-  `~/.nvm/versions/node/.../bin/node`
-
----
-
-# 🩺 **8) Debugging Section (If Something Fails)**
-
-## ❌ Issue: `exec fish` shows errors:  
-`Unknown command: csource`  
-`Unknown command: bass`
-
-✔ Fix:  
-Ensure this file exists:
-
-`~/.config/fish/conf.d/00-nvm-shim.fish`
-
-Run:
-
-```bash
-ls ~/.config/fish/conf.d/
-```
-
-You should see:
-
-```
-00-nvm-shim.fish
-```
-
----
-
-## ❌ Issue: `node -v` works in one session but not after restart
-
-Cause: `nvm-load` not being called.
-
-Check:
-
-```bash
-grep nvm-load ~/.config/fish/config.fish
-```
-
-If missing, add:
-
-```fish
-if type -q nvm-load
-    nvm-load
-end
-```
-
----
-
-## ❌ Issue: `nvm` works but `node` is missing in Fish
-
-Cause: PATH not carried over.
-
-Check:
-
-```fish
-nvm-load; echo $PATH
-```
-
-PATH should contain something like:
-
-```
-/home/you/.nvm/versions/node/vXX/bin
-```
-
-If missing → `nvm-load.fish` is not correct or not saved.
-
----
-
-## ❌ Issue: Node version wrong
-
-Run:
-
-```bash
-bash -ic 'nvm alias'
-```
-
-Ensure default is set.
-
-If not:
-
-```bash
-bash -ic 'nvm alias default lts/*'
-```
-
----
-
-## ❌ Issue: `nvm` broken in Zsh or Bash
-
-Run:
-
-```bash
-grep nvm ~/.zshrc
-grep nvm ~/.bashrc
-```
-
-Ensure the correct block exists.
-
----
+Rollback
+--------
+To undo, remove the two files (or restore backups):
+rm -f ~/.config/fish/functions/nvm.fish
+# optionally remove nvm-load if created as separate file
