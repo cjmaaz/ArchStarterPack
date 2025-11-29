@@ -10,6 +10,7 @@ A curated collection of configuration files, setup guides, and optimization scri
   - [CachyOS Configuration](#1-cachyos-configuration)
   - [LogiOps - Logitech Mouse Configuration](#2-logiops---logitech-mouse-configuration)
   - [Node.js Development Setup](#3-nodejs-development-setup)
+  - [Brother Printer Setup](#4-brother-printer-setup)
 - [Project Structure](#project-structure)
 - [Quick Start](#quick-start)
 - [Troubleshooting & FAQ](#troubleshooting--faq)
@@ -24,6 +25,7 @@ ArchStarterPack is a collection of production-ready configuration files and comp
 - 🚀 Performance optimization for CachyOS/Arch systems
 - 🖱️ Advanced mouse configuration for Logitech devices
 - 🔧 Minimal, clean development environment setup
+- 🖨️ Brother printer and scanner setup guides
 - 📚 Detailed documentation with safety checks
 - 🛡️ Tested configurations for ASUS VivoBook hardware
 
@@ -236,6 +238,76 @@ nvm --version
 
 ---
 
+### 4. Brother Printer Setup
+
+**Location:** [`brother_dcp-t820dw/`](brother_dcp-t820dw/)  
+**Difficulty:** Beginner to Intermediate  
+**Time Required:** 15-25 minutes  
+
+Complete setup guide for Brother DCP-T820DW printer and scanner on Arch Linux. Includes network (WiFi), USB configuration, and scanning setup.
+
+#### What's Included
+
+- **[Brother Printer Setup Guide](brother_dcp-t820dw/BROTHER_PRINTER_SETUP_README.md)** - Complete installation and configuration
+  - CUPS and Avahi setup
+  - AUR driver installation
+  - USB and WiFi network printing
+  - Scanner setup with SANE
+  - Troubleshooting common issues
+  - Driver integrity verification
+
+#### Features
+
+🖨️ **Printing:**
+- WiFi network printing via IPP
+- USB direct printing
+- CUPS web interface configuration
+- IPP Everywhere support
+
+🔍 **Scanning:**
+- SANE integration
+- Network scanner support
+- Simple Scan GUI
+- brscan5 driver configuration
+
+📸 **Photo Management:**
+- digiKam recommended for photo organization
+- Advanced image editing and cataloging
+- RAW format support
+- Face detection and tagging
+
+#### Quick Start
+
+```bash
+cd brother_dcp-t820dw/
+
+# Install CUPS and dependencies
+sudo pacman -S cups cups-pdf avahi nss-mdns system-config-printer
+
+# Enable services
+sudo systemctl enable --now cups
+sudo systemctl enable --now avahi-daemon
+
+# Install Brother driver (AUR)
+paru -S brother-dcpt820dw
+
+# For scanning
+sudo pacman -S sane-airscan simple-scan
+paru -S brscan5 brscan-skey
+
+# Register scanner
+brsaneconfig5 -a name="BrotherDCP" model=DCPT820DW ip=<PRINTER-IP>
+
+# Test printer
+lpstat -p
+lp /usr/share/cups/data/testprint
+
+# For photo management and organization
+sudo pacman -S digikam
+```
+
+---
+
 ## Project Structure
 
 ```
@@ -243,6 +315,8 @@ ArchStarterPack/
 ├── .github/
 │   ├── ISSUE_TEMPLATE.md               # Bug report template
 │   └── PULL_REQUEST_TEMPLATE.md        # PR template
+├── brother_dcp-t820dw/
+│   └── BROTHER_PRINTER_SETUP_README.md # Brother printer & scanner guide
 ├── cachy_os_config/
 │   ├── asus_x_507_uf_readme.md         # Main performance & power guide
 │   ├── asus_x_507_uf_nvidia_deprecated.md  # External monitor setup
@@ -254,7 +328,8 @@ ArchStarterPack/
 ├── docs/
 │   ├── FAQ.md                          # Frequently asked questions
 │   ├── TROUBLESHOOTING.md              # Common issues and solutions
-│   └── GLOSSARY.md                     # Technical terms glossary
+│   ├── GLOSSARY.md                     # Technical terms glossary
+│   └── LEARNING_RESOURCES.md           # Curated educational materials
 ├── logiops/
 │   ├── readme.md                       # LogiOps setup guide
 │   └── logid.cfg                       # MX Master 3S configuration
@@ -299,6 +374,7 @@ This will check if your system meets all requirements for the configuration modu
    - For system optimization: `cd cachy_os_config/`
    - For mouse configuration: `cd logiops/`
    - For Node.js setup: `cd node_started/`
+   - For Brother printer setup: `cd brother_dcp-t820dw/`
 
 4. **Read the documentation:**
    Each module contains detailed README files with step-by-step instructions.

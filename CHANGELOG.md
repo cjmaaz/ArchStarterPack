@@ -10,6 +10,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- **Brother Printer Setup Module** - Complete guide for Brother DCP-T820DW
+  - USB and WiFi network printing setup
+  - Scanner configuration with SANE
+  - digiKam photo management integration
+  - Photo layouting and editing recommendations
+  - Document management tools
+  - Troubleshooting for printer and scanner issues
 - Comprehensive FAQ document
 - Troubleshooting guide with solutions to common issues
 - Glossary of technical terms
@@ -20,6 +27,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Enhanced inline comments in configuration files
 - Difficulty level and time estimates for each module
 - GitHub issue and PR templates
+- Learning resources document with curated materials
 
 ### Changed
 - Renamed `asus_x_507_uf_nvidia_depricated.md` to `asus_x_507_uf_nvidia_deprecated.md` (fixed typo)

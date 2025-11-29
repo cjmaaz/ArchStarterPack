@@ -151,6 +151,19 @@ if [ -d "$SCRIPT_DIR/node_started" ]; then
     fi
 fi
 
+# Brother Printer Module
+if [ -d "$SCRIPT_DIR/brother_dcp-t820dw" ]; then
+    echo -e "${BLUE}  Brother Printer Setup Module:${NC}"
+    printer_tools=("cups" "avahi-daemon")
+    for tool in "${printer_tools[@]}"; do
+        if command -v "$tool" &> /dev/null || systemctl list-unit-files | grep -q "$tool"; then
+            check_pass "  $tool available"
+        else
+            check_warn "  $tool not installed (install: sudo pacman -S cups avahi)"
+        fi
+    done
+fi
+
 # Check 8: Hardware Compatibility (if on ASUS X507UF)
 echo -e "\n${BLUE}[8] Checking Hardware Compatibility...${NC}"
 if command -v dmidecode &> /dev/null; then

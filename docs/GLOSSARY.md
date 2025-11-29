@@ -65,9 +65,21 @@ A comprehensive glossary of technical terms used throughout the ArchStarterPack 
 **Definition:** Tool to examine and tune CPU frequency scaling  
 **Usage:** `cpupower frequency-info`, `cpupower frequency-set`
 
+### CUPS
+**Definition:** Common UNIX Printing System  
+**Context:** Print server and spooler for Linux/UNIX  
+**Usage:** Manages printers, print queues, and print jobs  
+**Web Interface:** `http://localhost:631`
+
 ---
 
 ## D
+
+### digiKam
+**Definition:** Professional photo management application for KDE  
+**Context:** Used for organizing, editing, and managing scanned photos  
+**Features:** Face detection, tagging, RAW support, non-destructive editing  
+**Website:** https://www.digikam.org/
 
 ### DKMS
 **Definition:** Dynamic Kernel Module Support  
@@ -148,6 +160,12 @@ A comprehensive glossary of technical terms used throughout the ArchStarterPack 
 ---
 
 ## I
+
+### IPP (Internet Printing Protocol)
+**Definition:** Network protocol for printing over IP networks  
+**Context:** Modern standard for network printing  
+**Usage:** `ipp://printer.local/ipp/print`  
+**Advantage:** Driverless printing with IPP Everywhere
 
 ### i915
 **Definition:** Intel integrated graphics driver  
@@ -254,6 +272,12 @@ A comprehensive glossary of technical terms used throughout the ArchStarterPack 
 
 ## R
 
+### RAW (Image Format)
+**Definition:** Unprocessed image data from camera sensor  
+**Context:** Professional photography format requiring special software  
+**Supported by:** digiKam, Darktable, RawTherapee  
+**Advantage:** Maximum editing flexibility
+
 ### Rolling Release
 **Definition:** Distribution model with continuous updates (no version numbers)  
 **Context:** Arch Linux and derivatives use rolling release
@@ -261,6 +285,12 @@ A comprehensive glossary of technical terms used throughout the ArchStarterPack 
 ---
 
 ## S
+
+### SANE
+**Definition:** Scanner Access Now Easy  
+**Context:** Standard API for scanner access on Linux/UNIX  
+**Usage:** Backend for scanner drivers  
+**Command:** `scanimage` for command-line scanning
 
 ### SmartShift
 **Definition:** Logitech scroll wheel technology  
@@ -359,6 +389,7 @@ A comprehensive glossary of technical terms used throughout the ArchStarterPack 
 | BIOS | Basic Input/Output System | Firmware |
 | CID | Control ID | Input Devices |
 | CPU | Central Processing Unit | Hardware |
+| CUPS | Common UNIX Printing System | Printing |
 | dGPU | Discrete GPU | Graphics |
 | DKMS | Dynamic Kernel Module Support | Drivers |
 | DPI | Dots Per Inch | Input Devices |
@@ -372,14 +403,19 @@ A comprehensive glossary of technical terms used throughout the ArchStarterPack 
 | HuC | HDCP Micro Controller | Graphics |
 | HWP | Hardware P-States | CPU |
 | iGPU | Integrated GPU | Graphics |
+| IPP | Internet Printing Protocol | Printing |
 | KDE | K Desktop Environment | Desktop |
 | KMS | Kernel Mode Setting | Graphics |
 | LTS | Long Term Support | Kernel |
 | NVMe | Non-Volatile Memory Express | Storage |
 | NVM | Node Version Manager | Development |
+| OCR | Optical Character Recognition | Scanning |
 | PAT | Page Attribute Table | Memory |
+| PDF | Portable Document Format | Documents |
 | PWM | Pulse Width Modulation | Hardware |
 | RAM | Random Access Memory | Hardware |
+| RAW | (Unprocessed image data) | Photography |
+| SANE | Scanner Access Now Easy | Scanning |
 | SSD | Solid State Drive | Storage |
 | TLP | (No expansion - just TLP) | Power |
 | USB | Universal Serial Bus | Hardware |

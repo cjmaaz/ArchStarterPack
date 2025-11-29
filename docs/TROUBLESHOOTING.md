@@ -674,6 +674,88 @@ ls -lh "$BACKUP_DIR/"
 
 ---
 
+## Brother Printer/Scanner Issues
+
+### Printer Not Detected on Network
+
+**Symptoms:** `lpinfo -v` doesn't show printer
+
+**Check Avahi:**
+```bash
+systemctl status avahi-daemon
+ping BRWXXXX.local
+```
+
+**Solution:**
+```bash
+# Restart Avahi
+sudo systemctl restart avahi-daemon
+
+# Or use direct IP instead of .local
+sudo lpadmin -p BrotherDCP -E -v "ipp://192.168.1.XXX/ipp" -m everywhere
+```
+
+---
+
+### Scanner Not Working
+
+**Symptoms:** `scanimage -L` shows no devices
+
+**Solution:**
+```bash
+# Re-register scanner
+brsaneconfig5 -d
+brsaneconfig5 -a name="BrotherDCP" model=DCPT820DW ip=<PRINTER-IP>
+
+# Restart CUPS
+sudo systemctl restart cups
+
+# Check again
+scanimage -L
+```
+
+---
+
+### Print Job Stuck in Queue
+
+**Symptoms:** Jobs show as "processing" but don't print
+
+**Solution:**
+```bash
+# Cancel all jobs
+cancel -a
+
+# Restart CUPS
+sudo systemctl restart cups
+
+# Check printer status
+lpstat -p
+```
+
+---
+
+### digiKam Issues
+
+**digiKam won't start:**
+```bash
+# Reset configuration
+mv ~/.config/digikamrc ~/.config/digikamrc.backup
+digikam
+```
+
+**Database corruption:**
+```bash
+# Rebuild thumbnails database
+digikam --rebuild-thumbnails
+```
+
+**Import issues:**
+- Check file permissions on photo directories
+- Ensure sufficient disk space
+- Try smaller batch imports
+
+---
+
 ## Getting More Help
 
 If your issue isn't covered here:

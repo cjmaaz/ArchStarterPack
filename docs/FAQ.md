@@ -387,12 +387,50 @@ See [LICENSE](../LICENSE) for full details.
 
 ---
 
+## Brother Printer Module Questions
+
+### Q: Which Brother printers are supported?
+
+**A:** The guide is written for Brother DCP-T820DW, but the general setup process works for most Brother printers. Check the [AUR](https://aur.archlinux.org/) for your specific model's driver:
+
+```bash
+paru -Ss brother
+```
+
+---
+
+### Q: Should I use WiFi or USB for my printer?
+
+**A:** 
+- **WiFi (Recommended):** More flexible, can print from any device on network
+- **USB:** More reliable, faster for large jobs, good for single computer
+
+You can set up both and choose based on needs.
+
+---
+
+### Q: Why use digiKam instead of Simple Scan?
+
+**A:** 
+- **Simple Scan:** Basic scanning, quick and simple
+- **digiKam:** Professional photo management, editing, organization, tagging, face detection, RAW support
+
+Use Simple Scan for quick scans, digiKam for photo library management.
+
+---
+
+### Q: Can I use this guide for other scanner brands?
+
+**A:** The CUPS and SANE setup is universal. Only the Brother-specific driver installation differs. Check manufacturer documentation for your scanner model.
+
+---
+
 ## Still Have Questions?
 
 - 📖 Read the [Main README](../README.md)
 - 🔧 Check [TROUBLESHOOTING.md](TROUBLESHOOTING.md)
 - 📚 Review [GLOSSARY.md](GLOSSARY.md) for term definitions
-- 💬 Open a [GitHub Issue](https://github.com/yourusername/ArchStarterPack/issues)
+- 💬 Open a [GitHub Issue](https://github.com/cjmaaz/ArchStarterPack/issues)
 - 🌐 Check the [Arch Wiki](https://wiki.archlinux.org/)
 
 ---
