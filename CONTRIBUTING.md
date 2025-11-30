@@ -45,7 +45,7 @@ We are committed to providing a welcoming and inspiring community for all. Pleas
 
 **Before submitting a bug report:**
 - Check the [FAQ](docs/FAQ.md) and [Troubleshooting Guide](docs/TROUBLESHOOTING.md)
-- Search existing [GitHub Issues](https://github.com/yourusername/ArchStarterPack/issues)
+- Search existing [GitHub Issues](https://github.com/cjmaaz/ArchStarterPack/issues)
 - Run the diagnostics script: `./cachy_os_config/diagnostics.sh`
 
 **When submitting a bug report, include:**
@@ -64,13 +64,13 @@ We are committed to providing a welcoming and inspiring community for all. Pleas
 
 **When suggesting an enhancement, include:**
 - Clear use case and benefits
-- Proposed implementation (if applicable)
+- Proposed implementation
 - Any potential drawbacks
-- Examples from other projects (if relevant)
+- Examples from other projects
 
 ### Adding Hardware Support
 
-Want to add configurations for your hardware? Great!
+Want to add configurations for your hardware?
 
 **Include:**
 - Hardware specifications (CPU, GPU, laptop model)
@@ -78,7 +78,7 @@ Want to add configurations for your hardware? Great!
 - Complete configuration files
 - Step-by-step setup guide
 - Safety checks and rollback instructions
-- Expected results and benchmarks (if applicable)
+- Expected results and benchmarks
 
 ### Improving Documentation
 
@@ -366,8 +366,8 @@ Preferred testing:
 ## Questions?
 
 - Check the [FAQ](docs/FAQ.md)
-- Open a [Discussion](https://github.com/yourusername/ArchStarterPack/discussions)
-- Ask in [Issues](https://github.com/yourusername/ArchStarterPack/issues)
+- Open a [Discussion](https://github.com/cjmaaz/ArchStarterPack/discussions)
+- Ask in [Issues](https://github.com/cjmaaz/ArchStarterPack/issues)
 
 ---
 

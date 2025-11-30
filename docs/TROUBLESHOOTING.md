@@ -772,7 +772,7 @@ If your issue isn't covered here:
    ```
 
 3. **Search existing issues:**
-   [GitHub Issues](https://github.com/yourusername/ArchStarterPack/issues)
+   [GitHub Issues](https://github.com/cjmaaz/ArchStarterPack/issues)
 
 4. **Open a new issue** with:
    - Problem description

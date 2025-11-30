@@ -349,7 +349,7 @@ ArchStarterPack/
 **Before you begin, verify your system compatibility:**
 
 ```bash
-git clone https://github.com/yourusername/ArchStarterPack.git
+git clone https://github.com/cjmaaz/ArchStarterPack.git
 cd ArchStarterPack
 chmod +x check-prerequisites.sh
 ./check-prerequisites.sh
@@ -361,7 +361,7 @@ This will check if your system meets all requirements for the configuration modu
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/yourusername/ArchStarterPack.git
+   git clone https://github.com/cjmaaz/ArchStarterPack.git
    cd ArchStarterPack
    ```
 

@@ -308,7 +308,7 @@ See [TROUBLESHOOTING.md](TROUBLESHOOTING.md) for more details.
 **A:** 
 1. Check [TROUBLESHOOTING.md](TROUBLESHOOTING.md)
 2. Run diagnostics: `./cachy_os_config/diagnostics.sh`
-3. Search existing [GitHub Issues](https://github.com/yourusername/ArchStarterPack/issues)
+3. Search existing [GitHub Issues](https://github.com/cjmaaz/ArchStarterPack/issues)
 4. Open a new issue with:
    - Your hardware specs
    - Distribution and kernel version

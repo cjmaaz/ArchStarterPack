@@ -35,10 +35,8 @@ chmod +x diagnostics.sh
 OR run all commands directly (no script needed):
 
 ```bash
-bash <(curl -s https://example.com/diagnostics.sh)
+bash <(curl -s https://raw.githubusercontent.com/cjmaaz/ArchStarterPack/master/cachy_os_config/diagnostics.sh)
 ```
-
-*(I can host it on GitHub or generate a raw link if you want.)*
 
 ---
 
