@@ -32,10 +32,21 @@ chmod +x diagnostics.sh
 ./diagnostics.sh
 ```
 
-OR run all commands directly (no script needed):
+OR run directly from URL without downloading:
 
+**For Bash/Zsh:**
 ```bash
 bash <(curl -s https://raw.githubusercontent.com/cjmaaz/ArchStarterPack/master/cachy_os_config/diagnostics.sh)
+```
+
+**For Fish shell:**
+```fish
+curl -s https://raw.githubusercontent.com/cjmaaz/ArchStarterPack/master/cachy_os_config/diagnostics.sh | bash
+```
+
+**Universal method (works in any shell):**
+```bash
+curl -s https://raw.githubusercontent.com/cjmaaz/ArchStarterPack/master/cachy_os_config/diagnostics.sh | bash
 ```
 
 ---
