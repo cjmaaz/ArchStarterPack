@@ -25,6 +25,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - systemd/udev logs
   - Multiple organized output files
   - Command visibility for transparency
+  - `--redact` flag to mask personal information (IPs, MACs, hostnames, serials, SSIDs, UUIDs)
 - **TLP custom configuration example** (`01-custom.conf`) with hardware detection instructions
 - Comprehensive FAQ document
 - Troubleshooting guide with solutions to common issues
@@ -60,13 +61,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Initial release
 - CachyOS performance and power optimization guide for ASUS X507UF
 - External monitor-only NVIDIA Optimus configuration guide
-- Hardware diagnostics toolkit documentation
+- Hardware diagnostics toolkit documentation with privacy redaction feature
 - Optional diagnostics extensions guide
 - GRUB configuration file with optimized kernel parameters
 - LogiOps setup guide and MX Master 3S configuration
 - Minimal NVM setup for Fish shell (no fisher/bass dependencies)
 - Comprehensive README with module descriptions
 - Project structure documentation
+- Privacy-focused diagnostic scripts with `--redact` flag
 
 ### Hardware Support
 - ASUS X507UF (Intel i5-8250U + Intel UHD 620 + NVIDIA MX130)

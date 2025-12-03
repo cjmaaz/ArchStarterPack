@@ -25,24 +25,37 @@ It's particularly useful for troubleshooting external monitor issues, USB hub po
 
 ```bash
 chmod +x drm-power-diagnostics.sh
-./drm-power-diagnostics.sh
+./drm-power-diagnostics.sh              # Normal mode
+./drm-power-diagnostics.sh --redact     # Redact personal information
 ```
 
 ### Run directly from URL:
 
 **For Bash/Zsh:**
 ```bash
+# Normal mode
 bash <(curl -s https://raw.githubusercontent.com/cjmaaz/ArchStarterPack/master/cachy_os_config/drm-power-diagnostics.sh)
+
+# With redaction
+bash <(curl -s https://raw.githubusercontent.com/cjmaaz/ArchStarterPack/master/cachy_os_config/drm-power-diagnostics.sh) --redact
 ```
 
 **For Fish shell:**
 ```fish
+# Normal mode
 curl -s https://raw.githubusercontent.com/cjmaaz/ArchStarterPack/master/cachy_os_config/drm-power-diagnostics.sh | bash
+
+# With redaction
+curl -s https://raw.githubusercontent.com/cjmaaz/ArchStarterPack/master/cachy_os_config/drm-power-diagnostics.sh | bash -s -- --redact
 ```
 
 **Universal method (works in any shell):**
 ```bash
+# Normal mode
 curl -s https://raw.githubusercontent.com/cjmaaz/ArchStarterPack/master/cachy_os_config/drm-power-diagnostics.sh | bash
+
+# With redaction
+curl -s https://raw.githubusercontent.com/cjmaaz/ArchStarterPack/master/cachy_os_config/drm-power-diagnostics.sh | bash -s -- --redact
 ```
 
 ---
@@ -234,7 +247,15 @@ Use this script's output to populate hardware-specific settings in `/etc/tlp.d/0
 ## Privacy & Safety
 
 - **Safe:** Read-only operations, no system modifications
-- **Privacy:** No passwords or personal data collected
+- **No passwords collected:** Never asks for or stores credentials
+- **Redaction available:** Use `--redact` flag to mask:
+  - IP addresses
+  - MAC addresses
+  - Hostnames
+  - Serial numbers
+  - WiFi SSIDs
+  - UUIDs
+  - Usernames in paths
 - **Hardware Info:** Contains PCI/USB IDs, system model, kernel version
 - **Review:** Check output files before sharing publicly
 

@@ -46,24 +46,37 @@ Make the script executable and run it:
 
 ```bash
 chmod +x diagnostics.sh
-./diagnostics.sh
+./diagnostics.sh              # Normal mode
+./diagnostics.sh --redact     # Redact personal information
 ```
 
 OR run directly from URL without downloading:
 
 **For Bash/Zsh:**
 ```bash
+# Normal mode
 bash <(curl -s https://raw.githubusercontent.com/cjmaaz/ArchStarterPack/master/cachy_os_config/diagnostics.sh)
+
+# With redaction
+bash <(curl -s https://raw.githubusercontent.com/cjmaaz/ArchStarterPack/master/cachy_os_config/diagnostics.sh) --redact
 ```
 
 **For Fish shell:**
 ```fish
+# Normal mode
 curl -s https://raw.githubusercontent.com/cjmaaz/ArchStarterPack/master/cachy_os_config/diagnostics.sh | bash
+
+# With redaction
+curl -s https://raw.githubusercontent.com/cjmaaz/ArchStarterPack/master/cachy_os_config/diagnostics.sh | bash -s -- --redact
 ```
 
 **Universal method (works in any shell):**
 ```bash
+# Normal mode
 curl -s https://raw.githubusercontent.com/cjmaaz/ArchStarterPack/master/cachy_os_config/diagnostics.sh | bash
+
+# With redaction
+curl -s https://raw.githubusercontent.com/cjmaaz/ArchStarterPack/master/cachy_os_config/diagnostics.sh | bash -s -- --redact
 ```
 
 ---
@@ -380,7 +393,7 @@ Shows:
 * Manufacturer
 * BIOS version
 * Laptop model
-* Serial # (masked for privacy)
+* Serial # (use `--redact` to mask)
 
 ---
 

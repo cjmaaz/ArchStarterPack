@@ -763,11 +763,13 @@ If your issue isn't covered here:
 1. **Run diagnostics (shows commands and output):**
    ```bash
    # Full system diagnostics
-   ./cachy_os_config/diagnostics.sh
+   ./cachy_os_config/diagnostics.sh --redact          # Redacts IPs, MACs, hostnames, serials
    
    # DRM/display, power management, USB issues (creates directory with multiple files)
-   ./cachy_os_config/drm-power-diagnostics.sh
+   ./cachy_os_config/drm-power-diagnostics.sh --redact
    ```
+   
+   **Use `--redact` flag to automatically mask personal information before sharing.**
 
 2. **Check logs:**
    ```bash

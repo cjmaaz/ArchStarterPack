@@ -4,15 +4,40 @@
 # DRM, Power Management & USB Diagnostics Collector
 # Safe, read-only, information-gathering tool
 # ============================================
-# Last Updated: November 2025
+# Last Updated: December 2025
 # Purpose: Collect DRM/display, USB, PCI, power management, and systemd/udev diagnostics
 # Scope: Display connectors, EDID, USB hubs, TLP, runtime PM, kernel logs
 # Output: Multiple text files in ~/drm-power-diagnostics-<TIMESTAMP>/
+# Usage: ./drm-power-diagnostics.sh [--redact]
 
 set -euo pipefail
 
+# Parse arguments
+REDACT_MODE=false
+if [[ "${1:-}" == "--redact" ]]; then
+    REDACT_MODE=true
+fi
+
 OUTDIR="$HOME/drm-power-diagnostics-$(date +%Y%m%d-%H%M%S)"
 mkdir -p "$OUTDIR"
+
+# Redaction function - masks sensitive personal information
+redact_sensitive() {
+    if [[ "$REDACT_MODE" == "true" ]]; then
+        sed -E \
+            -e 's/([0-9]{1,3}\.){3}[0-9]{1,3}/XXX.XXX.XXX.XXX/g' \
+            -e 's/([0-9A-Fa-f]{2}:){5}[0-9A-Fa-f]{2}/XX:XX:XX:XX:XX:XX/g' \
+            -e 's/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX/gi' \
+            -e "s|/home/[^/ ]+|/home/USER|g" \
+            -e "s|/Users/[^/ ]+|/Users/USER|g" \
+            -e 's/(Serial Number|S\/N|Serial #|iSerial):.*$/\1: [REDACTED]/gi' \
+            -e 's/(SSID|essid)[=:].*/\1=[REDACTED]/gi' \
+            -e 's/(hostname|Host)[=:].*/\1=[REDACTED]/gi' \
+            -e 's/UUID=[0-9a-f-]*/UUID=[REDACTED]/gi'
+    else
+        cat
+    fi
+}
 
 # Helper function to show commands before execution
 cmd() {
@@ -20,6 +45,9 @@ cmd() {
 }
 
 echo "[+] Starting DRM, power management, and USB diagnostics..."
+if [[ "$REDACT_MODE" == "true" ]]; then
+    echo "[+] REDACTION MODE: Personal information will be masked"
+fi
 echo "[+] Output directory: $OUTDIR"
 echo "[!] This script only reads information - no changes will be made"
 echo ""
@@ -44,225 +72,189 @@ echo "[+] Collecting system information..."
   echo "XDG_SESSION_TYPE=$XDG_SESSION_TYPE"
   echo "DISPLAY=$DISPLAY"
   echo "XDG_SESSION_CLASS=$XDG_SESSION_CLASS"
-} > "$OUTDIR/system-info.txt"
+} | redact_sensitive > "$OUTDIR/system-info.txt"
 
 # 2) Session and compositor info (processes)
 echo "[+] Collecting session and compositor information..."
 {
-  echo "==================== SESSIONS & PROCESSES ===================="
+  echo "==================== SESSION & COMPOSITOR PROCESSES ===================="
   echo ""
-  cmd "who"
-  who || true
+  cmd "ps aux | grep -iE 'kwin|plasma|gnome-shell|Xorg|wayland|mutter'"
+  ps aux | grep -iE 'kwin|plasma|gnome-shell|Xorg|wayland|mutter' | grep -v grep || echo "No compositor/session found"
   echo ""
-  echo "=== LOGGED-IN SESSIONS ==="
-  cmd "ps -eo pid,uid,user,cmd --sort=-uid | head -n 200"
-  ps -eo pid,uid,user,cmd --sort=-uid | head -n 200
+  cmd "loginctl list-sessions"
+  loginctl list-sessions 2>/dev/null || echo "loginctl not available"
   echo ""
-  echo "=== COMPOSITOR / DISPLAY RELATED PROCESSES ==="
-  cmd "ps -eo pid,uid,user,cmd | egrep -i \"kwin|kwin_wayland|plasmashell|gnome-shell|mutter|Xwayland|Xorg|sddm|gdm|wayland\""
-  ps -eo pid,uid,user,cmd | egrep -i "kwin|kwin_wayland|plasmashell|gnome-shell|mutter|Xwayland|Xorg|sddm|gdm|wayland" --color=never || true
-} > "$OUTDIR/sessions-processes.txt"
+  cmd "loginctl show-session \$XDG_SESSION_ID"
+  loginctl show-session "$XDG_SESSION_ID" 2>/dev/null || echo "Session info not available"
+} | redact_sensitive > "$OUTDIR/sessions-processes.txt"
 
-# 3) DRM connectors and EDID (sysfs-based)
+# 3) DRM connectors & EDID
 echo "[+] Scanning DRM connectors and EDID data..."
 {
-  echo "==================== DRM CONNECTORS ===================="
+  echo "==================== DRM CONNECTORS & EDID ===================="
   echo ""
-  cmd "Scanning /sys/class/drm/* for connector status, modes, and EDID"
+  cmd "ls -l /sys/class/drm/"
+  ls -l /sys/class/drm/ 2>/dev/null || echo "No DRM connectors found"
   echo ""
-  for d in /sys/class/drm/*; do
-    [ -e "$d" ] || continue
-    name=$(basename "$d")
-    echo "---- $name ----"
-    if [ -r "$d/status" ]; then
-      echo "status: $(cat "$d/status")"
-    else
-      echo "status: (no status file)"
+  for connector in /sys/class/drm/card*/card*-*; do
+    if [[ -d "$connector" ]]; then
+      conn_name=$(basename "$connector")
+      echo "---------- $conn_name ----------"
+      cmd "cat $connector/status"
+      echo "Status: $(cat "$connector/status" 2>/dev/null || echo "unavailable")"
+      cmd "cat $connector/enabled"
+      echo "Enabled: $(cat "$connector/enabled" 2>/dev/null || echo "unavailable")"
+      
+      edid="$connector/edid"
+      if [[ -f "$edid" ]]; then
+        cmd "edid-decode $edid"
+        edid-decode "$edid" 2>/dev/null || echo "edid-decode not available or failed"
+      else
+        echo "No EDID data"
+      fi
+      echo ""
     fi
-    if [ -r "$d/modes" ]; then
-      echo "modes:"
-      sed -n '1,200p' "$d/modes"
-    else
-      echo "modes: (none)"
-    fi
-    if [ -s "$d/edid" ]; then
-      echo "edid: present (binary -> hexdump head)"
-      hexdump -C -n 128 "$d/edid" | sed -n '1,20p'
-    else
-      echo "edid: not present"
-    fi
-    echo
   done
-} > "$OUTDIR/drm-connectors.txt"
+  
+  echo "=== DRM MODES FROM XRANDR ==="
+  cmd "xrandr --verbose"
+  xrandr --verbose 2>/dev/null || echo "xrandr not available or not in X session"
+  
+  echo ""
+  echo "=== WAYLAND DISPLAY INFO (wlr-randr) ==="
+  cmd "wlr-randr"
+  wlr-randr 2>/dev/null || echo "wlr-randr not available (Wayland only)"
+} | redact_sensitive > "$OUTDIR/drm-connectors.txt"
 
-# 4) USB devices via sysfs (find Genesys Logic and show details)
+# 4) USB device info (sysfs attributes)
 echo "[+] Collecting USB device information..."
 {
-  echo "==================== USB DEVICES ===================="
+  echo "==================== USB DEVICES (SYSFS) ===================="
   echo ""
-  cmd "Scanning /sys/bus/usb/devices/* for vendor/product IDs and power states"
+  cmd "lsusb"
+  lsusb 2>/dev/null || echo "lsusb not available"
   echo ""
-  # list all USB device dirs with vendor/product info
-  for dev in /sys/bus/usb/devices/*; do
-    [ -d "$dev" ] || continue
-    if [ -f "$dev/idVendor" ]; then
-      v=$(cat "$dev/idVendor" 2>/dev/null || echo "")
-      p=$(cat "$dev/idProduct" 2>/dev/null || echo "")
-      if [ -n "$v" ]; then
-        echo "Device: $(basename "$dev") vendor:$v product:$p"
-        # show product strings if available
-        grep -H . "$dev"/product "$dev"/manufacturer 2>/dev/null || true
-        # show power state if available
-        if [ -f "$dev/power/level" ]; then
-          echo " power/level: $(cat "$dev/power/level" 2>/dev/null || true)"
-        fi
-        if [ -f "$dev/power/autosuspend_delay_ms" ]; then
-          echo " power/autosuspend_delay_ms: $(cat "$dev/power/autosuspend_delay_ms" 2>/dev/null || true)"
-        fi
-        echo
-      fi
+  
+  for usbdev in /sys/bus/usb/devices/*-*; do
+    if [[ -d "$usbdev" && ! "$usbdev" =~ .*:.*  ]]; then
+      devname=$(basename "$usbdev")
+      echo "---------- $devname ----------"
+      cmd "cat $usbdev/{idVendor,idProduct,manufacturer,product,power/control,power/autosuspend_delay_ms}"
+      echo "idVendor: $(cat "$usbdev/idVendor" 2>/dev/null || echo "N/A")"
+      echo "idProduct: $(cat "$usbdev/idProduct" 2>/dev/null || echo "N/A")"
+      echo "Manufacturer: $(cat "$usbdev/manufacturer" 2>/dev/null || echo "N/A")"
+      echo "Product: $(cat "$usbdev/product" 2>/dev/null || echo "N/A")"
+      echo "Power Control: $(cat "$usbdev/power/control" 2>/dev/null || echo "N/A")"
+      echo "Autosuspend Delay (ms): $(cat "$usbdev/power/autosuspend_delay_ms" 2>/dev/null || echo "N/A")"
+      echo ""
     fi
   done
+} | redact_sensitive > "$OUTDIR/usb-sysfs.txt"
 
-  echo "=== Quick grep for vendor 05e3 (Genesys) ==="
-  grep -R --line-number --no-messages -I "05e3" /sys/bus/usb/devices/*/uevent 2>/dev/null || true
-} > "$OUTDIR/usb-sysfs.txt"
-
-# 5) PCI devices (simple sysfs scan for VGA/NVIDIA/Intel)
+# 5) PCI VGA devices
 echo "[+] Scanning PCI VGA devices..."
 {
   echo "==================== PCI VGA DEVICES ===================="
   echo ""
-  cmd "Scanning /sys/bus/pci/devices/* for VGA/3D controllers"
+  cmd "lspci -nn | grep -i vga"
+  lspci -nn | grep -i vga 2>/dev/null || echo "No VGA devices found"
   echo ""
-  for d in /sys/bus/pci/devices/*; do
-    [ -d "$d" ] || continue
-    if [ -f "$d/class" ]; then
-      cls=$(cat "$d/class" 2>/dev/null || echo "")
-      # VGA class codes: 0x030000, 0x030200 etc.
-      case "$cls" in
-        *0300*|*0302*)
-          echo "PCI device: $(basename "$d")"
-          echo " vendor: $(cat "$d/vendor" 2>/dev/null || true)"
-          echo " device: $(cat "$d/device" 2>/dev/null || true)"
-          echo " class: $cls"
-          # show device name if available
-          if [ -f "$d/driver/module" ]; then echo " driver/module: $(basename $(readlink -f "$d/driver/module"))"; fi
-          echo
-        ;;
-      esac
+  cmd "lspci -v -s \$(lspci | grep -i vga | cut -d' ' -f1)"
+  for vga in $(lspci | grep -i vga | cut -d' ' -f1); do
+    echo "---------- $vga ----------"
+    lspci -v -s "$vga" 2>/dev/null
+    echo ""
+    runtime_pm_path="/sys/bus/pci/devices/0000:$vga/power/control"
+    if [[ -f "$runtime_pm_path" ]]; then
+      cmd "cat $runtime_pm_path"
+      echo "Runtime PM: $(cat "$runtime_pm_path" 2>/dev/null)"
     fi
+    echo ""
   done
-} > "$OUTDIR/pci-vga.txt"
+} | redact_sensitive > "$OUTDIR/pci-vga.txt"
 
-# 6) Kernel logs: attempt to extract drm/hdmi/edid/connector/hotplug lines from /var/log
+# 6) Filtered kernel logs (last 500 lines)
 echo "[+] Extracting filtered kernel logs..."
 {
   echo "==================== KERNEL LOGS (FILTERED) ===================="
   echo ""
-  cmd "grep -iE \"drm|hdmi|edid|connector|hotplug|genesys|05e3|intel\" /var/log/*"
-  echo ""
-  # Try common log files
-  LOGFILES="/var/log/kern.log /var/log/syslog /var/log/messages"
-  for f in $LOGFILES; do
-    if [ -r "$f" ]; then
-      echo "---- source: $f ----"
-      # filter for display keywords
-      grep -iE "drm|hdmi|edid|connector|hotplug|genesys|05e3|intel" "$f" | tail -n 400 || true
-      echo
-    fi
-  done
+  cmd "dmesg | grep -iE 'drm|edid|hdmi|dp-|usb|hub|runtime.*pm|tlp' | tail -500"
+  dmesg | grep -iE 'drm|edid|hdmi|dp-|usb|hub|runtime.*pm|tlp' | tail -500 2>/dev/null || echo "dmesg not available"
+} | redact_sensitive > "$OUTDIR/kernlog-filtered.txt"
 
-  # Fallback: try /proc/kmsg (requires root)
-  if [ -r /proc/kmsg ]; then
-    echo "---- /proc/kmsg (head) ----"
-    head -n 200 /proc/kmsg 2>/dev/null || true
-  fi
-} > "$OUTDIR/kernlog-filtered.txt"
-
-# 7) systemd & udev: unit statuses and recent udevd messages (using systemctl and journalctl)
+# 7) systemd & udev journal
 echo "[+] Collecting systemd and udev information..."
 {
-  echo "==================== SYSTEMD & UDEV ===================="
+  echo "==================== SYSTEMD & UDEV JOURNAL ===================="
   echo ""
-  cmd "systemctl status tlp"
+  cmd "journalctl -b -u systemd-udevd | tail -200"
+  journalctl -b -u systemd-udevd 2>/dev/null | tail -200 || echo "journalctl not available"
   echo ""
-  systemctl status tlp --no-pager || true
-  echo
-  echo "=== systemctl --type=service --state=running | grep udev/sys" 
-  systemctl list-units --type=service --state=running | egrep "udev|tlp|display-manager|sddm|gdm|lightdm" --color=never || true
-  echo
-  echo "=== Recent systemd-udevd messages (journalctl, last 400 lines) ==="
-  journalctl -b -u systemd-udevd --no-pager | tail -n 400 || true
-  echo
-  echo "=== Recent display-manager / compositor journal lines (last 800 lines) ==="
-  journalctl -b --no-pager | egrep -i "kwin|kwin_wayland|plasmashell|Xwayland|sddm|gdm|display-manager" | tail -n 800 || true
-} > "$OUTDIR/systemd-udev-journal.txt"
+  echo "=== UDEV RULES (DRM/USB) ==="
+  cmd "find /etc/udev/rules.d /usr/lib/udev/rules.d -name '*drm*' -o -name '*usb*' 2>/dev/null"
+  find /etc/udev/rules.d /usr/lib/udev/rules.d -name '*drm*' -o -name '*usb*' 2>/dev/null || echo "No relevant udev rules found"
+} | redact_sensitive > "$OUTDIR/systemd-udev-journal.txt"
 
-# 8) Show key files (tlp conf and grub line, if readable)
+# 8) Configuration files (TLP, X11, etc.)
 echo "[+] Reading configuration files..."
 {
   echo "==================== CONFIGURATION FILES ===================="
   echo ""
-  cmd "cat /etc/tlp.d/01-custom.conf"
+  echo "=== TLP CONFIG ==="
+  cmd "cat /etc/tlp.conf /etc/tlp.d/*.conf"
+  cat /etc/tlp.conf 2>/dev/null || echo "/etc/tlp.conf not found"
   echo ""
-  if [ -r /etc/tlp.d/01-custom.conf ]; then
-    sed -n '1,240p' /etc/tlp.d/01-custom.conf || true
-  else
-    echo "(no /etc/tlp.d/01-custom.conf)"
-  fi
-  echo
-  echo "=== /proc/cmdline ==="
-  cat /proc/cmdline || true
-  echo
-  echo "=== /etc/default/grub (GRUB_CMDLINE_LINUX_DEFAULT line) ==="
-  if [ -r /etc/default/grub ]; then
-    grep -i '^GRUB_CMDLINE_LINUX_DEFAULT' /etc/default/grub || true
-  else
-    echo "(no /etc/default/grub)"
-  fi
-} > "$OUTDIR/config-files.txt"
+  for tlp_custom in /etc/tlp.d/*.conf; do
+    if [[ -f "$tlp_custom" ]]; then
+      echo "--- $(basename "$tlp_custom") ---"
+      cat "$tlp_custom"
+      echo ""
+    fi
+  done
+  
+  echo "=== X11 CONFIGS ==="
+  cmd "cat /etc/X11/xorg.conf /etc/X11/xorg.conf.d/*.conf"
+  cat /etc/X11/xorg.conf 2>/dev/null || echo "/etc/X11/xorg.conf not found"
+  echo ""
+  for xconf in /etc/X11/xorg.conf.d/*.conf; do
+    if [[ -f "$xconf" ]]; then
+      echo "--- $(basename "$xconf") ---"
+      cat "$xconf"
+      echo ""
+    fi
+  done
+  
+  echo "=== GRUB CMDLINE ==="
+  cmd "cat /proc/cmdline"
+  cat /proc/cmdline 2>/dev/null || echo "/proc/cmdline not available"
+} | redact_sensitive > "$OUTDIR/config-files.txt"
 
-# 9) DRM connector raw status snapshot (additional)
+# 9) Raw DRM snapshot (for advanced debugging)
 echo "[+] Creating raw DRM snapshot..."
 {
-  echo "==================== DRM RAW SNAPSHOT ===================="
+  echo "==================== RAW DRM SNAPSHOT ===================="
   echo ""
-  cmd "Reading raw status, modes, and EDID from /sys/class/drm/*"
-  echo ""
-  for d in /sys/class/drm/*; do
-    [ -e "$d" ] || continue
-    name=$(basename "$d")
-    echo "---- $name ----"
-    for f in status modes edid; do
-      if [ -r "$d/$f" ]; then
-        echo " $f :"
-        if [ "$f" = "edid" ]; then
-          hexdump -C -n 64 "$d/$f" | sed -n '1,20p'
-        else
-          sed -n '1,200p' "$d/$f"
-        fi
-      fi
-    done
-    echo
-  done
-} > "$OUTDIR/drm-raw-snapshot.txt"
+  cmd "find /sys/class/drm -type f -exec echo '{}:' \\; -exec cat {} 2>/dev/null \\;"
+  find /sys/class/drm -type f -exec echo '{}:' \; -exec cat {} 2>/dev/null \; | head -1000
+} | redact_sensitive > "$OUTDIR/drm-raw-snapshot.txt"
 
 # 10) Final note
 echo ""
 echo "[✓] DRM, power management, and USB diagnostics complete!"
 echo "[✓] Saved to directory: $OUTDIR"
 echo ""
-echo "Privacy Note: These logs contain hardware information but no passwords or personal data."
-echo "Review the files before sharing publicly."
+
+if [[ "$REDACT_MODE" == "true" ]]; then
+    echo "✓ Personal information has been redacted (IPs, MACs, hostnames, serials, UUIDs)"
+else
+    echo "ℹ  Privacy Note: These logs contain hardware information but no passwords."
+    echo "   To redact personal info, run: ./drm-power-diagnostics.sh --redact"
+fi
+
 echo ""
 echo "Files created:"
-echo " - $OUTDIR/system-info.txt"
-echo " - $OUTDIR/sessions-processes.txt"
-echo " - $OUTDIR/drm-connectors.txt"
-echo " - $OUTDIR/usb-sysfs.txt"
-echo " - $OUTDIR/pci-vga.txt"
-echo " - $OUTDIR/kernlog-filtered.txt"
-echo " - $OUTDIR/systemd-udev-journal.txt"
-echo " - $OUTDIR/config-files.txt"
-echo " - $OUTDIR/drm-raw-snapshot.txt"
+ls -1 "$OUTDIR" | sed 's/^/ - /'
+echo ""
+echo "Review files before sharing publicly."
+echo ""

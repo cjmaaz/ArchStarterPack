@@ -439,9 +439,9 @@ Use Simple Scan for quick scans, digiKam for photo library management.
 
 **Pro Tip:** Before asking a question, try running:
 ```bash
-./check-prerequisites.sh                      # Check system compatibility
-./cachy_os_config/diagnostics.sh              # Full system diagnostics
-./cachy_os_config/drm-power-diagnostics.sh    # DRM/power/USB diagnostics
+./check-prerequisites.sh                           # Check system compatibility
+./cachy_os_config/diagnostics.sh --redact          # Full system diagnostics (personal info masked)
+./cachy_os_config/drm-power-diagnostics.sh --redact # DRM/power/USB diagnostics (personal info masked)
 ```
 
-These tools often reveal the answer to your question!
+These tools often reveal the answer to your question! Use `--redact` to safely share output.

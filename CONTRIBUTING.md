@@ -116,7 +116,7 @@ Want to add a new configuration module?
 
 2. **Clone your fork**
    ```bash
-   git clone https://github.com/YOUR-USERNAME/ArchStarterPack.git
+   git clone https://github.com/<YOUR-USERNAME>/ArchStarterPack.git
    cd ArchStarterPack
    ```
 

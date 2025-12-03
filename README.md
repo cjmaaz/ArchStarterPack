@@ -397,10 +397,12 @@ If you encounter issues, run the diagnostics tools (show commands and output):
 cd cachy_os_config/
 
 # Full system diagnostics
-./diagnostics.sh
+./diagnostics.sh                  # Normal mode
+./diagnostics.sh --redact         # Redact personal info (IPs, MACs, hostnames, etc.)
 
 # DRM/display, power management, USB issues (creates directory with multiple files)
-./drm-power-diagnostics.sh
+./drm-power-diagnostics.sh                  # Normal mode
+./drm-power-diagnostics.sh --redact         # Redact personal info
 ```
 
 ## Troubleshooting & FAQ
