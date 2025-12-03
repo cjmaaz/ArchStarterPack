@@ -65,6 +65,7 @@ Comprehensive guides for configuring and optimizing CachyOS on ASUS X507UF (Inte
   - HDMI-first boot configuration
 
 - **[Hardware Diagnostics Toolkit](cachy_os_config/extract.md)** - Comprehensive system diagnostics script
+  - Shows commands before executing (transparent and educational)
   - GPU/CPU/PCI/ACPI information gathering
   - Thermal sensor readings
   - Kernel module status
@@ -386,7 +387,7 @@ This will check if your system meets all requirements for the configuration modu
    - Test in a safe environment first
 
 **Quick Diagnostics:**
-If you encounter issues, run the diagnostics tool:
+If you encounter issues, run the diagnostics tool (shows commands and output):
 ```bash
 cd cachy_os_config/
 ./diagnostics.sh

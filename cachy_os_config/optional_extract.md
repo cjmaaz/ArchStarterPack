@@ -2,6 +2,8 @@
 
 This document describes optional advanced diagnostics modules that can be integrated into the `diagnostics.sh` toolkit. These modules extend system inspection capability and provide deeper insights into GPU, storage, network, display server, and overall system health.
 
+**Note:** The main `diagnostics.sh` script now displays each command before executing it, making it easier to understand what information is being gathered and learn useful diagnostic commands.
+
 ---
 
 ## 1. Auto-Upload Output to Pastebin
@@ -91,4 +93,3 @@ journalctl --user -u xdg-desktop-portal -b
 ```
 cat ~/.local/share/xorg/Xorg.0.log
 ```
-

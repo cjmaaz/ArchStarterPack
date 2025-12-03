@@ -46,7 +46,7 @@ We are committed to providing a welcoming and inspiring community for all. Pleas
 **Before submitting a bug report:**
 - Check the [FAQ](docs/FAQ.md) and [Troubleshooting Guide](docs/TROUBLESHOOTING.md)
 - Search existing [GitHub Issues](https://github.com/cjmaaz/ArchStarterPack/issues)
-- Run the diagnostics script: `./cachy_os_config/diagnostics.sh`
+- Run the diagnostics script (shows commands and output): `./cachy_os_config/diagnostics.sh`
 
 **When submitting a bug report, include:**
 - Clear, descriptive title

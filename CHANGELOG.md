@@ -22,7 +22,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Glossary of technical terms
 - GRUB kernel parameters detailed explanation guide
 - Prerequisites checker script (`check-prerequisites.sh`)
-- System diagnostics script (`diagnostics.sh`)
+- System diagnostics script (`diagnostics.sh`) with command visibility
 - Backup and rollback instructions in all guides
 - Enhanced inline comments in configuration files
 - Difficulty level and time estimates for each module

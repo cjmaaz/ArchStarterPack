@@ -760,7 +760,7 @@ digikam --rebuild-thumbnails
 
 If your issue isn't covered here:
 
-1. **Run diagnostics:**
+1. **Run diagnostics (shows commands and output):**
    ```bash
    ./cachy_os_config/diagnostics.sh
    ```

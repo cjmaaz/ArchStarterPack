@@ -4,17 +4,19 @@ This toolkit provides a **single unified way** to gather all important system in
 
 The toolkit includes:
 
-1. **A full diagnostic script (`diagnostics.sh`)**
+1. **A full diagnostic script (`diagnostics.sh`)** - shows commands and their output
 2. **A one-line command** to quickly run everything
 3. **Detailed explanations** of every diagnostic section
-4. **Warnings & safety notes**
-5. **Requirements** and optional dependencies
+4. **Command visibility** - see exactly what's being executed
+5. **Warnings & safety notes**
+6. **Requirements** and optional dependencies
 
 ---
 
 # 🛠️ Features
 
 * Collects **GPU/CPU/PCI/ACPI/fan/kernel** debug info
+* **Shows commands before output** for transparency and learning
 * Safe: **read-only**, does not modify system state
 * Fast: prints only important parts
 * Works on **any Linux distro** (Arch, Debian, Fedora, etc.)
