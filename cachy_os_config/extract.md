@@ -1,15 +1,30 @@
 # 📘 README — Hardware & System Diagnostics Toolkit
 
-This toolkit provides a **single unified way** to gather all important system information needed for debugging Linux hardware, ACPI, thermal, GPU, audio, storage, and kernel-related issues.
+This toolkit provides comprehensive diagnostic tools to gather system information for debugging Linux hardware, ACPI, thermal, GPU, audio, storage, display, and kernel-related issues.
 
-The toolkit includes:
+## Available Diagnostic Tools:
 
-1. **A full diagnostic script (`diagnostics.sh`)** - shows commands and their output
-2. **A one-line command** to quickly run everything
-3. **Detailed explanations** of every diagnostic section
-4. **Command visibility** - see exactly what's being executed
-5. **Warnings & safety notes**
-6. **Requirements** and optional dependencies
+1. **[`diagnostics.sh`](diagnostics.sh)** - Full system diagnostics
+   - Complete hardware and software information
+   - Single output log file
+   - Runs all checks in one pass
+
+2. **[`drm-power-diagnostics.sh`](drm-power-diagnostics.sh)** - DRM, power management, and USB diagnostics ([Documentation](DRM_POWER_DIAGNOSTICS.md))
+   - DRM connectors and EDID data
+   - USB devices and power states
+   - PCI graphics devices
+   - TLP and power management configuration
+   - systemd/udev logs
+   - Multiple organized output files
+   - Specialized for display, power, and USB issues
+
+## Features:
+
+- **Command visibility** - see exactly what's being executed
+- **Safe operation** - read-only, no system modifications
+- **Educational** - learn diagnostic commands as they run
+- **Comprehensive coverage** - all major subsystems
+- **Multiple formats** - single file or directory-based output
 
 ---
 

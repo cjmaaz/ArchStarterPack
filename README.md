@@ -64,7 +64,9 @@ Comprehensive guides for configuring and optimizing CachyOS on ASUS X507UF (Inte
   - GRUB kernel parameters
   - HDMI-first boot configuration
 
-- **[Hardware Diagnostics Toolkit](cachy_os_config/extract.md)** - Comprehensive system diagnostics script
+- **[Hardware Diagnostics Toolkit](cachy_os_config/extract.md)** - Comprehensive system diagnostics scripts
+  - `diagnostics.sh` - Full system diagnostics with command visibility
+  - `drm-power-diagnostics.sh` - Specialized DRM/power/USB diagnostics
   - Shows commands before executing (transparent and educational)
   - GPU/CPU/PCI/ACPI information gathering
   - Thermal sensor readings
@@ -322,7 +324,10 @@ ArchStarterPack/
 │   ├── asus_x_507_uf_readme.md         # Main performance & power guide
 │   ├── asus_x_507_uf_nvidia_deprecated.md  # External monitor setup
 │   ├── diagnostics.sh                   # System diagnostics tool
+│   ├── drm-power-diagnostics.sh         # DRM/power/USB diagnostics tool
+│   ├── 01-custom.conf                   # TLP custom configuration example
 │   ├── extract.md                      # Diagnostics toolkit documentation
+│   ├── DRM_POWER_DIAGNOSTICS.md        # DRM/power diagnostics guide
 │   ├── optional_extract.md             # Advanced diagnostics
 │   ├── GRUB_PARAMETERS.md              # Detailed kernel parameter explanations
 │   └── grub                            # GRUB configuration file
@@ -387,10 +392,15 @@ This will check if your system meets all requirements for the configuration modu
    - Test in a safe environment first
 
 **Quick Diagnostics:**
-If you encounter issues, run the diagnostics tool (shows commands and output):
+If you encounter issues, run the diagnostics tools (show commands and output):
 ```bash
 cd cachy_os_config/
+
+# Full system diagnostics
 ./diagnostics.sh
+
+# DRM/display, power management, USB issues (creates directory with multiple files)
+./drm-power-diagnostics.sh
 ```
 
 ## Troubleshooting & FAQ

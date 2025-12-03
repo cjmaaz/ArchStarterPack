@@ -17,6 +17,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Photo layouting and editing recommendations
   - Document management tools
   - Troubleshooting for printer and scanner issues
+- **DRM and power diagnostics script** (`drm-power-diagnostics.sh`) - Specialized DRM/power/USB troubleshooting
+  - DRM connector and EDID analysis
+  - USB device and power management diagnostics
+  - PCI graphics device information
+  - TLP and runtime PM configuration
+  - systemd/udev logs
+  - Multiple organized output files
+  - Command visibility for transparency
+- **TLP custom configuration example** (`01-custom.conf`) with hardware detection instructions
 - Comprehensive FAQ document
 - Troubleshooting guide with solutions to common issues
 - Glossary of technical terms

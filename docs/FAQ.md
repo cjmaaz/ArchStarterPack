@@ -307,7 +307,9 @@ See [TROUBLESHOOTING.md](TROUBLESHOOTING.md) for more details.
 
 **A:** 
 1. Check [TROUBLESHOOTING.md](TROUBLESHOOTING.md)
-2. Run diagnostics (shows executed commands): `./cachy_os_config/diagnostics.sh`
+2. Run diagnostics (shows executed commands):
+   - Full system: `./cachy_os_config/diagnostics.sh`
+   - DRM/power/USB: `./cachy_os_config/drm-power-diagnostics.sh`
 3. Search existing [GitHub Issues](https://github.com/cjmaaz/ArchStarterPack/issues)
 4. Open a new issue with:
    - Your hardware specs
@@ -437,8 +439,9 @@ Use Simple Scan for quick scans, digiKam for photo library management.
 
 **Pro Tip:** Before asking a question, try running:
 ```bash
-./check-prerequisites.sh          # Check system compatibility
-./cachy_os_config/diagnostics.sh  # Gather system information
+./check-prerequisites.sh                      # Check system compatibility
+./cachy_os_config/diagnostics.sh              # Full system diagnostics
+./cachy_os_config/drm-power-diagnostics.sh    # DRM/power/USB diagnostics
 ```
 
 These tools often reveal the answer to your question!

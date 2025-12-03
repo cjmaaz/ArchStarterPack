@@ -762,7 +762,11 @@ If your issue isn't covered here:
 
 1. **Run diagnostics (shows commands and output):**
    ```bash
+   # Full system diagnostics
    ./cachy_os_config/diagnostics.sh
+   
+   # DRM/display, power management, USB issues (creates directory with multiple files)
+   ./cachy_os_config/drm-power-diagnostics.sh
    ```
 
 2. **Check logs:**

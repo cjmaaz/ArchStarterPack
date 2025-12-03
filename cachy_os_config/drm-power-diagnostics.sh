@@ -1,46 +1,75 @@
 #!/usr/bin/env bash
-# display-diagnostics.sh
-# Collect display-related diagnostics in plain text files (no tar.gz).
-# Output directory: ~/display-diagnostics-<TIMESTAMP>/
+
+# ============================================
+# DRM, Power Management & USB Diagnostics Collector
+# Safe, read-only, information-gathering tool
+# ============================================
+# Last Updated: November 2025
+# Purpose: Collect DRM/display, USB, PCI, power management, and systemd/udev diagnostics
+# Scope: Display connectors, EDID, USB hubs, TLP, runtime PM, kernel logs
+# Output: Multiple text files in ~/drm-power-diagnostics-<TIMESTAMP>/
+
 set -euo pipefail
 
-OUTDIR="$HOME/display-diagnostics-$(date +%Y%m%d-%H%M%S)"
+OUTDIR="$HOME/drm-power-diagnostics-$(date +%Y%m%d-%H%M%S)"
 mkdir -p "$OUTDIR"
 
-echo "Saving diagnostics to $OUTDIR"
+# Helper function to show commands before execution
+cmd() {
+    echo "$ $1"
+}
+
+echo "[+] Starting DRM, power management, and USB diagnostics..."
+echo "[+] Output directory: $OUTDIR"
+echo "[!] This script only reads information - no changes will be made"
+echo ""
+sleep 1
 
 # 1) Basic system info
+echo "[+] Collecting system information..."
 {
-  echo "=== DATE ==="
+  echo "==================== SYSTEM INFORMATION ===================="
+  echo ""
+  cmd "date"
   date
-  echo
-  echo "=== UNAME ==="
+  echo ""
+  cmd "uname -a"
   uname -a
-  echo
-  echo "=== CURRENT USER / UID ==="
+  echo ""
+  cmd "id"
   id
-  echo
-  echo "=== ENV (selected) ==="
+  echo ""
+  echo "=== ENVIRONMENT VARIABLES ==="
+  cmd "echo \$XDG_SESSION_TYPE, \$DISPLAY, \$XDG_SESSION_CLASS"
   echo "XDG_SESSION_TYPE=$XDG_SESSION_TYPE"
   echo "DISPLAY=$DISPLAY"
   echo "XDG_SESSION_CLASS=$XDG_SESSION_CLASS"
 } > "$OUTDIR/system-info.txt"
 
 # 2) Session and compositor info (processes)
+echo "[+] Collecting session and compositor information..."
 {
-  echo "=== WHO / W ==="
+  echo "==================== SESSIONS & PROCESSES ===================="
+  echo ""
+  cmd "who"
   who || true
-  echo
-  echo "=== LOGGED-IN SESSIONS (simple ps scan) ==="
+  echo ""
+  echo "=== LOGGED-IN SESSIONS ==="
+  cmd "ps -eo pid,uid,user,cmd --sort=-uid | head -n 200"
   ps -eo pid,uid,user,cmd --sort=-uid | head -n 200
-  echo
+  echo ""
   echo "=== COMPOSITOR / DISPLAY RELATED PROCESSES ==="
+  cmd "ps -eo pid,uid,user,cmd | egrep -i \"kwin|kwin_wayland|plasmashell|gnome-shell|mutter|Xwayland|Xorg|sddm|gdm|wayland\""
   ps -eo pid,uid,user,cmd | egrep -i "kwin|kwin_wayland|plasmashell|gnome-shell|mutter|Xwayland|Xorg|sddm|gdm|wayland" --color=never || true
 } > "$OUTDIR/sessions-processes.txt"
 
 # 3) DRM connectors and EDID (sysfs-based)
+echo "[+] Scanning DRM connectors and EDID data..."
 {
-  echo "=== /sys/class/drm connector statuses and EDID presence ==="
+  echo "==================== DRM CONNECTORS ===================="
+  echo ""
+  cmd "Scanning /sys/class/drm/* for connector status, modes, and EDID"
+  echo ""
   for d in /sys/class/drm/*; do
     [ -e "$d" ] || continue
     name=$(basename "$d")
@@ -67,9 +96,12 @@ echo "Saving diagnostics to $OUTDIR"
 } > "$OUTDIR/drm-connectors.txt"
 
 # 4) USB devices via sysfs (find Genesys Logic and show details)
+echo "[+] Collecting USB device information..."
 {
-  echo "=== USB devices (sysfs scan for vendor 05e3 and monitor hubs) ==="
-  echo
+  echo "==================== USB DEVICES ===================="
+  echo ""
+  cmd "Scanning /sys/bus/usb/devices/* for vendor/product IDs and power states"
+  echo ""
   # list all USB device dirs with vendor/product info
   for dev in /sys/bus/usb/devices/*; do
     [ -d "$dev" ] || continue
@@ -97,8 +129,12 @@ echo "Saving diagnostics to $OUTDIR"
 } > "$OUTDIR/usb-sysfs.txt"
 
 # 5) PCI devices (simple sysfs scan for VGA/NVIDIA/Intel)
+echo "[+] Scanning PCI VGA devices..."
 {
-  echo "=== PCI devices (sysfs scan for VGA/3D devices) ==="
+  echo "==================== PCI VGA DEVICES ===================="
+  echo ""
+  cmd "Scanning /sys/bus/pci/devices/* for VGA/3D controllers"
+  echo ""
   for d in /sys/bus/pci/devices/*; do
     [ -d "$d" ] || continue
     if [ -f "$d/class" ]; then
@@ -120,8 +156,12 @@ echo "Saving diagnostics to $OUTDIR"
 } > "$OUTDIR/pci-vga.txt"
 
 # 6) Kernel logs: attempt to extract drm/hdmi/edid/connector/hotplug lines from /var/log
+echo "[+] Extracting filtered kernel logs..."
 {
-  echo "=== Kernel/boot logs (filtered) ==="
+  echo "==================== KERNEL LOGS (FILTERED) ===================="
+  echo ""
+  cmd "grep -iE \"drm|hdmi|edid|connector|hotplug|genesys|05e3|intel\" /var/log/*"
+  echo ""
   # Try common log files
   LOGFILES="/var/log/kern.log /var/log/syslog /var/log/messages"
   for f in $LOGFILES; do
@@ -141,8 +181,12 @@ echo "Saving diagnostics to $OUTDIR"
 } > "$OUTDIR/kernlog-filtered.txt"
 
 # 7) systemd & udev: unit statuses and recent udevd messages (using systemctl and journalctl)
+echo "[+] Collecting systemd and udev information..."
 {
-  echo "=== systemctl status tlp (if present) ==="
+  echo "==================== SYSTEMD & UDEV ===================="
+  echo ""
+  cmd "systemctl status tlp"
+  echo ""
   systemctl status tlp --no-pager || true
   echo
   echo "=== systemctl --type=service --state=running | grep udev/sys" 
@@ -156,8 +200,12 @@ echo "Saving diagnostics to $OUTDIR"
 } > "$OUTDIR/systemd-udev-journal.txt"
 
 # 8) Show key files (tlp conf and grub line, if readable)
+echo "[+] Reading configuration files..."
 {
-  echo "=== /etc/tlp.d/01-custom.conf ==="
+  echo "==================== CONFIGURATION FILES ===================="
+  echo ""
+  cmd "cat /etc/tlp.d/01-custom.conf"
+  echo ""
   if [ -r /etc/tlp.d/01-custom.conf ]; then
     sed -n '1,240p' /etc/tlp.d/01-custom.conf || true
   else
@@ -176,7 +224,12 @@ echo "Saving diagnostics to $OUTDIR"
 } > "$OUTDIR/config-files.txt"
 
 # 9) DRM connector raw status snapshot (additional)
+echo "[+] Creating raw DRM snapshot..."
 {
+  echo "==================== DRM RAW SNAPSHOT ===================="
+  echo ""
+  cmd "Reading raw status, modes, and EDID from /sys/class/drm/*"
+  echo ""
   for d in /sys/class/drm/*; do
     [ -e "$d" ] || continue
     name=$(basename "$d")
@@ -196,11 +249,20 @@ echo "Saving diagnostics to $OUTDIR"
 } > "$OUTDIR/drm-raw-snapshot.txt"
 
 # 10) Final note
-echo "Diagnostics saved under: $OUTDIR"
-echo "Please upload the following files for review:"
+echo ""
+echo "[✓] DRM, power management, and USB diagnostics complete!"
+echo "[✓] Saved to directory: $OUTDIR"
+echo ""
+echo "Privacy Note: These logs contain hardware information but no passwords or personal data."
+echo "Review the files before sharing publicly."
+echo ""
+echo "Files created:"
+echo " - $OUTDIR/system-info.txt"
+echo " - $OUTDIR/sessions-processes.txt"
 echo " - $OUTDIR/drm-connectors.txt"
 echo " - $OUTDIR/usb-sysfs.txt"
 echo " - $OUTDIR/pci-vga.txt"
 echo " - $OUTDIR/kernlog-filtered.txt"
 echo " - $OUTDIR/systemd-udev-journal.txt"
 echo " - $OUTDIR/config-files.txt"
+echo " - $OUTDIR/drm-raw-snapshot.txt"
