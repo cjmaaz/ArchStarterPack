@@ -427,6 +427,138 @@ Use Simple Scan for quick scans, digiKam for photo library management.
 
 ---
 
+## Shell Commands Module Questions
+
+### Q: What is the Shell Commands module?
+
+**A:** The Shell Commands module is a comprehensive learning guide covering Unix/Linux command-line tools. It includes:
+- 80+ hands-on practice exercises (beginner → expert)
+- 40+ command tutorials with real-world examples
+- Piping patterns and command combinations
+- Salesforce CLI integration patterns
+- Generic Linux system administration examples
+
+It's designed for self-paced learning over 4-6 weeks.
+
+---
+
+### Q: Do I need shell knowledge to use ArchStarterPack?
+
+**A:** 
+- **For configuration modules (CachyOS, LogiOps, Node.js, Printer):** Basic copy-paste command knowledge is enough. The guides provide all commands.
+- **For advanced customization:** Shell command knowledge is helpful but not required.
+- **For the Shell Commands module itself:** No prerequisites! It starts from fundamentals.
+
+The Shell Commands module is an optional learning resource to enhance your Linux skills.
+
+---
+
+### Q: Can I use the Shell Commands module on non-Arch systems?
+
+**A:** **Yes!** The shell commands are universal across all Unix/Linux systems:
+- ✅ Works on: Ubuntu, Debian, Fedora, CentOS, macOS, WSL, etc.
+- ✅ Generic Linux examples work everywhere
+- ⚠️ Salesforce CLI examples require SF CLI installation (works on any OS)
+- ⚠️ Some Arch-specific examples use `pacman`, but concepts apply to any package manager
+
+Only the system configuration modules (CachyOS, LogiOps) are Arch-specific.
+
+---
+
+### Q: How long does it take to complete the Shell Commands course?
+
+**A:** 
+- **Minimum:** 4 weeks (1-2 hours/week) - Following the structured learning path
+- **Comfortable:** 6 weeks - With thorough practice and experimentation
+- **Self-paced:** As long as you need - Use as reference material
+
+**Breakdown:**
+- Week 1: Basics and beginner exercises (6-8 hours)
+- Week 2: Core commands and intermediate exercises (6-8 hours)
+- Week 3: Combinations and advanced exercises (6-8 hours)
+- Week 4+: Expert exercises and real-world application (variable)
+
+You can also use it as a quick reference without completing all exercises.
+
+---
+
+### Q: What's the difference between the Shell Commands module and shell scripting?
+
+**A:** 
+- **Shell Commands Module:** Learn individual commands and how to combine them interactively
+- **Shell Scripting:** Write automated scripts (.sh files) using those commands
+
+The Shell Commands module teaches you the building blocks. Once you master the commands, writing scripts becomes much easier. The module does include some scripting patterns in the Salesforce deployment section.
+
+---
+
+### Q: Is this module useful for Salesforce developers?
+
+**A:** **Absolutely!** It includes Salesforce-specific sections:
+- SF CLI integration patterns (deployments, queries, tests)
+- Apex log analysis techniques
+- Deployment automation scripts
+- JSON processing with `jq` for SF CLI output
+- Real-world deployment workflows
+
+Plus, shell command knowledge is essential for CI/CD pipelines, log analysis, and workflow automation in Salesforce development.
+
+---
+
+### Q: Can I contribute my own command patterns?
+
+**A:** Yes! We welcome contributions:
+1. Fork the repository
+2. Add your patterns to relevant sections
+3. Follow the existing format (examples + explanations)
+4. Submit a pull request
+
+See [CONTRIBUTING.md](../CONTRIBUTING.md) for guidelines.
+
+---
+
+### Q: Do I need to complete all 80 exercises?
+
+**A:** No! The exercises are optional practice:
+- **Selective approach:** Pick exercises relevant to your work
+- **Complete approach:** Do all 80 to master the material
+- **Reference approach:** Use exercises as examples when needed
+
+However, completing exercises significantly improves retention and practical skills.
+
+---
+
+### Q: What if I get stuck on an exercise?
+
+**A:** Each practice section includes:
+1. Clear problem descriptions
+2. Expected output examples
+3. Hints for complex problems
+4. Solutions (check the solutions file)
+
+If still stuck:
+- Search for the command's man page: `man grep`
+- Check the command's tutorial in `02-commands/`
+- Review the patterns in `03-combinations/`
+- Open an issue with your question
+
+---
+
+### Q: Are the examples real-world or just theoretical?
+
+**A:** **Real-world!** Examples include:
+- Actual Salesforce CLI workflows
+- Production log analysis patterns
+- Docker container monitoring
+- Web server log parsing
+- Git repository analysis
+- Network troubleshooting
+- System administration tasks
+
+All patterns are used in production environments.
+
+---
+
 ## Still Have Questions?
 
 - 📖 Read the [Main README](../README.md)

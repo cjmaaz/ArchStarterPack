@@ -206,6 +206,40 @@ A curated collection of learning materials to help you understand the concepts a
 
 ## Shell Scripting
 
+### ⭐ Shell Commands Mastery Guide (Internal Resource)
+
+**ArchStarterPack Shell Commands Module**
+- [Shell Commands README](../shell-commands/README.md) - Start here!
+- Complete course from beginner to expert
+- 80+ hands-on practice exercises with solutions
+- Real-world patterns and recipes
+- Level: Beginner to Expert
+
+**What's Covered:**
+- **Basics:** Operators, redirection, piping
+- **Commands:** 40+ essential tools (grep, sed, awk, jq, curl, find, xargs, etc.)
+- **Combinations:** Piping patterns, command chaining, advanced workflows
+- **Practice:** 20 beginner + 20 intermediate + 20 advanced + 20 expert exercises
+- **Salesforce:** SF CLI patterns, log analysis, deployment automation
+- **Linux Systems:** Web servers, Docker, network analysis, system monitoring
+
+**Learning Path:**
+1. [Shell Operators](../shell-commands/01-basics/operators.md) - Pipes, redirects, chaining
+2. [Essential Commands](../shell-commands/02-commands/) - grep, sed, awk, jq, and more
+3. [Piping Patterns](../shell-commands/03-combinations/piping.md) - Chain commands effectively
+4. [Practice Exercises](../shell-commands/04-practice/) - 80 problems with solutions
+5. [Salesforce Patterns](../shell-commands/05-salesforce/) - SF CLI automation
+
+**Time Commitment:** 4-6 weeks self-paced (1-2 hours per week)
+
+**Perfect For:**
+- Salesforce developers learning shell commands
+- System administrators wanting structured practice
+- DevOps engineers needing quick reference
+- Anyone automating with shell scripts
+
+---
+
 ### Bash Scripting
 
 **Learning Bash**
@@ -367,6 +401,30 @@ A curated collection of learning materials to help you understand the concepts a
 - [Fish Shell Tutorial](https://fishshell.com/docs/current/tutorial.html)
 - Node.js version management best practices
 
+### For Shell Commands Module
+
+**Start Here:**
+1. [Shell Commands README](../shell-commands/README.md) - Course overview
+2. [Operators Guide](../shell-commands/01-basics/operators.md) - Fundamentals
+3. [grep Tutorial](../shell-commands/02-commands/grep.md) - Most essential command
+
+**Core Commands to Master:**
+- Text processing: grep, sed, awk, cut, sort, uniq
+- File operations: find, cat, tail/head
+- Data tools: jq (JSON), curl/wget (network)
+- Utilities: xargs, tee, column
+
+**Practice Path:**
+1. [Beginner Exercises](../shell-commands/04-practice/beginner.md) - 20 problems
+2. [Intermediate Exercises](../shell-commands/04-practice/intermediate.md) - 20 problems
+3. [Advanced Exercises](../shell-commands/04-practice/advanced.md) - 20 problems
+4. [Expert Exercises](../shell-commands/04-practice/expert.md) - 20 problems
+
+**Salesforce Developers:**
+- [SF CLI Patterns](../shell-commands/05-salesforce/sf-cli-patterns.md)
+- [Apex Log Analysis](../shell-commands/05-salesforce/log-analysis.md)
+- [Deployment Scripts](../shell-commands/05-salesforce/deployment-scripts.md)
+
 ---
 
 ## Learning Paths
@@ -394,6 +452,38 @@ A curated collection of learning materials to help you understand the concepts a
 3. Apply basic configuration
 4. Customize gestures for your workflow
 5. Share your configuration!
+
+### Path 4: Shell Commands Mastery (4-6 weeks)
+
+**Week 1: Fundamentals**
+1. Read [operators.md](../shell-commands/01-basics/operators.md) and [redirection.md](../shell-commands/01-basics/redirection.md)
+2. Master grep, cat, tail/head commands
+3. Complete beginner exercises 1-10
+4. Practice basic piping patterns
+
+**Week 2: Core Commands**
+1. Learn sed, awk, and cut for text processing
+2. Master jq for JSON processing
+3. Complete beginner exercises 11-20
+4. Complete intermediate exercises 1-10
+
+**Week 3: Combinations & Patterns**
+1. Study [piping patterns](../shell-commands/03-combinations/piping.md)
+2. Learn [command chaining](../shell-commands/03-combinations/chaining.md)
+3. Complete intermediate exercises 11-20
+4. Complete advanced exercises 1-10
+
+**Week 4: Advanced & Expert**
+1. Master xargs, find, and complex pipelines
+2. Complete advanced exercises 11-20
+3. Study [Salesforce CLI patterns](../shell-commands/05-salesforce/sf-cli-patterns.md)
+4. Complete expert exercises 1-20
+
+**Week 5-6: Real-World Application**
+1. Build automation scripts for your workflow
+2. Practice [deployment automation](../shell-commands/05-salesforce/deployment-scripts.md)
+3. Analyze logs with [log analysis patterns](../shell-commands/05-salesforce/log-analysis.md)
+4. Create your own command recipes
 
 ---
 

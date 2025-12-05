@@ -11,6 +11,7 @@ A curated collection of configuration files, setup guides, and optimization scri
   - [LogiOps - Logitech Mouse Configuration](#2-logiops---logitech-mouse-configuration)
   - [Node.js Development Setup](#3-nodejs-development-setup)
   - [Brother Printer Setup](#4-brother-printer-setup)
+  - [Shell Commands Mastery Guide](#5-shell-commands-mastery-guide)
 - [Project Structure](#project-structure)
 - [Quick Start](#quick-start)
 - [Troubleshooting & FAQ](#troubleshooting--faq)
@@ -26,7 +27,8 @@ ArchStarterPack is a collection of production-ready configuration files and comp
 - 🖱️ Advanced mouse configuration for Logitech devices
 - 🔧 Minimal, clean development environment setup
 - 🖨️ Brother printer and scanner setup guides
-- 📚 Detailed documentation with safety checks
+- 📚 Shell commands mastery with 80+ practice exercises
+- 📖 Detailed documentation with safety checks
 - 🛡️ Tested configurations for ASUS VivoBook hardware
 
 ## Prerequisites
@@ -311,6 +313,119 @@ sudo pacman -S digikam
 
 ---
 
+### 5. Shell Commands Mastery Guide
+
+**Location:** [`shell-commands/`](shell-commands/)  
+**Difficulty:** Beginner to Expert  
+**Time Required:** 4-6 weeks (self-paced)  
+
+Complete guide to Unix/Linux shell commands for Salesforce development and system automation. Master essential commands, powerful combinations, and real-world patterns through 80+ hands-on practice exercises.
+
+#### What's Included
+
+- **[Shell Commands Guide](shell-commands/README.md)** - Complete mastery course
+  - Shell operators and redirection fundamentals
+  - 40+ essential command tutorials (grep, sed, awk, jq, curl, etc.)
+  - Piping patterns and command chaining
+  - Linux system administration patterns
+  - Salesforce CLI integration patterns
+  - Apex log analysis techniques
+  - Deployment automation scripts
+
+#### Course Structure
+
+📚 **Part 1: Fundamentals**
+- Shell operators (`|`, `>`, `>>`, `&&`, `||`)
+- Input/output redirection
+
+📝 **Part 2: Essential Commands (40+ commands)**
+- Text processing: grep, sed, awk, cut, sort, uniq, tr, wc
+- File operations: find, cat, diff, tail/head, tee
+- System & process: ps, top, df/du
+- Archives: tar, zip, gzip
+- Network: curl, wget, ping, netstat
+- Advanced: jq, xargs, column, paste, comm
+
+🔗 **Part 3: Command Combinations**
+- Piping patterns for data processing
+- Command chaining strategies
+- Linux system patterns
+- Advanced workflows
+
+💪 **Part 4: Practice (80 exercises)**
+- Beginner: 20 exercises
+- Intermediate: 20 exercises
+- Advanced: 20 exercises
+- Expert: 20 exercises
+
+⚡ **Part 5: Salesforce-Specific**
+- SF CLI integration patterns
+- Apex log analysis
+- Deployment scripts
+
+#### Quick Start
+
+```bash
+cd shell-commands/
+
+# Follow the structured learning path
+cat README.md
+
+# Start with basics
+cat 01-basics/operators.md
+
+# Practice with grep (most common command)
+cat 02-commands/grep.md
+
+# Try beginner exercises
+cat 04-practice/beginner.md
+
+# 4-Week Learning Path:
+# Week 1: Basics + beginner practice (operators, grep, tail)
+# Week 2: Core commands (sed, awk, jq, xargs)
+# Week 3: Combinations + advanced practice
+# Week 4: Expert practice + Salesforce patterns
+```
+
+#### Learning Path
+
+**For Complete Beginners:**
+1. Read operators and redirection basics
+2. Master grep, cat, tail/head
+3. Complete beginner exercises (1-20)
+4. Progress to intermediate commands
+
+**For Intermediate Users:**
+1. Focus on sed, awk, jq for data processing
+2. Learn piping and chaining patterns
+3. Complete intermediate and advanced exercises
+4. Explore Salesforce-specific patterns
+
+**For Advanced Users:**
+1. Master complex piping patterns
+2. Complete expert exercises
+3. Build custom automation scripts
+4. Contribute your own patterns
+
+#### Key Highlights
+
+✅ **80+ Practice Exercises** - Hands-on learning with solutions  
+✅ **Salesforce Integration** - Real-world SF CLI patterns  
+✅ **Generic Linux Examples** - System administration, web servers, Docker  
+✅ **Progressive Learning** - Beginner to expert path  
+✅ **Real-World Patterns** - Production-ready recipes  
+✅ **Self-Paced** - Learn at your own speed  
+
+#### Who This Is For
+
+- Salesforce developers learning Linux/Unix commands
+- System administrators wanting structured practice
+- DevOps engineers needing quick reference
+- Anyone automating workflows with shell scripts
+- Students preparing for Linux certification
+
+---
+
 ## Project Structure
 
 ```
@@ -343,6 +458,30 @@ ArchStarterPack/
 │   ├── nvm-fish-readme.md              # NVM Fish setup guide
 │   ├── config.fish                     # Minimal Fish config
 │   └── nvm.fish                        # NVM Fish functions
+├── shell-commands/
+│   ├── 01-basics/
+│   │   ├── operators.md                # Shell operators and symbols
+│   │   └── redirection.md              # Input/output redirection
+│   ├── 02-commands/
+│   │   ├── grep.md, sed.md, awk.md     # Text processing commands
+│   │   ├── find.md, cat.md, tail-head.md # File operations
+│   │   ├── curl.md, wget.md, jq.md     # Network and data tools
+│   │   └── [35+ more command guides]   # Comprehensive command reference
+│   ├── 03-combinations/
+│   │   ├── piping.md                   # Piping patterns
+│   │   ├── chaining.md                 # Command chaining
+│   │   ├── linux-system-patterns.md    # System admin patterns
+│   │   └── advanced-patterns.md        # Complex workflows
+│   ├── 04-practice/
+│   │   ├── beginner.md                 # 20 beginner exercises
+│   │   ├── intermediate.md             # 20 intermediate exercises
+│   │   ├── advanced.md                 # 20 advanced exercises
+│   │   └── expert.md                   # 20 expert exercises
+│   ├── 05-salesforce/
+│   │   ├── sf-cli-patterns.md          # SF CLI integration
+│   │   ├── log-analysis.md             # Apex log analysis
+│   │   └── deployment-scripts.md       # Deployment automation
+│   └── README.md                       # Shell commands guide
 ├── check-prerequisites.sh               # System compatibility checker
 ├── CHANGELOG.md                         # Version history and changes
 ├── CONTRIBUTING.md                      # Contribution guidelines
@@ -381,6 +520,7 @@ This will check if your system meets all requirements for the configuration modu
    - For mouse configuration: `cd logiops/`
    - For Node.js setup: `cd node_started/`
    - For Brother printer setup: `cd brother_dcp-t820dw/`
+   - For shell commands learning: `cd shell-commands/`
 
 4. **Read the documentation:**
    Each module contains detailed README files with step-by-step instructions.

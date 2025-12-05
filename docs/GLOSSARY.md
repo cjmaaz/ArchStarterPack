@@ -22,6 +22,14 @@ A comprehensive glossary of technical terms used throughout the ArchStarterPack 
 **Context:** ArchStarterPack is designed for Arch-based systems  
 **Related:** Manjaro, EndeavourOS, CachyOS
 
+### awk
+**Definition:** Pattern scanning and text processing language  
+**Usage:** `awk '{print $1}' file.txt` (print first column)  
+**Context:** Powerful tool for column-based data processing  
+**Common Use:** Extract fields, perform calculations, format output  
+**Example:** `ps aux | awk '{print $1, $11}'` (show user and command)  
+**Learn More:** [awk Tutorial](../shell-commands/02-commands/awk.md)
+
 ---
 
 ## B
@@ -124,6 +132,18 @@ A comprehensive glossary of technical terms used throughout the ArchStarterPack 
 ### Governor
 **See:** CPU Governor
 
+### grep
+**Definition:** Global Regular Expression Print - search text using patterns  
+**Usage:** `grep "pattern" file.txt`  
+**Common Options:**
+- `-i` - Case insensitive
+- `-r` - Recursive search
+- `-v` - Invert match (exclude)
+- `-n` - Show line numbers
+**Example:** `grep -i "error" log.txt | wc -l` (count errors)  
+**Context:** Most commonly used command for filtering and searching text  
+**Learn More:** [grep Tutorial](../shell-commands/02-commands/grep.md)
+
 ### GRUB
 **Definition:** GRand Unified Bootloader  
 **Context:** Boot loader that loads Linux kernel; configured via `/etc/default/grub`  
@@ -180,6 +200,18 @@ A comprehensive glossary of technical terms used throughout the ArchStarterPack 
 **Definition:** Initial RAM filesystem loaded before root filesystem  
 **Context:** Must include required drivers (NVIDIA, NVMe) for early boot  
 **Command:** `mkinitcpio -P` rebuilds initramfs
+
+---
+
+## J
+
+### jq
+**Definition:** Command-line JSON processor  
+**Usage:** `echo '{"name":"John"}' | jq '.name'` (extract field)  
+**Context:** Essential for parsing JSON output from APIs and CLI tools  
+**Common Use:** Parse Salesforce CLI JSON output, API responses  
+**Example:** `sf org list --json | jq '.result.nonScratchOrgs[].username'`  
+**Learn More:** [jq Tutorial](../shell-commands/02-commands/jq.md)
 
 ---
 
@@ -260,6 +292,13 @@ A comprehensive glossary of technical terms used throughout the ArchStarterPack 
 **Definition:** Package manager for Arch Linux  
 **Usage:** `sudo pacman -S package` installs, `pacman -Syu` updates system
 
+### Pipe (|)
+**Definition:** Shell operator that connects output of one command to input of another  
+**Syntax:** `command1 | command2`  
+**Example:** `grep "ERROR" log.txt | wc -l` (count error lines)  
+**Context:** Fundamental for command chaining and data processing  
+**Learn More:** [Piping Patterns](../shell-commands/03-combinations/piping.md)
+
 ### P-State
 **Definition:** Performance state - CPU frequency/voltage combination  
 **Context:** Intel P-State driver manages modern Intel CPU frequencies
@@ -278,6 +317,17 @@ A comprehensive glossary of technical terms used throughout the ArchStarterPack 
 **Supported by:** digiKam, Darktable, RawTherapee  
 **Advantage:** Maximum editing flexibility
 
+### Redirection
+**Definition:** Changing where command input comes from or output goes to  
+**Types:**
+- `>` - Write stdout to file (overwrite)
+- `>>` - Append stdout to file
+- `<` - Read stdin from file
+- `2>` - Redirect stderr to file
+- `&>` - Redirect both stdout and stderr
+**Example:** `command > output.txt 2>&1` (save all output)  
+**Learn More:** [Redirection Guide](../shell-commands/01-basics/redirection.md)
+
 ### Rolling Release
 **Definition:** Distribution model with continuous updates (no version numbers)  
 **Context:** Arch Linux and derivatives use rolling release
@@ -292,6 +342,40 @@ A comprehensive glossary of technical terms used throughout the ArchStarterPack 
 **Usage:** Backend for scanner drivers  
 **Command:** `scanimage` for command-line scanning
 
+### Shell
+**Definition:** Command-line interpreter that executes commands  
+**Types:** Bash, Zsh, Fish, sh  
+**Context:** Interface for interacting with the operating system  
+**Learn More:** [Shell Commands Module](../shell-commands/)
+
+### Shell Operators
+**Definition:** Special characters that control command execution and data flow  
+**Common Operators:**
+- `|` (pipe) - Pass output of one command as input to another
+- `>` (redirect) - Write output to file (overwrite)
+- `>>` (append) - Write output to file (append)
+- `&&` (AND) - Execute next command only if previous succeeds
+- `||` (OR) - Execute next command only if previous fails
+- `2>&1` - Redirect stderr to stdout
+- `;` (semicolon) - Execute commands sequentially
+**Learn More:** [Operators Guide](../shell-commands/01-basics/operators.md)
+
+### stdin (Standard Input)
+**Definition:** Default input stream for programs (file descriptor 0)  
+**Context:** Data read by a program (typically from keyboard or pipe)  
+**Usage:** `cat < file.txt` redirects file to stdin
+
+### stdout (Standard Output)
+**Definition:** Default output stream for programs (file descriptor 1)  
+**Context:** Normal program output (typically displayed on screen)  
+**Usage:** `command > output.txt` redirects stdout to file
+
+### stderr (Standard Error)
+**Definition:** Error output stream for programs (file descriptor 2)  
+**Context:** Error messages and diagnostics  
+**Usage:** `command 2> errors.txt` redirects stderr to file  
+**Combined:** `command > output.txt 2>&1` redirects both stdout and stderr
+
 ### SmartShift
 **Definition:** Logitech scroll wheel technology  
 **Context:** Automatically switches between ratchet (tactile) and free-spin modes  
@@ -300,6 +384,14 @@ A comprehensive glossary of technical terms used throughout the ArchStarterPack 
 ### SDDM
 **Definition:** Simple Desktop Display Manager - login screen  
 **Context:** Common display manager on KDE Plasma
+
+### sed
+**Definition:** Stream Editor - non-interactive text editor  
+**Usage:** `sed 's/old/new/g' file.txt` (replace text)  
+**Context:** Powerful tool for text transformation and substitution  
+**Common Use:** Find and replace, delete lines, insert text  
+**Example:** `grep "ERROR" log.txt | sed 's/.*ERROR: //'` (extract error messages)  
+**Learn More:** [sed Tutorial](../shell-commands/02-commands/sed.md)
 
 ### systemd
 **Definition:** System and service manager for Linux  
