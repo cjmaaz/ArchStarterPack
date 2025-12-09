@@ -1,0 +1,106 @@
+This file contains mixed content types for text processing practice.
+
+=== SECTION 1: Contact Information ===
+Name: John Doe
+Email: john.doe@example.com
+Phone: +1-555-123-4567
+Address: 123 Main St, San Francisco, CA 94102
+
+Name: Jane Smith
+Email: jane.smith@company.org
+Phone: +1-555-234-5678
+Address: 456 Oak Ave, New York, NY 10001
+
+Name: Bob Johnson
+Email: bob.j@techcorp.io
+Phone: +1-555-345-6789
+Address: 789 Pine Rd, Austin, TX 78701
+
+=== SECTION 2: Server Information ===
+Server: web-server-01
+IP: 192.168.1.10
+Status: ACTIVE
+Uptime: 99.95%
+
+Server: db-server-01
+IP: 192.168.1.20
+Status: ACTIVE
+Uptime: 99.99%
+
+Server: cache-server-01
+IP: 192.168.1.30
+Status: MAINTENANCE
+Uptime: 98.50%
+
+=== SECTION 3: URLs and Endpoints ===
+https://api.example.com/v1/users
+https://api.example.com/v1/orders
+https://api.example.com/v2/products
+http://legacy.example.com/api/data
+https://cdn.example.com/assets/images/logo.png
+ftp://files.example.com/uploads/documents/
+
+=== SECTION 4: Log Entries ===
+2025-12-09 08:15:23 INFO Application started successfully
+2025-12-09 08:15:45 DEBUG Loading configuration from /etc/app/config.yaml
+2025-12-09 08:16:12 ERROR Failed to connect to database: Connection timeout
+2025-12-09 08:16:15 WARN Retrying database connection (attempt 1/3)
+2025-12-09 08:16:18 INFO Database connection established
+2025-12-09 08:17:34 ERROR HTTP 500: Internal server error at /api/v1/users
+2025-12-09 08:18:45 INFO User login: john.doe@example.com from IP 203.0.113.45
+
+=== SECTION 5: Code Snippets ===
+function calculateTotal(items) {
+    return items.reduce((sum, item) => sum + item.price, 0);
+}
+
+def process_data(input_file):
+    with open(input_file, 'r') as f:
+        return f.read().split('\n')
+
+SELECT name, email FROM users WHERE active = true ORDER BY created_at DESC;
+
+=== SECTION 6: Dates and Times ===
+2025-12-09
+2025/12/09 14:30:45
+December 9, 2025 02:30 PM
+09-Dec-2025
+2025-12-09T14:30:45Z
+2025-12-09T14:30:45.123+00:00
+
+=== SECTION 7: Numbers and IDs ===
+Transaction ID: TXN-2025-12345
+Order #: ORD-98765
+Customer ID: CUST-00123
+Invoice: INV-2025-Q4-00456
+Request ID: req-abc-123-xyz-789
+Session: sess_1234567890abcdef
+
+=== SECTION 8: Mixed Formats ===
+CSV: id,name,value
+CSV: 1,alpha,100
+CSV: 2,beta,200
+CSV: 3,gamma,300
+
+JSON: {"status": "success", "count": 42}
+JSON: {"error": "Not found", "code": 404}
+
+XML: <user id="1"><name>John</name><active>true</active></user>
+XML: <product sku="ABC123"><price>99.99</price></product>
+
+=== SECTION 9: Special Characters ===
+Symbols: !@#$%^&*()_+-={}[]|:;"'<>,.?/~`
+Unicode: café, résumé, naïve, Zürich
+Escape sequences: \n \t \r \\ \" \'
+HTML entities: &lt; &gt; &amp; &quot; &copy;
+
+=== SECTION 10: Free Text ===
+Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+Ut enim ad minim veniam, quis nostrud exercitation ullamco.
+
+The quick brown fox jumps over the lazy dog.
+Pack my box with five dozen liquor jugs.
+How vexingly quick daft zebras jump!
+
+END OF FILE

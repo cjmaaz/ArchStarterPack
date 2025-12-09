@@ -1,0 +1,63 @@
+{
+  "status": "success",
+  "data": {
+    "total": 5,
+    "users": [
+      {
+        "id": 1,
+        "name": "John Doe",
+        "email": "john.doe@example.com",
+        "active": true,
+        "role": "admin",
+        "department": "Engineering",
+        "joinDate": "2023-01-15",
+        "lastLogin": "2025-12-09T08:30:00Z",
+        "permissions": ["read", "write", "delete", "admin"]
+      },
+      {
+        "id": 2,
+        "name": "Jane Smith",
+        "email": "jane.smith@example.com",
+        "active": true,
+        "role": "developer",
+        "department": "Engineering",
+        "joinDate": "2023-03-20",
+        "lastLogin": "2025-12-09T07:45:00Z",
+        "permissions": ["read", "write"]
+      },
+      {
+        "id": 3,
+        "name": "Bob Johnson",
+        "email": "bob.johnson@example.com",
+        "active": false,
+        "role": "developer",
+        "department": "Engineering",
+        "joinDate": "2022-11-10",
+        "lastLogin": "2025-11-15T14:20:00Z",
+        "permissions": ["read", "write"]
+      },
+      {
+        "id": 4,
+        "name": "Alice Williams",
+        "email": "alice.williams@example.com",
+        "active": true,
+        "role": "manager",
+        "department": "Sales",
+        "joinDate": "2023-05-08",
+        "lastLogin": "2025-12-09T09:00:00Z",
+        "permissions": ["read", "write", "approve"]
+      },
+      {
+        "id": 5,
+        "name": "Charlie Brown",
+        "email": "charlie.brown@example.com",
+        "active": true,
+        "role": "analyst",
+        "department": "Marketing",
+        "joinDate": "2023-08-12",
+        "lastLogin": "2025-12-08T16:30:00Z",
+        "permissions": ["read"]
+      }
+    ]
+  }
+}

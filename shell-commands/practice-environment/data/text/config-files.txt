@@ -1,0 +1,60 @@
+# Application Configuration
+# Last updated: 2025-12-09
+
+[database]
+host=localhost
+port=5432
+name=production_db
+user=dbadmin
+max_connections=100
+timeout=30
+
+[redis]
+host=cache.example.com
+port=6379
+password=secret123
+db=0
+max_retries=3
+
+[api]
+base_url=https://api.example.com/v1
+timeout=60
+rate_limit=1000
+api_key=sk-prod-abc123xyz789
+
+[logging]
+level=INFO
+format=json
+output=/var/log/app/application.log
+max_size=100MB
+retention_days=30
+
+[features]
+enable_analytics=true
+enable_caching=true
+enable_debug_mode=false
+maintenance_mode=false
+
+[email]
+smtp_host=smtp.example.com
+smtp_port=587
+smtp_user=noreply@example.com
+smtp_password=email_pass_123
+from_address=notifications@example.com
+
+[security]
+jwt_secret=your-256-bit-secret
+session_timeout=3600
+password_min_length=8
+require_2fa=true
+allowed_origins=https://app.example.com,https://www.example.com
+
+[performance]
+worker_threads=4
+request_queue_size=1000
+connection_pool_size=50
+cache_ttl=300
+
+# Environment: production
+# Region: us-west-2
+# Version: 3.2.1

@@ -1,0 +1,222 @@
+{
+  "company": {
+    "name": "Acme Corporation",
+    "founded": 1985,
+    "headquarters": {
+      "address": {
+        "street": "123 Main Street",
+        "city": "San Francisco",
+        "state": "CA",
+        "zipCode": "94102",
+        "country": "USA"
+      },
+      "coordinates": {
+        "latitude": 37.7749,
+        "longitude": -122.4194
+      }
+    },
+    "departments": [
+      {
+        "id": "eng",
+        "name": "Engineering",
+        "employees": 150,
+        "teams": [
+          {
+            "name": "Backend",
+            "lead": "John Doe",
+            "members": 25,
+            "technologies": [
+              "Python",
+              "Java",
+              "PostgreSQL",
+              "Redis"
+            ]
+          },
+          {
+            "name": "Frontend",
+            "lead": "Jane Smith",
+            "members": 20,
+            "technologies": [
+              "React",
+              "TypeScript",
+              "CSS",
+              "Webpack"
+            ]
+          },
+          {
+            "name": "DevOps",
+            "lead": "Bob Wilson",
+            "members": 10,
+            "technologies": [
+              "Docker",
+              "Kubernetes",
+              "AWS",
+              "Terraform"
+            ]
+          }
+        ],
+        "budget": {
+          "annual": 15000000,
+          "currency": "USD",
+          "breakdown": {
+            "salaries": 12000000,
+            "infrastructure": 2000000,
+            "training": 500000,
+            "other": 500000
+          }
+        }
+      },
+      {
+        "id": "sales",
+        "name": "Sales",
+        "employees": 75,
+        "teams": [
+          {
+            "name": "Enterprise",
+            "lead": "Alice Johnson",
+            "members": 30,
+            "regions": [
+              "North America",
+              "Europe"
+            ]
+          },
+          {
+            "name": "SMB",
+            "lead": "Charlie Davis",
+            "members": 25,
+            "regions": [
+              "North America",
+              "Asia Pacific"
+            ]
+          }
+        ],
+        "budget": {
+          "annual": 8000000,
+          "currency": "USD",
+          "breakdown": {
+            "salaries": 6000000,
+            "marketing": 1500000,
+            "travel": 300000,
+            "other": 200000
+          }
+        }
+      }
+    ],
+    "products": [
+      {
+        "id": "prod-001",
+        "name": "Enterprise Platform",
+        "version": "3.2.1",
+        "status": "active",
+        "pricing": {
+          "model": "subscription",
+          "tiers": [
+            {
+              "name": "Starter",
+              "monthlyPrice": 99,
+              "annualPrice": 999,
+              "features": [
+                "Basic Analytics",
+                "Email Support",
+                "5 Users"
+              ]
+            },
+            {
+              "name": "Professional",
+              "monthlyPrice": 299,
+              "annualPrice": 2999,
+              "features": [
+                "Advanced Analytics",
+                "Phone Support",
+                "25 Users",
+                "API Access"
+              ]
+            },
+            {
+              "name": "Enterprise",
+              "monthlyPrice": 999,
+              "annualPrice": 9999,
+              "features": [
+                "Custom Analytics",
+                "24/7 Support",
+                "Unlimited Users",
+                "API Access",
+                "SLA"
+              ]
+            }
+          ]
+        },
+        "metrics": {
+          "activeUsers": 125000,
+          "monthlyRevenue": 2500000,
+          "churnRate": 2.5,
+          "nps": 72
+        }
+      },
+      {
+        "id": "prod-002",
+        "name": "Mobile App",
+        "version": "2.1.0",
+        "status": "active",
+        "platforms": [
+          "iOS",
+          "Android"
+        ],
+        "downloads": {
+          "total": 500000,
+          "ios": 300000,
+          "android": 200000
+        },
+        "ratings": {
+          "average": 4.6,
+          "count": 45000,
+          "distribution": {
+            "5": 30000,
+            "4": 10000,
+            "3": 3000,
+            "2": 1000,
+            "1": 1000
+          }
+        }
+      }
+    ],
+    "financials": {
+      "fiscal_year": 2025,
+      "quarters": [
+        {
+          "quarter": "Q1",
+          "revenue": 15000000,
+          "expenses": 12000000,
+          "profit": 3000000,
+          "growth": 15.5
+        },
+        {
+          "quarter": "Q2",
+          "revenue": 17500000,
+          "expenses": 13000000,
+          "profit": 4500000,
+          "growth": 18.2
+        },
+        {
+          "quarter": "Q3",
+          "revenue": 19000000,
+          "expenses": 14000000,
+          "profit": 5000000,
+          "growth": 20.1
+        }
+      ],
+      "projections": {
+        "Q4": {
+          "revenue": 21000000,
+          "expenses": 15000000,
+          "profit": 6000000
+        },
+        "annual": {
+          "revenue": 72500000,
+          "expenses": 54000000,
+          "profit": 18500000
+        }
+      }
+    }
+  }
+}

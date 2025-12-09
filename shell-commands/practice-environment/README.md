@@ -225,7 +225,46 @@ grep " 404 " data/logs/web-access.log | \
 
 ## 🎓 Learning Paths
 
-### Path 1: Absolute Beginner (Week 1)
+### 🌟 Path 1: Interactive Tutorials (Recommended)
+
+**Best for beginners!** Run guided exercises with instant feedback:
+
+```bash
+# Week 1: Beginner Exercises (5 tutorials)
+./exercises/beginner/01-grep-basics.sh          # 10 min
+./exercises/beginner/02-piping-basics.sh         # 10 min
+./exercises/beginner/03-json-processing.sh       # 15 min (requires jq)
+./exercises/beginner/04-file-operations.sh       # 10 min
+./exercises/beginner/05-csv-basics.sh            # 15 min
+
+# Week 2: Intermediate Scenarios (3 tutorials)
+./exercises/intermediate/01-log-analysis.sh      # 20 min
+./exercises/intermediate/02-salesforce-analysis.sh # 25 min
+./exercises/intermediate/03-data-transformation.sh # 20 min
+
+# Week 3: Advanced Challenges (2 tutorials)
+./exercises/advanced/01-complex-pipelines.sh     # 30 min
+./exercises/advanced/02-automation-scripts.sh    # 30 min
+
+# Week 4: Expert Level (1 tutorial)
+./exercises/expert/01-production-scenarios.sh    # 45 min
+```
+
+**Why choose this path?**
+
+- ✅ Interactive guidance with hints
+- ✅ Step-by-step explanations
+- ✅ Instant result verification
+- ✅ Real sample data
+- ✅ Progressive difficulty
+
+📖 **See full guide:** `cat exercises/README.md`
+
+---
+
+### Path 2: Self-Paced Documentation
+
+**For independent learners who prefer reading:**
 
 1. **Basic Commands**
 
@@ -246,7 +285,7 @@ grep " 404 " data/logs/web-access.log | \
 3. **Commands to Master**
    - grep, cat, head, tail, wc
 
-### Path 2: Intermediate (Week 2-3)
+### Path 3: Intermediate (Week 2-3)
 
 1. **Text Processing**
 
@@ -270,7 +309,7 @@ grep " 404 " data/logs/web-access.log | \
 3. **Commands to Master**
    - awk, sed, cut, sort, uniq, tr
 
-### Path 3: Advanced (Week 4-5)
+### Path 4: Advanced (Week 4-5)
 
 1. **Complex Pipelines**
 
