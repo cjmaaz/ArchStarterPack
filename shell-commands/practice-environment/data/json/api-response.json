@@ -1,0 +1,78 @@
+{
+  "success": true,
+  "data": {
+    "users": [
+      {
+        "id": "USR-001",
+        "username": "john.doe",
+        "email": "john.doe@example.com",
+        "firstName": "John",
+        "lastName": "Doe",
+        "role": "admin",
+        "active": true,
+        "createdAt": "2023-01-15T10:30:00Z",
+        "lastLogin": "2025-12-09T08:15:23Z",
+        "permissions": [
+          "read",
+          "write",
+          "delete"
+        ],
+        "profile": {
+          "avatar": "https://cdn.example.com/avatars/john.jpg",
+          "bio": "Software Engineer",
+          "location": "San Francisco, CA"
+        }
+      },
+      {
+        "id": "USR-002",
+        "username": "jane.smith",
+        "email": "jane.smith@example.com",
+        "firstName": "Jane",
+        "lastName": "Smith",
+        "role": "user",
+        "active": true,
+        "createdAt": "2023-02-20T14:45:00Z",
+        "lastLogin": "2025-12-09T07:45:10Z",
+        "permissions": [
+          "read",
+          "write"
+        ],
+        "profile": {
+          "avatar": "https://cdn.example.com/avatars/jane.jpg",
+          "bio": "Product Manager",
+          "location": "New York, NY"
+        }
+      },
+      {
+        "id": "USR-003",
+        "username": "bob.johnson",
+        "email": "bob.johnson@example.com",
+        "firstName": "Bob",
+        "lastName": "Johnson",
+        "role": "user",
+        "active": false,
+        "createdAt": "2023-03-10T09:20:00Z",
+        "lastLogin": "2025-11-15T16:30:45Z",
+        "permissions": [
+          "read"
+        ],
+        "profile": {
+          "avatar": null,
+          "bio": null,
+          "location": "Chicago, IL"
+        }
+      }
+    ],
+    "pagination": {
+      "page": 1,
+      "perPage": 10,
+      "total": 3,
+      "totalPages": 1
+    }
+  },
+  "meta": {
+    "requestId": "req-abc-123",
+    "timestamp": "2025-12-09T08:30:00Z",
+    "version": "v2.1.0"
+  }
+}

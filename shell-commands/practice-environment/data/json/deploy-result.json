@@ -1,0 +1,160 @@
+{
+  "status": 1,
+  "result": {
+    "checkOnly": false,
+    "completedDate": "2025-12-09T10:01:03.000Z",
+    "createdDate": "2025-12-09T10:00:00.000Z",
+    "done": true,
+    "id": "0Af5e000009vRq9CAE",
+    "ignoreWarnings": false,
+    "lastModifiedDate": "2025-12-09T10:01:03.000Z",
+    "numberComponentErrors": 2,
+    "numberComponentsDeployed": 13,
+    "numberComponentsTotal": 15,
+    "numberTestErrors": 1,
+    "numberTestsCompleted": 6,
+    "numberTestsTotal": 6,
+    "rollbackOnError": true,
+    "runTestsEnabled": true,
+    "startDate": "2025-12-09T10:00:05.000Z",
+    "status": "Failed",
+    "success": false,
+    "details": {
+      "componentSuccesses": [
+        {
+          "changed": true,
+          "created": false,
+          "deleted": false,
+          "fileName": "force-app/main/default/classes/AccountTriggerHandler.cls",
+          "fullName": "AccountTriggerHandler",
+          "success": true,
+          "componentType": "ApexClass"
+        },
+        {
+          "changed": true,
+          "created": false,
+          "deleted": false,
+          "fileName": "force-app/main/default/classes/OpportunityService.cls",
+          "fullName": "OpportunityService",
+          "success": true,
+          "componentType": "ApexClass"
+        },
+        {
+          "changed": true,
+          "created": false,
+          "deleted": false,
+          "fileName": "force-app/main/default/classes/ContactHelper.cls",
+          "fullName": "ContactHelper",
+          "success": true,
+          "componentType": "ApexClass"
+        }
+      ],
+      "componentFailures": [
+        {
+          "changed": false,
+          "created": false,
+          "deleted": false,
+          "fileName": "force-app/main/default/triggers/OpportunityTrigger.trigger",
+          "fullName": "OpportunityTrigger",
+          "success": false,
+          "componentType": "ApexTrigger",
+          "problem": "Unexpected token 'if' at line 45, column 8",
+          "problemType": "Error",
+          "lineNumber": 45,
+          "columnNumber": 8
+        },
+        {
+          "changed": false,
+          "created": false,
+          "deleted": false,
+          "fileName": "force-app/main/default/objects/Account/fields/CustomRevenue__c.field-meta.xml",
+          "fullName": "Account.CustomRevenue__c",
+          "success": false,
+          "componentType": "CustomField",
+          "problem": "Field already exists: Account.CustomRevenue__c",
+          "problemType": "Error"
+        }
+      ],
+      "runTestResult": {
+        "numFailures": 1,
+        "numTestsRun": 6,
+        "totalTime": 1543.0,
+        "successes": [
+          {
+            "id": "01p5e000001234AAA",
+            "methodName": "testBulkInsert",
+            "name": "AccountTriggerHandlerTest",
+            "time": 234.0
+          },
+          {
+            "id": "01p5e000001235AAA",
+            "methodName": "testUpdate",
+            "name": "AccountTriggerHandlerTest",
+            "time": 156.0
+          },
+          {
+            "id": "01p5e000001236AAA",
+            "methodName": "testDeduplicate",
+            "name": "ContactHelperTest",
+            "time": 312.0
+          },
+          {
+            "id": "01p5e000001237AAA",
+            "methodName": "testConversion",
+            "name": "LeadConverterTest",
+            "time": 445.0
+          },
+          {
+            "id": "01p5e000001238AAA",
+            "methodName": "testValidation",
+            "name": "LeadConverterTest",
+            "time": 189.0
+          }
+        ],
+        "failures": [
+          {
+            "id": "01p5e000001239AAA",
+            "message": "System.AssertException: Assertion Failed: Expected: 5, Actual: 4",
+            "methodName": "testCloseDeals",
+            "name": "OpportunityServiceTest",
+            "stackTrace": "Class.OpportunityServiceTest.testCloseDeals: line 42",
+            "time": 207.0,
+            "type": "Class"
+          }
+        ],
+        "codeCoverage": [
+          {
+            "id": "01p5e000001234BBB",
+            "name": "AccountTriggerHandler",
+            "type": "Class",
+            "numLocations": 130,
+            "numLocationsNotCovered": 7,
+            "locationsNotCovered": [
+              {
+                "line": 45,
+                "column": 0
+              },
+              {
+                "line": 67,
+                "column": 0
+              },
+              {
+                "line": 89,
+                "column": 0
+              }
+            ]
+          },
+          {
+            "id": "01p5e000001235BBB",
+            "name": "OpportunityService",
+            "type": "Class",
+            "numLocations": 136,
+            "numLocationsNotCovered": 38,
+            "locationsNotCovered": []
+          }
+        ],
+        "codeCoverageWarnings": []
+      }
+    }
+  }
+}

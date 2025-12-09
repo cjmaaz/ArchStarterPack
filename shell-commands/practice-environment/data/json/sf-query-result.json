@@ -1,0 +1,204 @@
+{
+  "status": 0,
+  "result": {
+    "done": true,
+    "totalSize": 15,
+    "records": [
+      {
+        "attributes": {
+          "type": "Account",
+          "url": "/services/data/v58.0/sobjects/Account/001xx000003DGbQAAW"
+        },
+        "Id": "001xx000003DGbQAAW",
+        "Name": "Acme Corporation",
+        "Industry": "Technology",
+        "AnnualRevenue": 5000000,
+        "BillingCity": "San Francisco",
+        "BillingCountry": "USA",
+        "CreatedDate": "2023-01-15T08:30:00.000+0000"
+      },
+      {
+        "attributes": {
+          "type": "Account",
+          "url": "/services/data/v58.0/sobjects/Account/001xx000003DGbRAAW"
+        },
+        "Id": "001xx000003DGbRAAW",
+        "Name": "Global Industries",
+        "Industry": "Manufacturing",
+        "AnnualRevenue": 12000000,
+        "BillingCity": "Chicago",
+        "BillingCountry": "USA",
+        "CreatedDate": "2023-02-20T10:45:00.000+0000"
+      },
+      {
+        "attributes": {
+          "type": "Account",
+          "url": "/services/data/v58.0/sobjects/Account/001xx000003DGbSAAW"
+        },
+        "Id": "001xx000003DGbSAAW",
+        "Name": "Tech Innovators",
+        "Industry": "Technology",
+        "AnnualRevenue": 3500000,
+        "BillingCity": "Austin",
+        "BillingCountry": "USA",
+        "CreatedDate": "2023-03-10T14:20:00.000+0000"
+      },
+      {
+        "attributes": {
+          "type": "Account",
+          "url": "/services/data/v58.0/sobjects/Account/001xx000003DGbTAAW"
+        },
+        "Id": "001xx000003DGbTAAW",
+        "Name": "Retail Giants",
+        "Industry": "Retail",
+        "AnnualRevenue": 25000000,
+        "BillingCity": "New York",
+        "BillingCountry": "USA",
+        "CreatedDate": "2023-04-05T09:15:00.000+0000"
+      },
+      {
+        "attributes": {
+          "type": "Account",
+          "url": "/services/data/v58.0/sobjects/Account/001xx000003DGbUAAW"
+        },
+        "Id": "001xx000003DGbUAAW",
+        "Name": "Healthcare Solutions",
+        "Industry": "Healthcare",
+        "AnnualRevenue": 8500000,
+        "BillingCity": "Boston",
+        "BillingCountry": "USA",
+        "CreatedDate": "2023-05-18T11:00:00.000+0000"
+      },
+      {
+        "attributes": {
+          "type": "Account",
+          "url": "/services/data/v58.0/sobjects/Account/001xx000003DGbVAAW"
+        },
+        "Id": "001xx000003DGbVAAW",
+        "Name": "Energy Corp",
+        "Industry": "Energy",
+        "AnnualRevenue": 45000000,
+        "BillingCity": "Houston",
+        "BillingCountry": "USA",
+        "CreatedDate": "2023-06-22T13:30:00.000+0000"
+      },
+      {
+        "attributes": {
+          "type": "Account",
+          "url": "/services/data/v58.0/sobjects/Account/001xx000003DGbWAAW"
+        },
+        "Id": "001xx000003DGbWAAW",
+        "Name": "Financial Services Inc",
+        "Industry": "Finance",
+        "AnnualRevenue": 18000000,
+        "BillingCity": "Charlotte",
+        "BillingCountry": "USA",
+        "CreatedDate": "2023-07-14T15:45:00.000+0000"
+      },
+      {
+        "attributes": {
+          "type": "Account",
+          "url": "/services/data/v58.0/sobjects/Account/001xx000003DGbXAAW"
+        },
+        "Id": "001xx000003DGbXAAW",
+        "Name": "Telecommunications Plus",
+        "Industry": "Telecommunications",
+        "AnnualRevenue": 32000000,
+        "BillingCity": "Seattle",
+        "BillingCountry": "USA",
+        "CreatedDate": "2023-08-09T10:20:00.000+0000"
+      },
+      {
+        "attributes": {
+          "type": "Account",
+          "url": "/services/data/v58.0/sobjects/Account/001xx000003DGbYAAW"
+        },
+        "Id": "001xx000003DGbYAAW",
+        "Name": "Construction Co",
+        "Industry": "Construction",
+        "AnnualRevenue": 6700000,
+        "BillingCity": "Denver",
+        "BillingCountry": "USA",
+        "CreatedDate": "2023-09-03T08:40:00.000+0000"
+      },
+      {
+        "attributes": {
+          "type": "Account",
+          "url": "/services/data/v58.0/sobjects/Account/001xx000003DGbZAAW"
+        },
+        "Id": "001xx000003DGbZAAW",
+        "Name": "Education Systems",
+        "Industry": "Education",
+        "AnnualRevenue": 4200000,
+        "BillingCity": "Portland",
+        "BillingCountry": "USA",
+        "CreatedDate": "2023-10-11T12:10:00.000+0000"
+      },
+      {
+        "attributes": {
+          "type": "Account",
+          "url": "/services/data/v58.0/sobjects/Account/001xx000003DGbaAAW"
+        },
+        "Id": "001xx000003DGbaAAW",
+        "Name": "Media Group",
+        "Industry": "Media",
+        "AnnualRevenue": 9800000,
+        "BillingCity": "Los Angeles",
+        "BillingCountry": "USA",
+        "CreatedDate": "2023-11-25T14:55:00.000+0000"
+      },
+      {
+        "attributes": {
+          "type": "Account",
+          "url": "/services/data/v58.0/sobjects/Account/001xx000003DGbbAAW"
+        },
+        "Id": "001xx000003DGbbAAW",
+        "Name": "Transportation Services",
+        "Industry": "Transportation",
+        "AnnualRevenue": 15500000,
+        "BillingCity": "Atlanta",
+        "BillingCountry": "USA",
+        "CreatedDate": "2023-12-02T09:25:00.000+0000"
+      },
+      {
+        "attributes": {
+          "type": "Account",
+          "url": "/services/data/v58.0/sobjects/Account/001xx000003DGbcAAW"
+        },
+        "Id": "001xx000003DGbcAAW",
+        "Name": "Hospitality International",
+        "Industry": "Hospitality",
+        "AnnualRevenue": 21000000,
+        "BillingCity": "Miami",
+        "BillingCountry": "USA",
+        "CreatedDate": "2024-01-08T11:40:00.000+0000"
+      },
+      {
+        "attributes": {
+          "type": "Account",
+          "url": "/services/data/v58.0/sobjects/Account/001xx000003DGbdAAW"
+        },
+        "Id": "001xx000003DGbdAAW",
+        "Name": "Biotech Research",
+        "Industry": "Biotechnology",
+        "AnnualRevenue": 11500000,
+        "BillingCity": "San Diego",
+        "BillingCountry": "USA",
+        "CreatedDate": "2024-02-14T13:15:00.000+0000"
+      },
+      {
+        "attributes": {
+          "type": "Account",
+          "url": "/services/data/v58.0/sobjects/Account/001xx000003DGbeAAW"
+        },
+        "Id": "001xx000003DGbeAAW",
+        "Name": "Agricultural Solutions",
+        "Industry": "Agriculture",
+        "AnnualRevenue": 7300000,
+        "BillingCity": "Des Moines",
+        "BillingCountry": "USA",
+        "CreatedDate": "2024-03-20T10:50:00.000+0000"
+      }
+    ]
+  }
+}
