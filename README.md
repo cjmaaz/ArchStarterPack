@@ -12,6 +12,7 @@ A curated collection of configuration files, setup guides, and optimization scri
   - [Node.js Development Setup](#3-nodejs-development-setup)
   - [Brother Printer Setup](#4-brother-printer-setup)
   - [Shell Commands Mastery Guide](#5-shell-commands-mastery-guide)
+  - [AppImage Setup](#6-appimage-setup)
 - [Project Structure](#project-structure)
 - [Quick Start](#quick-start)
 - [Troubleshooting & FAQ](#troubleshooting--faq)
@@ -23,6 +24,7 @@ A curated collection of configuration files, setup guides, and optimization scri
 ArchStarterPack is a collection of production-ready configuration files and comprehensive guides designed to streamline the setup process for Arch-based Linux distributions. Whether you're configuring a new system, optimizing performance, or setting up development tools, this repository provides tested solutions.
 
 **Key Features:**
+
 - 🚀 Performance optimization for CachyOS/Arch systems
 - 🖱️ Advanced mouse configuration for Logitech devices
 - 🔧 Minimal, clean development environment setup
@@ -43,15 +45,16 @@ ArchStarterPack is a collection of production-ready configuration files and comp
 
 ### 1. CachyOS Configuration
 
-**Location:** [`cachy_os_config/`](cachy_os_config/)  
-**Difficulty:** Intermediate to Advanced  
-**Time Required:** 30-60 minutes  
+**Location:** [`cachy_os_config/`](cachy_os_config/)
+**Difficulty:** Intermediate to Advanced
+**Time Required:** 30-60 minutes
 
 Comprehensive guides for configuring and optimizing CachyOS on ASUS X507UF (Intel i5-8250U + Intel UHD 620 + NVIDIA MX130) hardware. These configurations provide maximum performance when plugged in and power efficiency on battery.
 
 #### What's Included
 
 - **[Performance & Power Optimization](cachy_os_config/asus_x_507_uf_readme.md)** - Complete guide for AC/battery power management
+
   - TLP configuration for automatic AC/battery switching
   - CPU governor optimization (performance/powersave)
   - Intel Turbo Boost management
@@ -60,6 +63,7 @@ Comprehensive guides for configuring and optimizing CachyOS on ASUS X507UF (Inte
   - Battery care settings (charge thresholds)
 
 - **[External Monitor-Only Setup](cachy_os_config/asus_x_507_uf_nvidia_deprecated.md)** - Configure laptop to use external display exclusively
+
   - NVIDIA Optimus configuration
   - Disable internal eDP display
   - Early KMS (Kernel Mode Setting)
@@ -67,6 +71,7 @@ Comprehensive guides for configuring and optimizing CachyOS on ASUS X507UF (Inte
   - HDMI-first boot configuration
 
 - **[Hardware Diagnostics Toolkit](cachy_os_config/extract.md)** - Comprehensive system diagnostics scripts
+
   - `diagnostics.sh` - Full system diagnostics with command visibility
   - `drm-power-diagnostics.sh` - Specialized DRM/power/USB diagnostics
   - Shows commands before executing (transparent and educational)
@@ -77,6 +82,7 @@ Comprehensive guides for configuring and optimizing CachyOS on ASUS X507UF (Inte
   - Safe, read-only diagnostics
 
 - **[Optional Diagnostics Extensions](cachy_os_config/optional_extract.md)** - Advanced diagnostic modules
+
   - Auto-upload to pastebin
   - Vulkan/OpenGL info collection
   - Network diagnostics suite
@@ -87,13 +93,13 @@ Comprehensive guides for configuring and optimizing CachyOS on ASUS X507UF (Inte
 
 #### Key Features
 
-✅ Maximum performance on AC power  
-✅ Power efficiency on battery  
-✅ Safe thermal management  
-✅ NVIDIA Optimus support  
-✅ Intel P-state optimization  
-✅ Automatic power profile switching  
-✅ Battery longevity features  
+✅ Maximum performance on AC power
+✅ Power efficiency on battery
+✅ Safe thermal management
+✅ NVIDIA Optimus support
+✅ Intel P-state optimization
+✅ Automatic power profile switching
+✅ Battery longevity features
 
 #### Quick Start
 
@@ -110,15 +116,16 @@ cat asus_x_507_uf_readme.md
 
 ### 2. LogiOps - Logitech Mouse Configuration
 
-**Location:** [`logiops/`](logiops/)  
-**Difficulty:** Intermediate  
-**Time Required:** 20-30 minutes  
+**Location:** [`logiops/`](logiops/)
+**Difficulty:** Intermediate
+**Time Required:** 20-30 minutes
 
 Configuration and setup guide for Logitech MX Master 3S mouse using LogiOps on Linux. Provides gesture controls, button remapping, and scroll wheel optimization.
 
 #### What's Included
 
 - **[LogiOps Setup Guide](logiops/readme.md)** - Complete installation and configuration instructions
+
   - Building from source
   - Dependency installation for various distros
   - Safety checks and validation
@@ -136,18 +143,21 @@ Configuration and setup guide for Logitech MX Master 3S mouse using LogiOps on L
 #### Features
 
 🖱️ **Button Mappings:**
+
 - Scroll wheel middle-click
 - Back/Forward buttons
 - SmartShift toggle button
 - Gesture button with swipe controls
 
 🎯 **Gestures:**
+
 - Click: Overview (Meta+W)
 - Swipe Left/Right: Workspace switching
 - Swipe Up: Task switcher (Meta+Tab)
 - Swipe Down: Show desktop (Meta+D)
 
 ⚙️ **Advanced Settings:**
+
 - DPI: 2000
 - SmartShift threshold: 30
 - Scroll multiplier: 2.0x
@@ -181,15 +191,16 @@ sudo systemctl enable --now logid
 
 ### 3. Node.js Development Setup
 
-**Location:** [`node_started/`](node_started/)  
-**Difficulty:** Beginner to Intermediate  
-**Time Required:** 10-15 minutes  
+**Location:** [`node_started/`](node_started/)
+**Difficulty:** Beginner to Intermediate
+**Time Required:** 10-15 minutes
 
 Minimal, clean configuration for NVM (Node Version Manager) in Fish shell. No bloated plugins, no unnecessary dependencies—just what you need to get Node.js working reliably.
 
 #### What's Included
 
 - **[NVM Fish Setup Guide](node_started/nvm-fish-readme.md)** - Complete minimal setup instructions
+
   - Installation requirements
   - Fish shell integration
   - VSCode compatibility
@@ -197,6 +208,7 @@ Minimal, clean configuration for NVM (Node Version Manager) in Fish shell. No bl
   - Rollback instructions
 
 - **[Minimal config.fish](node_started/config.fish)** - Bare minimum Fish configuration
+
   - NVM environment setup
   - No fisher or bass required
   - Clean, maintainable approach
@@ -209,6 +221,7 @@ Minimal, clean configuration for NVM (Node Version Manager) in Fish shell. No bl
 #### Philosophy
 
 This configuration follows a **minimal, package-manager-friendly** approach:
+
 - No third-party Fish plugin managers
 - No bass (bash wrapper) dependency
 - Direct integration with pacman-installed NVM
@@ -245,9 +258,9 @@ nvm --version
 
 ### 4. Brother Printer Setup
 
-**Location:** [`brother_dcp-t820dw/`](brother_dcp-t820dw/)  
-**Difficulty:** Beginner to Intermediate  
-**Time Required:** 15-25 minutes  
+**Location:** [`brother_dcp-t820dw/`](brother_dcp-t820dw/)
+**Difficulty:** Beginner to Intermediate
+**Time Required:** 15-25 minutes
 
 Complete setup guide for Brother DCP-T820DW printer and scanner on Arch Linux. Includes network (WiFi), USB configuration, and scanning setup.
 
@@ -264,18 +277,21 @@ Complete setup guide for Brother DCP-T820DW printer and scanner on Arch Linux. I
 #### Features
 
 🖨️ **Printing:**
+
 - WiFi network printing via IPP
 - USB direct printing
 - CUPS web interface configuration
 - IPP Everywhere support
 
 🔍 **Scanning:**
+
 - SANE integration
 - Network scanner support
 - Simple Scan GUI
 - brscan5 driver configuration
 
 📸 **Photo Management:**
+
 - digiKam recommended for photo organization
 - Advanced image editing and cataloging
 - RAW format support
@@ -315,15 +331,16 @@ sudo pacman -S digikam
 
 ### 5. Shell Commands Mastery Guide
 
-**Location:** [`shell-commands/`](shell-commands/)  
-**Difficulty:** Beginner to Expert  
-**Time Required:** 4-6 weeks (self-paced)  
+**Location:** [`shell-commands/`](shell-commands/)
+**Difficulty:** Beginner to Expert
+**Time Required:** 4-6 weeks (self-paced)
 
-Complete guide to Unix/Linux shell commands for Salesforce development and system automation. Master essential commands, powerful combinations, and real-world patterns through 80+ hands-on practice exercises.
+Complete guide to Unix/Linux shell commands for Salesforce development and system automation. Master essential commands, powerful combinations, and real-world patterns through **383 interactive exercises** with automatic validation and progress tracking.
 
 #### What's Included
 
 - **[Shell Commands Guide](shell-commands/README.md)** - Complete mastery course
+
   - Shell operators and redirection fundamentals
   - 40+ essential command tutorials (grep, sed, awk, jq, curl, etc.)
   - Piping patterns and command chaining
@@ -332,13 +349,24 @@ Complete guide to Unix/Linux shell commands for Salesforce development and syste
   - Apex log analysis techniques
   - Deployment automation scripts
 
+- **[Interactive Practice System](shell-commands/practice-environment/practice/)** ⭐ NEW!
+  - **383 exercises** across 35 command practice files
+  - **Automatic validation** - Type commands yourself and get immediate feedback
+  - **Progress tracking** - JSON-based progress saved per user
+  - **Practice menu system** - Interactive menu organized by category
+  - **6 validation modes** - Exact, numeric, contains, regex, lines, sorted
+  - **3 attempts per question** - Hints after wrong attempts, solutions after failures
+  - **Scoring system** - Track mastery and improvement over time
+
 #### Course Structure
 
 📚 **Part 1: Fundamentals**
+
 - Shell operators (`|`, `>`, `>>`, `&&`, `||`)
 - Input/output redirection
 
 📝 **Part 2: Essential Commands (40+ commands)**
+
 - Text processing: grep, sed, awk, cut, sort, uniq, tr, wc
 - File operations: find, cat, diff, tail/head, tee
 - System & process: ps, top, df/du
@@ -347,18 +375,21 @@ Complete guide to Unix/Linux shell commands for Salesforce development and syste
 - Advanced: jq, xargs, column, paste, comm
 
 🔗 **Part 3: Command Combinations**
+
 - Piping patterns for data processing
 - Command chaining strategies
 - Linux system patterns
 - Advanced workflows
 
 💪 **Part 4: Practice (80 exercises)**
+
 - Beginner: 20 exercises
 - Intermediate: 20 exercises
 - Advanced: 20 exercises
 - Expert: 20 exercises
 
 ⚡ **Part 5: Salesforce-Specific**
+
 - SF CLI integration patterns
 - Apex log analysis
 - Deployment scripts
@@ -368,7 +399,13 @@ Complete guide to Unix/Linux shell commands for Salesforce development and syste
 ```bash
 cd shell-commands/
 
-# Follow the structured learning path
+# Option 1: Interactive Practice (Recommended)
+cd practice-environment/practice
+./practice-menu.sh
+# Or practice a specific command:
+./commands/grep-practice.sh
+
+# Option 2: Follow the structured learning path
 cat README.md
 
 # Start with basics
@@ -377,44 +414,55 @@ cat 01-basics/operators.md
 # Practice with grep (most common command)
 cat 02-commands/grep.md
 
-# Try beginner exercises
+# Try beginner exercises (reading)
 cat 04-practice/beginner.md
 
 # 4-Week Learning Path:
-# Week 1: Basics + beginner practice (operators, grep, tail)
-# Week 2: Core commands (sed, awk, jq, xargs)
-# Week 3: Combinations + advanced practice
-# Week 4: Expert practice + Salesforce patterns
+# Week 1: Basics + interactive practice (grep, cut, sort)
+# Week 2: Core commands (sed, awk, jq) + practice validation
+# Week 3: Combinations + advanced practice + track progress
+# Week 4: Expert practice + Salesforce patterns + master all 35 commands
 ```
 
 #### Learning Path
 
 **For Complete Beginners:**
+
 1. Read operators and redirection basics
 2. Master grep, cat, tail/head
-3. Complete beginner exercises (1-20)
-4. Progress to intermediate commands
+3. **Practice interactively:** `cd practice-environment/practice && ./commands/grep-practice.sh`
+4. Complete beginner exercises (1-20) from reading exercises
+5. Progress to intermediate commands
 
 **For Intermediate Users:**
+
 1. Focus on sed, awk, jq for data processing
-2. Learn piping and chaining patterns
-3. Complete intermediate and advanced exercises
-4. Explore Salesforce-specific patterns
+2. **Practice interactively:** `./commands/sed-practice.sh`, `./commands/awk-practice.sh`, `./commands/jq-practice.sh`
+3. Learn piping and chaining patterns
+4. Complete intermediate and advanced exercises
+5. **Track progress:** `./progress.sh show`
+6. Explore Salesforce-specific patterns
 
 **For Advanced Users:**
+
 1. Master complex piping patterns
 2. Complete expert exercises
-3. Build custom automation scripts
-4. Contribute your own patterns
+3. **Master all 35 practice command files** - Aim for 90%+ on each
+4. Build custom automation scripts
+5. **View mastery:** `./progress.sh mastered`
+6. Contribute your own patterns
 
 #### Key Highlights
 
-✅ **80+ Practice Exercises** - Hands-on learning with solutions  
-✅ **Salesforce Integration** - Real-world SF CLI patterns  
-✅ **Generic Linux Examples** - System administration, web servers, Docker  
-✅ **Progressive Learning** - Beginner to expert path  
-✅ **Real-World Patterns** - Production-ready recipes  
-✅ **Self-Paced** - Learn at your own speed  
+✅ **383 Interactive Exercises** - Active learning with automatic validation
+✅ **35 Practice Command Files** - One for each documented command
+✅ **Progress Tracking** - Track mastery per command with JSON storage
+✅ **80+ Reading Exercises** - Hands-on learning with solutions
+✅ **Salesforce Integration** - Real-world SF CLI patterns
+✅ **Generic Linux Examples** - System administration, web servers, Docker
+✅ **Progressive Learning** - Beginner to expert path
+✅ **Real-World Patterns** - Production-ready recipes
+✅ **Self-Paced** - Learn at your own speed
 
 #### Who This Is For
 
@@ -426,6 +474,95 @@ cat 04-practice/beginner.md
 
 ---
 
+### 6. AppImage Setup
+
+**Location:** [`appimage-setup/`](appimage-setup/)
+**Difficulty:** Beginner
+**Time Required:** 10-15 minutes
+
+Complete guide for running AppImages on Arch-based systems with KDE Plasma. Learn how to choose between AppImage and `.deb` formats, integrate AppImages into your desktop, extract icons, manage updates, and understand security considerations.
+
+#### What's Included
+
+- **[AppImage Setup Guide](appimage-setup/README.md)** - Comprehensive AppImage guide
+  - Choosing between AppImage and `.deb` formats
+  - Installing FUSE dependency
+  - Running and integrating AppImages
+  - Creating desktop entries for KDE Application Launcher
+  - Icon extraction and theming
+  - Update management strategies
+  - Security best practices
+  - Flatpak vs AppImage comparison
+
+#### Features
+
+📦 **Package Format Guidance:**
+
+- When to choose AppImage over `.deb`
+- Understanding distro-agnostic formats
+- Arch-specific considerations
+
+🔧 **Integration:**
+
+- Manual desktop entry creation
+- Icon extraction from AppImages
+- KDE Plasma integration
+- AppImageLauncher automation
+
+🔄 **Update Management:**
+
+- Manual update process
+- AppImageUpdate tool usage
+- Version management best practices
+- Backup strategies
+
+🛡️ **Security:**
+
+- Signature verification
+- Checksum validation
+- Trusted source guidelines
+- Sandboxing considerations
+
+📊 **Comparison:**
+
+- Flatpak vs AppImage detailed comparison
+- When to use each format
+- Hybrid approach recommendations
+
+#### Quick Start
+
+```bash
+cd appimage-setup/
+
+# Install FUSE dependency
+sudo pacman -S fuse2
+
+# Make AppImage executable
+chmod +x MyApp-x86_64.AppImage
+
+# Move to stable location
+mkdir -p ~/.local/bin
+mv MyApp-x86_64.AppImage ~/.local/bin/myapp
+chmod +x ~/.local/bin/myapp
+
+# Create desktop entry
+mkdir -p ~/.local/share/applications
+nano ~/.local/share/applications/myapp.desktop
+
+# Refresh KDE cache
+kbuildsycoca6
+```
+
+#### Use Cases
+
+- Running applications that only provide `.deb` or AppImage formats
+- Portable applications that don't need system installation
+- Testing applications without modifying system packages
+- Applications not available in Arch repositories or AUR
+- Understanding modern Linux application distribution formats
+
+---
+
 ## Project Structure
 
 ```
@@ -433,6 +570,8 @@ ArchStarterPack/
 ├── .github/
 │   ├── ISSUE_TEMPLATE.md               # Bug report template
 │   └── PULL_REQUEST_TEMPLATE.md        # PR template
+├── appimage-setup/
+│   └── README.md                       # AppImage setup and integration guide
 ├── brother_dcp-t820dw/
 │   └── BROTHER_PRINTER_SETUP_README.md # Brother printer & scanner guide
 ├── cachy_os_config/
@@ -481,6 +620,20 @@ ArchStarterPack/
 │   │   ├── sf-cli-patterns.md          # SF CLI integration
 │   │   ├── log-analysis.md             # Apex log analysis
 │   │   └── deployment-scripts.md       # Deployment automation
+│   ├── practice-environment/
+│   │   ├── practice/                   # ⭐ Interactive Practice System
+│   │   │   ├── commands/              # 35 practice files (383 exercises)
+│   │   │   │   ├── grep-practice.sh
+│   │   │   │   ├── awk-practice.sh
+│   │   │   │   └── [33 more...]
+│   │   │   ├── practice-engine.sh     # Validation engine
+│   │   │   ├── practice-menu.sh       # Interactive menu
+│   │   │   ├── progress.sh            # Progress tracking
+│   │   │   └── README.md              # Practice guide
+│   │   ├── data/                       # Sample data files (logs, JSON, CSV)
+│   │   ├── demos/                      # Passive learning demos
+│   │   ├── exercises/                  # Guided tutorials
+│   │   └── README.md                   # Practice environment guide
 │   └── README.md                       # Shell commands guide
 ├── check-prerequisites.sh               # System compatibility checker
 ├── CHANGELOG.md                         # Version history and changes
@@ -505,22 +658,26 @@ This will check if your system meets all requirements for the configuration modu
 ---
 
 1. **Clone the repository:**
+
    ```bash
    git clone https://github.com/cjmaaz/ArchStarterPack.git
    cd ArchStarterPack
    ```
 
 2. **Check prerequisites:**
+
    ```bash
    ./check-prerequisites.sh
    ```
 
 3. **Choose your configuration module:**
+
    - For system optimization: `cd cachy_os_config/`
    - For mouse configuration: `cd logiops/`
    - For Node.js setup: `cd node_started/`
    - For Brother printer setup: `cd brother_dcp-t820dw/`
    - For shell commands learning: `cd shell-commands/`
+   - For AppImage setup: `cd appimage-setup/`
 
 4. **Read the documentation:**
    Each module contains detailed README files with step-by-step instructions.
@@ -533,6 +690,7 @@ This will check if your system meets all requirements for the configuration modu
 
 **Quick Diagnostics:**
 If you encounter issues, run the diagnostics tools (show commands and output):
+
 ```bash
 cd cachy_os_config/
 
@@ -548,6 +706,7 @@ cd cachy_os_config/
 ## Troubleshooting & FAQ
 
 For comprehensive troubleshooting guides, common issues, and frequently asked questions, see:
+
 - [Troubleshooting Guide](docs/TROUBLESHOOTING.md) - Solutions to common problems
 - [FAQ](docs/FAQ.md) - Frequently asked questions
 - [Glossary](docs/GLOSSARY.md) - Technical terms explained
@@ -569,6 +728,7 @@ Contributions are welcome! If you have improvements, additional configurations, 
 6. Open a Pull Request
 
 **Guidelines:**
+
 - Document all configurations thoroughly
 - Include safety checks and warnings
 - Test on actual hardware before submitting
