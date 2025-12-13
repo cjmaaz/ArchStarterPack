@@ -6,6 +6,53 @@ Complete guide to Unix/Linux shell commands used in Salesforce development and a
 
 ## 📚 Course Structure
 
+```mermaid
+graph TD
+    Start([Shell Commands Course]) --> Part1[Part 1: Fundamentals]
+    Start --> Part2[Part 2: Essential Commands]
+    Start --> Part3[Part 3: Command Combinations]
+    Start --> Part4[Part 4: Practice Exercises]
+    Start --> Part4_5[Part 4.5: Interactive Practice]
+    Start --> Part5[Part 5: Salesforce-Specific]
+
+    Part1 --> P1A[Operators & Symbols]
+    Part1 --> P1B[Input/Output Redirection]
+
+    Part2 --> P2A[Text Processing<br/>grep, sed, awk, cut, etc.]
+    Part2 --> P2B[File Operations<br/>find, cat, diff, etc.]
+    Part2 --> P2C[System & Process<br/>ps, top, df/du]
+    Part2 --> P2D[Archives<br/>tar, zip, gzip]
+    Part2 --> P2E[Network<br/>curl, wget, ping]
+    Part2 --> P2F[Advanced Text<br/>jq, comm, paste]
+    Part2 --> P2G[Shell Utilities<br/>echo, date, xargs]
+
+    Part3 --> P3A[Piping Patterns]
+    Part3 --> P3B[Command Chaining]
+    Part3 --> P3C[Linux System Patterns]
+    Part3 --> P3D[Advanced Patterns]
+
+    Part4 --> P4A[Beginner: 20 exercises]
+    Part4 --> P4B[Intermediate: 20 exercises]
+    Part4 --> P4C[Advanced: 20 exercises]
+    Part4 --> P4D[Expert: 20 exercises]
+
+    Part4_5 --> P45A[35 Practice Files<br/>383 Exercises]
+    Part4_5 --> P45B[Automatic Validation]
+    Part4_5 --> P45C[Progress Tracking]
+
+    Part5 --> P5A[SF CLI Integration]
+    Part5 --> P5B[Apex Log Analysis]
+    Part5 --> P5C[Deployment Scripts]
+
+    style Start fill:#4caf50,color:#fff
+    style Part1 fill:#2196f3,color:#fff
+    style Part2 fill:#ff9800,color:#fff
+    style Part3 fill:#9c27b0,color:#fff
+    style Part4 fill:#f44336,color:#fff
+    style Part4_5 fill:#00bcd4,color:#fff
+    style Part5 fill:#795548,color:#fff
+```
+
 ### **Part 1: Fundamentals**
 
 - [Shell Operators & Symbols](./01-basics/operators.md) - `|`, `>`, `>>`, `2>&1`, `&&`, `||`
@@ -180,6 +227,32 @@ cd practice-environment/practice
 
 ## 🎯 Learning Path
 
+```mermaid
+gantt
+    title 4-Week Shell Commands Learning Path
+    dateFormat YYYY-MM-DD
+    section Week 1: Basics
+    Read operators.md                    :w1a, 2024-01-01, 1d
+    Practice: grep, cut, sort           :w1b, after w1a, 3d
+    Read grep.md, tail-head.md          :w1c, after w1a, 1d
+    Complete beginner exercises         :w1d, after w1b, 2d
+    section Week 2: Core Commands
+    Read sed.md, awk.md                 :w2a, after w1d, 1d
+    Practice: sed, awk, jq              :w2b, after w2a, 3d
+    Read jq.md, xargs.md                :w2c, after w2a, 1d
+    Complete intermediate exercises     :w2d, after w2b, 2d
+    section Week 3: Combinations
+    Read piping.md, chaining.md         :w3a, after w2d, 1d
+    Practice: Advanced exercises        :w3b, after w3a, 3d
+    Read advanced-patterns.md           :w3c, after w3a, 1d
+    Track progress                      :w3d, after w3b, 1d
+    section Week 4: Mastery
+    Complete expert exercises            :w4a, after w3d, 2d
+    Master all 35 practice files        :w4b, after w4a, 3d
+    Read SF CLI guides                  :w4c, after w4a, 1d
+    Build automation scripts            :w4d, after w4b, 2d
+```
+
 ### **Week 1: Basics**
 
 1. Read operators.md
@@ -214,6 +287,49 @@ cd practice-environment/practice
 3. **View mastery:** `./progress.sh mastered`
 4. Read SF CLI integration guides
 5. Build your own automation scripts
+
+---
+
+## 🎯 Quick Decision Guide
+
+**"What should I do based on my situation?"**
+
+```mermaid
+flowchart TD
+    Start([I Want To...]) --> Goal{What's Your Goal?}
+
+    Goal -->|Learn from scratch| Path1[Path 1: Complete Beginner]
+    Goal -->|Master specific command| Path2[Path 2: Command Focus]
+    Goal -->|Practice for Salesforce| Path3[Path 3: SF Developer]
+    Goal -->|Build automation| Path4[Path 4: Automation]
+    Goal -->|Quick reference| Path5[Path 5: Quick Lookup]
+
+    Path1 --> P1A[Read: 01-basics/]
+    P1A --> P1B[Watch: demos/exercises/beginner]
+    P1B --> P1C[Practice: practice/commands/grep-practice.sh]
+
+    Path2 --> P2A[Read: 02-commands/COMMAND.md]
+    P2A --> P2B[Practice: practice/commands/COMMAND-practice.sh]
+    P2B --> P2C[Use: data/ files]
+
+    Path3 --> P3A[Read: 05-salesforce/]
+    P3A --> P3B[Practice: jq-practice.sh]
+    P3B --> P3C[Analyze: data/json/sf-query-result.json]
+
+    Path4 --> P4A[Read: 03-combinations/]
+    P4A --> P4B[Practice: Advanced exercises]
+    P4B --> P4C[Solve: scenarios/]
+
+    Path5 --> P5A[Read: 02-commands/COMMAND.md]
+    P5A --> P5B[OR Practice: commands/COMMAND-practice.sh]
+
+    style Start fill:#e1f5ff
+    style Path1 fill:#fff3e0
+    style Path2 fill:#e8f5e9
+    style Path3 fill:#f3e5f5
+    style Path4 fill:#ffebee
+    style Path5 fill:#e0f2f1
+```
 
 ---
 
@@ -279,11 +395,139 @@ backup && verify || alert
 
 ## 📖 How to Use This Guide
 
+### Scenario-Based Guide: What to Do When
+
+**"I want to learn shell commands from scratch"**
+
+```bash
+# Step 1: Read fundamentals
+cd shell-commands
+cat 01-basics/operators.md
+cat 01-basics/redirection.md
+
+# Step 2: Watch examples
+cd practice-environment/demos/exercises/beginner
+./01-grep-basics.sh
+
+# Step 3: Practice interactively
+cd ../practice
+./commands/grep-practice.sh
+
+# Step 4: Read command documentation
+cd ../../02-commands
+cat grep.md
+```
+
+**"I know basics, want to master specific commands"**
+
+```bash
+# Step 1: Read command guide
+cd shell-commands/02-commands
+cat awk.md  # or sed.md, jq.md, etc.
+
+# Step 2: Practice that command
+cd ../practice-environment/practice
+./commands/awk-practice.sh
+
+# Step 3: Practice on real data
+cd ../data
+awk -F',' '{print $2}' csv/accounts.csv
+
+# Step 4: Check progress
+cd ../practice
+./progress.sh show
+```
+
+**"I want to practice for Salesforce development"**
+
+```bash
+# Step 1: Read Salesforce-specific guides
+cd shell-commands/05-salesforce
+cat sf-cli-patterns.md
+cat log-analysis.md
+
+# Step 2: Practice JSON processing (critical for SF)
+cd ../practice-environment/practice
+./commands/jq-practice.sh
+
+# Step 3: Practice on Salesforce data
+cd ../data
+jq '.result.records[].Name' json/sf-query-result.json
+
+# Step 4: Analyze Salesforce logs
+grep "ERROR" logs/apex-debug.log | tail -10
+```
+
+**"I want to build automation scripts"**
+
+```bash
+# Step 1: Master command combinations
+cd shell-commands/03-combinations
+cat piping.md
+cat chaining.md
+cat advanced-patterns.md
+
+# Step 2: Practice advanced exercises
+cd ../practice-environment/practice
+./practice-menu.sh  # Select advanced commands
+
+# Step 3: Study deployment scripts
+cd ../05-salesforce
+cat deployment-scripts.md
+
+# Step 4: Practice real scenarios
+cd ../practice-environment/scenarios
+cd deployment-failure
+cat README.md
+# Solve the challenge
+```
+
+**"I want to track my learning progress"**
+
+```bash
+# Step 1: Use interactive practice (tracks automatically)
+cd shell-commands/practice-environment/practice
+./practice-menu.sh
+# Complete exercises
+
+# Step 2: Check progress
+./progress.sh summary
+./progress.sh mastered
+./progress.sh needs
+
+# Step 3: Export progress
+./progress.sh export > my-progress.csv
+
+# Step 4: Focus on weak areas
+./progress.sh needs
+# Practice commands that need work
+```
+
+**"I need quick reference for a specific command"**
+
+```bash
+# Option 1: Read command guide
+cd shell-commands/02-commands
+cat grep.md  # Replace with your command
+
+# Option 2: Quick practice
+cd practice-environment/practice
+./commands/grep-practice.sh
+
+# Option 3: See examples
+cd ../demos/exercises/beginner
+./01-grep-basics.sh
+```
+
+### General Learning Workflow
+
 1. **Read**: Each topic has explanations and examples
-2. **Practice**: Try examples in your terminal
-3. **Exercise**: Complete practice problems (reading exercises in `04-practice/`)
-4. **Interactive Practice**: Use the interactive practice system (`practice-environment/practice/`) for active learning with validation
-5. **Review**: Check solutions and track your progress
+2. **Watch**: Use demos to see commands in action (`practice-environment/demos/`)
+3. **Practice**: Try examples in your terminal
+4. **Validate**: Use interactive practice (`practice-environment/practice/`) for immediate feedback
+5. **Exercise**: Complete practice problems (reading exercises in `04-practice/`)
+6. **Apply**: Use real data files (`practice-environment/data/`)
+7. **Review**: Check solutions and track your progress
 
 ---
 

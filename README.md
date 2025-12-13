@@ -565,6 +565,37 @@ kbuildsycoca6
 
 ## Project Structure
 
+```mermaid
+graph TD
+    Root([ArchStarterPack]) --> Module1[cachy_os_config/<br/>System Optimization]
+    Root --> Module2[logiops/<br/>Mouse Configuration]
+    Root --> Module3[node_started/<br/>Node.js Setup]
+    Root --> Module4[brother_dcp-t820dw/<br/>Printer Setup]
+    Root --> Module5[shell-commands/<br/>Shell Commands Guide]
+    Root --> Module6[appimage-setup/<br/>AppImage Setup]
+    Root --> Docs[docs/<br/>Documentation]
+
+    Module5 --> PracticeEnv[practice-environment/<br/>Interactive Practice]
+    PracticeEnv --> Practice[practice/<br/>383 exercises]
+    PracticeEnv --> Demos[demos/<br/>11 demos]
+    PracticeEnv --> Data[data/<br/>50+ files]
+
+    Module1 --> Config1[TLP Config]
+    Module1 --> Config2[GRUB Config]
+    Module1 --> Diag[Diagnostics]
+
+    style Root fill:#4caf50,color:#fff
+    style Module1 fill:#2196f3,color:#fff
+    style Module2 fill:#ff9800,color:#fff
+    style Module3 fill:#9c27b0,color:#fff
+    style Module4 fill:#f44336,color:#fff
+    style Module5 fill:#00bcd4,color:#fff
+    style Module6 fill:#795548,color:#fff
+    style PracticeEnv fill:#607d8b,color:#fff
+```
+
+**Detailed Structure:**
+
 ```
 ArchStarterPack/
 ├── .github/
@@ -644,6 +675,26 @@ ArchStarterPack/
 
 ## Quick Start
 
+```mermaid
+flowchart LR
+    A[Clone Repository] --> B[Check Prerequisites]
+    B --> C{System<br/>Compatible?}
+    C -->|No| D[Fix Issues]
+    D --> B
+    C -->|Yes| E[Choose Module]
+    E --> F[Read Documentation]
+    F --> G[Follow Safety Guidelines]
+    G --> H[Apply Configuration]
+    H --> I[Test & Verify]
+
+    style A fill:#e1f5ff
+    style B fill:#fff3e0
+    style C fill:#f3e5f5
+    style E fill:#e8f5e9
+    style H fill:#c8e6c9
+    style I fill:#4caf50,color:#fff
+```
+
 **Before you begin, verify your system compatibility:**
 
 ```bash
@@ -672,12 +723,51 @@ This will check if your system meets all requirements for the configuration modu
 
 3. **Choose your configuration module:**
 
-   - For system optimization: `cd cachy_os_config/`
-   - For mouse configuration: `cd logiops/`
-   - For Node.js setup: `cd node_started/`
-   - For Brother printer setup: `cd brother_dcp-t820dw/`
-   - For shell commands learning: `cd shell-commands/`
-   - For AppImage setup: `cd appimage-setup/`
+```mermaid
+flowchart TD
+    Start([What do you need?]) --> Need1{System<br/>Optimization?}
+    Need1 -->|Yes| CachyOS[cachy_os_config/<br/>Performance & Power]
+
+    Start --> Need2{Mouse<br/>Configuration?}
+    Need2 -->|Yes| LogiOps[logiops/<br/>Logitech Mouse]
+
+    Start --> Need3{Node.js<br/>Setup?}
+    Need3 -->|Yes| NodeJS[node_started/<br/>NVM Fish Setup]
+
+    Start --> Need4{Printer<br/>Setup?}
+    Need4 -->|Yes| Printer[brother_dcp-t820dw/<br/>Brother Printer]
+
+    Start --> Need5{Learn Shell<br/>Commands?}
+    Need5 -->|Yes| Shell[shell-commands/<br/>383 Exercises]
+
+    Start --> Need6{AppImage<br/>Setup?}
+    Need6 -->|Yes| AppImage[appimage-setup/<br/>AppImage Guide]
+
+    CachyOS --> End([Start Configuration])
+    LogiOps --> End
+    NodeJS --> End
+    Printer --> End
+    Shell --> End
+    AppImage --> End
+
+    style Start fill:#e1f5ff
+    style End fill:#c8e6c9
+    style CachyOS fill:#2196f3,color:#fff
+    style LogiOps fill:#ff9800,color:#fff
+    style NodeJS fill:#9c27b0,color:#fff
+    style Printer fill:#f44336,color:#fff
+    style Shell fill:#00bcd4,color:#fff
+    style AppImage fill:#795548,color:#fff
+```
+
+**Module Selection:**
+
+- For system optimization: `cd cachy_os_config/`
+- For mouse configuration: `cd logiops/`
+- For Node.js setup: `cd node_started/`
+- For Brother printer setup: `cd brother_dcp-t820dw/`
+- For shell commands learning: `cd shell-commands/`
+- For AppImage setup: `cd appimage-setup/`
 
 4. **Read the documentation:**
    Each module contains detailed README files with step-by-step instructions.

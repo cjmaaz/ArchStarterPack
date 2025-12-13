@@ -12,6 +12,35 @@ It is written for:
 
 ## Choosing the Correct Package Format
 
+```mermaid
+flowchart TD
+    Start([Need Linux App]) --> Format{Available Formats?}
+
+    Format -->|AppImage & .deb| CheckArch{Arch-based<br/>System?}
+    CheckArch -->|Yes| ChooseAppImage[✅ Use AppImage<br/>Distro-agnostic]
+    CheckArch -->|No| CheckDeb{Debian/Ubuntu?}
+    CheckDeb -->|Yes| UseDeb[Use .deb]
+    CheckDeb -->|No| ChooseAppImage
+
+    Format -->|AppImage & Flatpak| CheckNeeds{Need Portable<br/>or Auto-updates?}
+    CheckNeeds -->|Portable| ChooseAppImage
+    CheckNeeds -->|Auto-updates| UseFlatpak[Use Flatpak<br/>Centralized updates]
+
+    Format -->|Only AppImage| ChooseAppImage
+    Format -->|Only .deb| Warn[⚠️ Not Recommended<br/>on Arch]
+
+    ChooseAppImage --> End([Download AppImage])
+    UseDeb --> End
+    UseFlatpak --> End
+    Warn --> End
+
+    style Start fill:#e1f5ff
+    style ChooseAppImage fill:#4caf50,color:#fff
+    style UseFlatpak fill:#2196f3,color:#fff
+    style Warn fill:#f44336,color:#fff
+    style End fill:#c8e6c9
+```
+
 If an application provides the following options:
 
 * Linux (`.AppImage`)
@@ -37,6 +66,27 @@ Reasons:
 ---
 
 ## Running an AppImage on Arch
+
+```mermaid
+flowchart LR
+    A[Download AppImage] --> B[Make Executable<br/>chmod +x]
+    B --> C{Has FUSE2?}
+    C -->|No| D[Install fuse2<br/>pacman -S fuse2]
+    C -->|Yes| E[Run AppImage]
+    D --> E
+    E --> F{Works?}
+    F -->|No| G[Troubleshoot]
+    F -->|Yes| H[Move to ~/.local/bin]
+    H --> I[Create Desktop Entry]
+    I --> J[Extract Icon]
+    J --> K[Refresh KDE Cache]
+    K --> L[✅ Complete]
+
+    style A fill:#e1f5ff
+    style D fill:#fff3e0
+    style E fill:#e8f5e9
+    style L fill:#4caf50,color:#fff
+```
 
 ### Step 1: Make the AppImage executable
 
@@ -267,6 +317,41 @@ ls ~/.local/share/icons/
 ---
 
 ## AppImage Updates
+
+```mermaid
+flowchart TD
+    Start([Check for Updates]) --> CheckMethod{Update Method?}
+
+    CheckMethod -->|Manual| Manual[Manual Update]
+    CheckMethod -->|AppImageUpdate| AutoUpdate[AppImageUpdate]
+    CheckMethod -->|AppImageLauncher| Launcher[AppImageLauncher]
+
+    Manual --> M1[Backup Current Version]
+    M1 --> M2[Download New Version]
+    M2 --> M3[Replace Old File]
+    M3 --> M4[Test New Version]
+    M4 --> M5{Works?}
+    M5 -->|No| M6[Restore Backup]
+    M5 -->|Yes| M7[✅ Updated]
+    M6 --> M7
+
+    AutoUpdate --> AU1[Check Update Info]
+    AU1 --> AU2{Update Available?}
+    AU2 -->|Yes| AU3[Run appimageupdate]
+    AU2 -->|No| AU4[Already Latest]
+    AU3 --> AU5[✅ Updated]
+
+    Launcher --> L1[Download New Version]
+    L1 --> L2[Launcher Detects]
+    L2 --> L3[Prompt to Replace]
+    L3 --> L4[✅ Updated]
+
+    style Start fill:#e1f5ff
+    style M7 fill:#4caf50,color:#fff
+    style AU5 fill:#4caf50,color:#fff
+    style L4 fill:#4caf50,color:#fff
+    style AU4 fill:#fff3e0
+```
 
 AppImages do not update automatically. You need to manually download and replace the old version.
 

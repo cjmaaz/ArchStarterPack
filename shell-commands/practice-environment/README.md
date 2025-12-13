@@ -8,20 +8,23 @@
 
 **Choose your path:**
 
-```
-┌─────────────────────────────────────────┐
-│  Are you NEW to shell commands?         │
-└─────────────────────────────────────────┘
-                    │
-        ┌───────────┴───────────┐
-        │                       │
-       YES                     NO
-        │                       │
-        ▼                       ▼
-┌───────────────┐      ┌──────────────────┐
-│ Watch Examples│      │ Practice Yourself│
-│ cd demos/     │      │ cd practice/     │
-└───────────────┘      └──────────────────┘
+```mermaid
+flowchart TD
+    Start([Start Here]) --> NewUser{Are you NEW to<br/>shell commands?}
+    NewUser -->|Yes| WatchDemos[Watch Examples<br/>cd demos/exercises/beginner<br/>./01-grep-basics.sh]
+    NewUser -->|No| KnowBasics{Know basics,<br/>want to practice?}
+    KnowBasics -->|Yes| Practice[Practice Yourself<br/>cd practice<br/>./practice-menu.sh]
+    KnowBasics -->|No| UseData[Use Real Data Files<br/>cd .<br/>./setup.sh]
+
+    WatchDemos --> End([Start Learning])
+    Practice --> End
+    UseData --> End
+
+    style Start fill:#e1f5ff
+    style End fill:#c8e6c9
+    style WatchDemos fill:#fff3e0
+    style Practice fill:#f3e5f5
+    style UseData fill:#e8f5e9
 ```
 
 ### Path 1: New to Shell Commands
@@ -46,6 +49,44 @@ cd shell-commands/practice-environment/practice
 cd shell-commands/practice-environment
 ./setup.sh  # One-time setup
 grep "ERROR" data/logs/application.log
+```
+
+---
+
+## 🏗️ Component Architecture
+
+```mermaid
+graph TB
+    subgraph PracticeEnvironment["Practice Environment"]
+        Practice[practice/<br/>Interactive Practice<br/>383 exercises]
+        Demos[demos/<br/>Watch Examples<br/>11 demo scripts]
+        Data[data/<br/>Sample Files<br/>50+ files]
+        Exercises[exercises/<br/>Guided Tutorials<br/>Future content]
+        Generators[generators/<br/>Create Data<br/>Advanced]
+        Helpers[helpers/<br/>Test Utilities<br/>Advanced]
+        Scenarios[scenarios/<br/>Challenges<br/>Real-world]
+    end
+
+    User([User]) --> Practice
+    User --> Demos
+    User --> Data
+    User --> Exercises
+
+    Practice --> Data
+    Demos --> Data
+    Exercises --> Data
+
+    Generators --> Data
+    Helpers --> Practice
+    Scenarios --> Practice
+
+    Practice --> Progress[Progress Tracking<br/>JSON storage]
+
+    style Practice fill:#4caf50,color:#fff
+    style Demos fill:#ff9800,color:#fff
+    style Data fill:#2196f3,color:#fff
+    style User fill:#9c27b0,color:#fff
+    style Progress fill:#f44336,color:#fff
 ```
 
 ---
@@ -82,6 +123,38 @@ cd shell-commands/practice-environment/practice
 ```
 
 **What happens:**
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant System
+    participant Validator
+    participant Progress
+
+    User->>System: Start practice session
+    System->>User: Show question & expected output
+    User->>System: Type command
+    System->>Validator: Execute command
+    Validator->>Validator: Check output (6 modes)
+    alt Correct Answer
+        Validator->>User: ✓ Correct! (Score +1)
+        System->>Progress: Save success
+        System->>User: Next question
+    else Wrong Answer (Attempt 1-2)
+        Validator->>User: ✗ Incorrect
+        System->>User: Show hint
+        User->>System: Try again (2 more attempts)
+    else Wrong Answer (Attempt 3)
+        Validator->>User: ✗ Incorrect (3 attempts)
+        System->>User: Show solution & explanation
+        System->>Progress: Save failure
+        System->>User: Next question
+    end
+    System->>Progress: Save final score
+    System->>User: Show assessment & progress
+```
+
+**Step-by-step process:**
 
 1. System shows you a question (e.g., "Count lines containing 'ERROR'")
 2. You type your command
@@ -411,13 +484,15 @@ cd ../intermediate
 
 #### Generators (`generators/`)
 
-**What:** Scripts that generate additional sample data files.
+**What:** Scripts that generate additional sample data files for extended practice.
 
 **When to use:**
 
 - You need more data files for practice
 - You want to test with larger datasets
 - You're creating custom practice scenarios
+- You've exhausted the default sample files
+- You want to test performance with bigger files
 
 **How to use:**
 
@@ -427,23 +502,79 @@ cd shell-commands/practice-environment/generators
 # Creates additional data files in data/ directory
 ```
 
-**Examples:**
+**What it generates:**
+
+- Additional log files with more entries
+- Larger CSV datasets
+- More JSON files
+- Extended text files
+
+**Complete Example Workflow:**
 
 ```bash
+# Step 1: Navigate to generators
 cd shell-commands/practice-environment/generators
+
+# Step 2: Generate additional data
 ./generate-all.sh
-# Generates more sample files
+
+# Step 3: Verify new files were created
+cd ../data
+ls -lh logs/    # Check for new log files
+ls -lh csv/     # Check for larger CSV files
+
+# Step 4: Practice on new data
+grep "ERROR" logs/new-application.log
+wc -l csv/large-dataset.csv
+jq '.records | length' json/extended-data.json
+
+# Step 5: Test performance with larger files
+time grep "pattern" logs/large-log.log
+```
+
+**Use Cases:**
+
+**Case 1: Need More Log Entries**
+
+```bash
+cd generators
+./generate-all.sh
+cd ../data/logs
+# Now you have more log files to practice grep, awk, sed on
+grep -c "ERROR" large-application.log
+```
+
+**Case 2: Testing with Large CSV Files**
+
+```bash
+cd generators
+./generate-all.sh
+cd ../data/csv
+# Practice awk, cut, sort on larger datasets
+awk -F',' 'NR>1 && $4 > 1000000 {print $2}' large-dataset.csv | wc -l
+```
+
+**Case 3: Creating Custom Practice Scenarios**
+
+```bash
+cd generators
+./generate-all.sh
+# Modify generated files for your specific practice needs
+cd ../data
+# Add your own test cases to the generated files
 ```
 
 #### Helpers (`helpers/`)
 
-**What:** Helper scripts for testing and practice scenarios.
+**What:** Helper scripts for testing and practice scenarios that simulate real-world conditions.
 
 **When to use:**
 
 - You're practicing error handling (failing commands)
 - You're practicing process monitoring (slow processes)
 - You're creating test file structures
+- You want to test command chaining with failures (`&&`, `||`)
+- You need to practice `ps` and `top` commands
 
 **How to use:**
 
@@ -460,29 +591,98 @@ cd shell-commands/practice-environment/helpers
 ./create-test-files.sh
 ```
 
-**Examples:**
+**Complete Examples:**
+
+**Example 1: Practice Error Handling**
 
 ```bash
 cd shell-commands/practice-environment/helpers
 
-# Test error handling
+# Simulate a command that fails with exit code 1
 ./failing-command.sh 1 "Connection timeout"
-# Command exits with code 1 and message
+echo $?  # Should output: 1
 
-# Practice process monitoring
+# Use in command chaining practice
+./failing-command.sh 1 "Error" && echo "Success" || echo "Failed"
+# Output: Error message, then "Failed"
+
+# Practice with different exit codes
+./failing-command.sh 2 "Permission denied"
+./failing-command.sh 127 "Command not found"
+```
+
+**Example 2: Practice Process Monitoring**
+
+```bash
+cd shell-commands/practice-environment/helpers
+
+# Start a slow process in background
 ./slow-process.sh &
-# Process runs in background, use ps/top to monitor
+SLOW_PID=$!
+
+# Now practice ps command
+ps aux | grep slow-process
+ps -p $SLOW_PID -o pid,cmd,%cpu,%mem
+
+# Practice top command (interactive)
+top -p $SLOW_PID
+
+# Kill the process when done
+kill $SLOW_PID
+```
+
+**Example 3: Practice find Command**
+
+```bash
+cd shell-commands/practice-environment/helpers
+
+# Create test file structure
+./create-test-files.sh
+
+# Now practice find commands
+find . -name "*.txt" -type f
+find . -size +1M -exec ls -lh {} \;
+find . -mtime -1 -type f
+
+# Clean up when done
+rm -rf test-dir-*
+```
+
+**Example 4: Combined Practice Session**
+
+```bash
+cd shell-commands/practice-environment/helpers
+
+# Create test files
+./create-test-files.sh
+
+# Start slow process
+./slow-process.sh &
+SLOW_PID=$!
+
+# Practice finding and monitoring
+find . -name "*.log" -exec grep "ERROR" {} \;
+ps aux | grep slow-process | grep -v grep
+
+# Test error handling
+./failing-command.sh 1 "Test error" || echo "Handled error gracefully"
+
+# Clean up
+kill $SLOW_PID 2>/dev/null
+rm -rf test-dir-*
 ```
 
 #### Scenarios (`scenarios/`)
 
-**What:** Challenge problems based on real-world scenarios.
+**What:** Challenge problems based on real-world scenarios that require combining multiple commands.
 
 **When to use:**
 
 - You've mastered basic commands
 - You want to solve realistic problems
 - You're preparing for real-world tasks
+- You want to practice complex command combinations
+- You're ready for expert-level challenges
 
 **How to use:**
 
@@ -499,17 +699,149 @@ cat README.md  # Read the challenge
 - `data-migration/` - Transform and validate data
 - `performance-tuning/` - Optimize slow scripts
 
-**Examples:**
+**Complete Example: Deployment Failure Scenario**
 
 ```bash
+# Step 1: Navigate to scenario
 cd shell-commands/practice-environment/scenarios/deployment-failure
+
+# Step 2: Read the challenge
 cat README.md
-# Read challenge and solve using shell commands
+# Challenge: Find all deployment errors, extract component names,
+# count failures by type, and create a summary report
+
+# Step 3: Explore available files
+ls -la
+# You'll find: deployment.log, error-summary.txt, etc.
+
+# Step 4: Solve the challenge using shell commands
+# Example solution approach:
+grep "ERROR" deployment.log | \
+  awk '{print $3}' | \
+  sort | uniq -c | \
+  sort -nr > error-summary.txt
+
+# Step 5: Verify your solution
+cat error-summary.txt
 ```
+
+**Example: Log Investigation Scenario**
+
+```bash
+cd shell-commands/practice-environment/scenarios/log-investigation
+
+# Read challenge
+cat README.md
+# Challenge: Find root cause of production incident from logs
+
+# Analyze logs
+grep -E "ERROR|FATAL" logs/application.log | \
+  tail -20 | \
+  awk '{print $1, $2, $4}' | \
+  sort -u
+
+# Extract error patterns
+grep "ERROR" logs/application.log | \
+  sed 's/.*ERROR: //' | \
+  sort | uniq -c | \
+  sort -nr | head -10
+
+# Create investigation report
+{
+  echo "=== Error Summary ==="
+  grep -c "ERROR" logs/application.log
+  echo ""
+  echo "=== Top Errors ==="
+  grep "ERROR" logs/application.log | \
+    sed 's/.*ERROR: //' | \
+    sort | uniq -c | \
+    sort -nr | head -5
+} > investigation-report.txt
+```
+
+**Example: Data Migration Scenario**
+
+```bash
+cd shell-commands/practice-environment/scenarios/data-migration
+
+# Read challenge
+cat README.md
+# Challenge: Transform CSV data, validate format, and generate report
+
+# Transform data
+awk -F',' 'NR>1 {
+  gsub(/"/, "", $2)
+  print $1","$2","toupper($3)","$4
+}' source-data.csv > transformed-data.csv
+
+# Validate transformation
+wc -l source-data.csv transformed-data.csv
+# Should have same line count (minus header)
+
+# Generate validation report
+{
+  echo "=== Migration Report ==="
+  echo "Source records: $(tail -n +2 source-data.csv | wc -l)"
+  echo "Transformed records: $(tail -n +2 transformed-data.csv | wc -l)"
+  echo ""
+  echo "=== Sample Transformed Data ==="
+  head -5 transformed-data.csv
+} > migration-report.txt
+```
+
+**Example: Performance Tuning Scenario**
+
+```bash
+cd shell-commands/practice-environment/scenarios/performance-tuning
+
+# Read challenge
+cat README.md
+# Challenge: Optimize slow script, identify bottlenecks
+
+# Time the original script
+time ./slow-script.sh
+
+# Profile the script
+strace -c ./slow-script.sh 2>&1 | tail -20
+
+# Find slow operations
+./slow-script.sh 2>&1 | \
+  grep -E "took|slow|timeout" | \
+  sort -k2 -nr
+
+# Optimize and compare
+time ./optimized-script.sh
+```
+
+**Tips for Solving Scenarios:**
+
+1. **Read the challenge carefully** - Understand what's being asked
+2. **Explore available files** - `ls -la` to see what data you have
+3. **Start simple** - Use basic commands first, then combine
+4. **Test incrementally** - Verify each step before moving on
+5. **Document your solution** - Save commands in a script for reference
 
 ---
 
 ## 🎯 Learning Paths
+
+```mermaid
+gantt
+    title Learning Path Progression
+    dateFormat YYYY-MM-DD
+    section Beginner
+    Watch Examples (Demos)     :a1, 2024-01-01, 2d
+    Practice Basic Commands    :a2, after a1, 2d
+    Use Real Data Files        :a3, after a2, 3d
+    section Intermediate
+    Practice Core Commands     :b1, after a3, 4d
+    Track Progress            :b2, after b1, 1d
+    Watch Advanced Demos      :b3, after b2, 2d
+    section Advanced
+    Master All Commands        :c1, after b3, 7d
+    Solve Scenarios           :c2, after c1, 3d
+    Create Custom Practice    :c3, after c2, 2d
+```
 
 ### Path 1: Complete Beginner (Week 1-2)
 
