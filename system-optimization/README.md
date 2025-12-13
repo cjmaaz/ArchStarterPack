@@ -168,12 +168,34 @@ Automate system maintenance with scripts and scheduled tasks.
 
 **Run directly from GitHub:**
 
+**For Bash/Zsh:**
+
 ```bash
 # Check system health (no sudo needed)
 bash <(curl -s https://raw.githubusercontent.com/cjmaaz/ArchStarterPack/master/system-optimization/scripts/check-optimization.sh)
 
 # Run comprehensive maintenance (requires sudo)
 bash <(curl -s https://raw.githubusercontent.com/cjmaaz/ArchStarterPack/master/system-optimization/scripts/system-maintenance.sh)
+```
+
+**For Fish shell:**
+
+```fish
+# Check system health (no sudo needed)
+curl -s https://raw.githubusercontent.com/cjmaaz/ArchStarterPack/master/system-optimization/scripts/check-optimization.sh | bash
+
+# Run comprehensive maintenance (requires sudo)
+curl -s https://raw.githubusercontent.com/cjmaaz/ArchStarterPack/master/system-optimization/scripts/system-maintenance.sh | bash
+```
+
+**Universal method (works in any shell):**
+
+```bash
+# Check system health (no sudo needed)
+curl -s https://raw.githubusercontent.com/cjmaaz/ArchStarterPack/master/system-optimization/scripts/check-optimization.sh | bash
+
+# Run comprehensive maintenance (requires sudo)
+curl -s https://raw.githubusercontent.com/cjmaaz/ArchStarterPack/master/system-optimization/scripts/system-maintenance.sh | bash
 ```
 
 **Or run from local directory:**
@@ -298,6 +320,8 @@ du -sh /var/cache/pacman/pkg/  # Cache size
 
 **Using scripts (recommended):**
 
+**For Bash/Zsh:**
+
 ```bash
 # Run scripts directly from GitHub
 
@@ -312,6 +336,38 @@ bash <(curl -s https://raw.githubusercontent.com/cjmaaz/ArchStarterPack/master/s
 
 # 4. Full system maintenance (requires sudo)
 bash <(curl -s https://raw.githubusercontent.com/cjmaaz/ArchStarterPack/master/system-optimization/scripts/system-maintenance.sh)
+```
+
+**For Fish shell:**
+
+```fish
+# 1. Check system health (no sudo needed)
+curl -s https://raw.githubusercontent.com/cjmaaz/ArchStarterPack/master/system-optimization/scripts/check-optimization.sh | bash
+
+# 2. Clean orphaned packages (interactive, requires sudo)
+curl -s https://raw.githubusercontent.com/cjmaaz/ArchStarterPack/master/system-optimization/scripts/cleanup-packages.sh | bash
+
+# 3. Clean all caches (requires sudo)
+curl -s https://raw.githubusercontent.com/cjmaaz/ArchStarterPack/master/system-optimization/scripts/cleanup-cache.sh | bash
+
+# 4. Full system maintenance (requires sudo)
+curl -s https://raw.githubusercontent.com/cjmaaz/ArchStarterPack/master/system-optimization/scripts/system-maintenance.sh | bash
+```
+
+**Universal method (works in any shell):**
+
+```bash
+# 1. Check system health (no sudo needed)
+curl -s https://raw.githubusercontent.com/cjmaaz/ArchStarterPack/master/system-optimization/scripts/check-optimization.sh | bash
+
+# 2. Clean orphaned packages (interactive, requires sudo)
+curl -s https://raw.githubusercontent.com/cjmaaz/ArchStarterPack/master/system-optimization/scripts/cleanup-packages.sh | bash
+
+# 3. Clean all caches (requires sudo)
+curl -s https://raw.githubusercontent.com/cjmaaz/ArchStarterPack/master/system-optimization/scripts/cleanup-cache.sh | bash
+
+# 4. Full system maintenance (requires sudo)
+curl -s https://raw.githubusercontent.com/cjmaaz/ArchStarterPack/master/system-optimization/scripts/system-maintenance.sh | bash
 ```
 
 **Manual commands:**
