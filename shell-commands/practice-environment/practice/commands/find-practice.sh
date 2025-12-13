@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+cd "$SCRIPT_DIR/../.."
+source "../practice/practice-engine.sh"
+COMMAND="find"
+TOTAL_EXERCISES=15
+init_practice "$COMMAND" "$TOTAL_EXERCISES"
+
+run_exercise 1 "Find all .log files, count them" "data/logs/" "6" "6 log files" "numeric" "Use find -name '*.log'" "find data/logs/ -name '*.log' | wc -l" "find -name matches pattern"
+run_exercise 2 "Find all .csv files" "data/csv/" "5" "5 CSV files" "numeric" "find -name '*.csv'" "find data/csv/ -name '*.csv' | wc -l" "Glob pattern matching"
+run_exercise 3 "Find all files (not directories)" "data/logs/" "6" "6 files" "numeric" "Use find -type f" "find data/logs/ -type f | wc -l" "-type f finds only files"
+run_exercise 4 "Find all directories" "data/" "6" "6 directories" "numeric" "Use find -type d" "find data/ -type d | wc -l" "-type d finds directories"
+run_exercise 5 "Find files larger than 5KB" "data/" "4" "4 large files" "numeric" "Use find -size +5k" "find data/ -type f -size +5k | wc -l" "-size +5k finds files > 5KB"
+run_exercise 6 "Find .json files only in data/json/" "data/json/" "5" "5 JSON files" "numeric" "find with maxdepth" "find data/json/ -maxdepth 1 -name '*.json' | wc -l" "-maxdepth limits search depth"
+run_exercise 7 "Find empty files" "data/" "0" "0 empty files" "numeric" "Use find -empty" "find data/ -type f -empty | wc -l" "-empty finds empty files"
+run_exercise 8 "Find and list .txt files" "data/text/" "5" "5 text files" "lines" "find -name '*.txt'" "find data/text/ -name '*.txt' | wc -l" "Pattern for text files"
+run_exercise 9 "Find files modified today" "data/" "28" "28 files" "numeric" "Use find -mtime 0" "find data/ -type f -mtime 0 | wc -l" "-mtime 0 means today"
+run_exercise 10 "Case-insensitive name search" "data/" "28" "Many files" "numeric" "Use find -iname" "find data/ -type f -iname '*.log' -o -iname '*.csv' -o -iname '*.json' -o -iname '*.txt' | wc -l" "-iname ignores case"
+run_exercise 11 "Find and count lines in all CSVs" "data/csv/" "112" "~112 total lines" "numeric" "find -exec cat" "find data/csv/ -name '*.csv' -exec cat {} \\; | wc -l" "-exec runs command on each file"
+run_exercise 12 "Find files NOT named application.log" "data/logs/" "5" "5 other logs" "numeric" "Use find ! -name" "find data/logs/ -type f ! -name 'application.log' | wc -l" "! negates condition"
+run_exercise 13 "Find .log files and search for ERROR" "data/logs/" "104" "~104 total errors" "numeric" "find | xargs grep" "find data/logs/ -name '*.log' -exec grep -h ERROR {} \\; | wc -l" "Combine find with grep"
+run_exercise 14 "Find files in subdirectories only (mindepth)" "data/" "28" "28 files" "numeric" "Use -mindepth 2" "find data/ -mindepth 2 -type f | wc -l" "-mindepth skips top level"
+run_exercise 15 "Count all files recursively" "data/" "28" "28 files" "numeric" "find -type f" "find data/ -type f | wc -l" "Recursive file count"
+
+show_final_score "$COMMAND"
