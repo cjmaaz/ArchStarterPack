@@ -168,7 +168,7 @@ cd practice-environment/practice
 - System: ps, top, df-du, env
 - Utilities: echo, date, xargs, alias, history
 
-📖 **Full Guide:** See [`practice-environment/practice/README.md`](./practice-environment/practice/README.md) for complete documentation.
+📖 **Complete Guide:** [`practice-environment/README.md`](./practice-environment/README.md) - Single comprehensive guide covering all components (practice, demos, data, exercises, and more)
 
 ### **Part 5: Salesforce-Specific**
 
