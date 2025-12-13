@@ -12,7 +12,8 @@ A curated collection of configuration files, setup guides, and optimization scri
   - [Node.js Development Setup](#3-nodejs-development-setup)
   - [Brother Printer Setup](#4-brother-printer-setup)
   - [Shell Commands Mastery Guide](#5-shell-commands-mastery-guide)
-  - [AppImage Setup](#6-appimage-setup)
+  - [Linux Package Management](#6-linux-package-management)
+  - [System Optimization & Maintenance](#7-system-optimization--maintenance)
 - [Project Structure](#project-structure)
 - [Quick Start](#quick-start)
 - [Troubleshooting & FAQ](#troubleshooting--faq)
@@ -474,17 +475,18 @@ cat 04-practice/beginner.md
 
 ---
 
-### 6. AppImage Setup
+### 6. Linux Package Management
 
-**Location:** [`appimage-setup/`](appimage-setup/)
-**Difficulty:** Beginner
-**Time Required:** 10-15 minutes
+**Location:** [`linux-packages/`](linux-packages/)
+**Difficulty:** Beginner to Intermediate
+**Time Required:** 10-30 minutes
 
-Complete guide for running AppImages on Arch-based systems with KDE Plasma. Learn how to choose between AppImage and `.deb` formats, integrate AppImages into your desktop, extract icons, manage updates, and understand security considerations.
+Complete guide for installing and managing applications on Arch-based systems. Learn how to choose between AppImage, Flatpak, and `.deb` formats, integrate applications into your desktop, troubleshoot Flatpak sandboxing issues, and manage package-related problems.
 
 #### What's Included
 
-- **[AppImage Setup Guide](appimage-setup/README.md)** - Comprehensive AppImage guide
+- **[Package Management Guide](linux-packages/README.md)** - Comprehensive AppImage and package installation guide
+- **[Flatpak Sandboxing Issues](linux-packages/FLATPAK_SANDBOXING.md)** - Troubleshooting browser settings and data persistence problems
   - Choosing between AppImage and `.deb` formats
   - Installing FUSE dependency
   - Running and integrating AppImages
@@ -532,7 +534,7 @@ Complete guide for running AppImages on Arch-based systems with KDE Plasma. Lear
 #### Quick Start
 
 ```bash
-cd appimage-setup/
+cd linux-packages/
 
 # Install FUSE dependency
 sudo pacman -S fuse2
@@ -563,6 +565,91 @@ kbuildsycoca6
 
 ---
 
+### 7. System Optimization & Maintenance
+
+**Location:** [`system-optimization/`](system-optimization/)
+**Difficulty:** Beginner to Intermediate
+**Time Required:** 15-60 minutes
+
+Complete guide for optimizing, cleaning, and maintaining CachyOS/Arch-based systems. Remove redundant packages, optimize memory usage, improve system speed, clean caches, and automate maintenance tasks.
+
+#### What's Included
+
+- **[System Optimization Guide](system-optimization/README.md)** - Main guide with decision tree and quick reference
+- **[Package Cleanup Guide](system-optimization/PACKAGE_CLEANUP.md)** - Remove orphaned and unused packages
+- **[Cache Cleanup Guide](system-optimization/CACHE_CLEANUP.md)** - Clean pacman, paru, and flatpak caches
+- **[Memory Optimization Guide](system-optimization/MEMORY_OPTIMIZATION.md)** - Optimize memory usage and swap configuration
+- **[Speed Optimization Guide](system-optimization/SPEED_OPTIMIZATION.md)** - Improve boot time and system performance
+- **[Maintenance Scripts Guide](system-optimization/MAINTENANCE_SCRIPTS.md)** - Automate maintenance tasks
+
+#### Features
+
+🧹 **Package Cleanup:**
+
+- Find and remove orphaned packages
+- Clean unused dependencies
+- Remove AUR packages safely
+- Flatpak runtime cleanup
+
+💾 **Cache Management:**
+
+- Pacman cache cleanup (keeps last 2 versions)
+- Paru cache cleanup
+- Flatpak cache and unused runtimes
+- Systemd journal log rotation
+- Temporary files cleanup
+
+🧠 **Memory Optimization:**
+
+- Monitor memory usage
+- Configure swap and swappiness
+- ZRAM setup for faster virtual memory
+- Memory leak detection
+
+⚡ **Speed Optimization:**
+
+- Boot time analysis and optimization
+- Database optimization (pacman, locate)
+- Filesystem optimization (TRIM, mount options)
+- I/O scheduler tuning
+- Network optimization
+
+🤖 **Automation:**
+
+- Automated maintenance scripts
+- Systemd timer scheduling
+- Cron job examples
+- Health check scripts
+
+#### Quick Start
+
+```bash
+cd system-optimization/
+
+# Check system health
+./scripts/check-optimization.sh
+
+# Clean orphaned packages (interactive)
+sudo ./scripts/cleanup-packages.sh
+
+# Clean caches
+sudo ./scripts/cleanup-cache.sh
+
+# Full system maintenance
+sudo ./scripts/system-maintenance.sh
+```
+
+#### Use Cases
+
+- Free up disk space by removing unused packages and caches
+- Optimize system performance and boot time
+- Improve memory usage and configure swap
+- Automate regular maintenance tasks
+- Monitor system health and optimization status
+- Troubleshoot performance issues
+
+---
+
 ## Project Structure
 
 ```mermaid
@@ -572,7 +659,8 @@ graph TD
     Root --> Module3[node_started/<br/>Node.js Setup]
     Root --> Module4[brother_dcp-t820dw/<br/>Printer Setup]
     Root --> Module5[shell-commands/<br/>Shell Commands Guide]
-    Root --> Module6[appimage-setup/<br/>AppImage Setup]
+    Root --> Module6[linux-packages/<br/>Package Management]
+    Root --> Module7[system-optimization/<br/>System Optimization]
     Root --> Docs[docs/<br/>Documentation]
 
     Module5 --> PracticeEnv[practice-environment/<br/>Interactive Practice]
@@ -591,6 +679,7 @@ graph TD
     style Module4 fill:#f44336,color:#fff
     style Module5 fill:#00bcd4,color:#fff
     style Module6 fill:#795548,color:#fff
+    style Module7 fill:#e91e63,color:#fff
     style PracticeEnv fill:#607d8b,color:#fff
 ```
 
@@ -601,8 +690,21 @@ ArchStarterPack/
 ├── .github/
 │   ├── ISSUE_TEMPLATE.md               # Bug report template
 │   └── PULL_REQUEST_TEMPLATE.md        # PR template
-├── appimage-setup/
-│   └── README.md                       # AppImage setup and integration guide
+├── linux-packages/
+│   ├── README.md                       # Package management and AppImage guide
+│   └── FLATPAK_SANDBOXING.md           # Flatpak sandboxing troubleshooting
+├── system-optimization/
+│   ├── README.md                       # System optimization main guide
+│   ├── PACKAGE_CLEANUP.md              # Package cleanup guide
+│   ├── CACHE_CLEANUP.md                # Cache cleanup guide
+│   ├── MEMORY_OPTIMIZATION.md          # Memory optimization guide
+│   ├── SPEED_OPTIMIZATION.md           # Speed optimization guide
+│   ├── MAINTENANCE_SCRIPTS.md          # Maintenance scripts guide
+│   └── scripts/
+│       ├── check-optimization.sh       # System health check script
+│       ├── cleanup-packages.sh         # Package cleanup script
+│       ├── cleanup-cache.sh            # Cache cleanup script
+│       └── system-maintenance.sh       # Full maintenance script
 ├── brother_dcp-t820dw/
 │   └── BROTHER_PRINTER_SETUP_README.md # Brother printer & scanner guide
 ├── cachy_os_config/
@@ -740,15 +842,19 @@ flowchart TD
     Start --> Need5{Learn Shell<br/>Commands?}
     Need5 -->|Yes| Shell[shell-commands/<br/>383 Exercises]
 
-    Start --> Need6{AppImage<br/>Setup?}
-    Need6 -->|Yes| AppImage[appimage-setup/<br/>AppImage Guide]
+    Start --> Need6{Package<br/>Management?}
+    Need6 -->|Yes| Packages[linux-packages/<br/>Package Management]
+
+    Start --> Need7{System<br/>Optimization?}
+    Need7 -->|Yes| Optimization[system-optimization/<br/>Optimization & Maintenance]
 
     CachyOS --> End([Start Configuration])
     LogiOps --> End
     NodeJS --> End
     Printer --> End
     Shell --> End
-    AppImage --> End
+    Packages --> End
+    Optimization --> End
 
     style Start fill:#e1f5ff
     style End fill:#c8e6c9
@@ -757,7 +863,8 @@ flowchart TD
     style NodeJS fill:#9c27b0,color:#fff
     style Printer fill:#f44336,color:#fff
     style Shell fill:#00bcd4,color:#fff
-    style AppImage fill:#795548,color:#fff
+    style Packages fill:#795548,color:#fff
+    style Optimization fill:#e91e63,color:#fff
 ```
 
 **Module Selection:**
@@ -767,7 +874,8 @@ flowchart TD
 - For Node.js setup: `cd node_started/`
 - For Brother printer setup: `cd brother_dcp-t820dw/`
 - For shell commands learning: `cd shell-commands/`
-- For AppImage setup: `cd appimage-setup/`
+  - For package management: `cd linux-packages/`
+- For system optimization: `cd system-optimization/`
 
 4. **Read the documentation:**
    Each module contains detailed README files with step-by-step instructions.

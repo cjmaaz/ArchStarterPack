@@ -1,12 +1,19 @@
-# Running AppImages on Arch / CachyOS (KDE Plasma)
+# Linux Package Management & Installation
 
-This document explains **which Linux package format to choose**, **how to run AppImages on Arch-based systems**, and **how to properly integrate them into the KDE Application Launcher**.
+**Complete guide to installing and managing applications on Arch-based systems, covering AppImage, Flatpak, and common package installation issues.**
+
+This document explains:
+
+- **Which Linux package format to choose** (AppImage, Flatpak, .deb)
+- **How to run AppImages on Arch-based systems**
+- **How to properly integrate applications into KDE Application Launcher**
+- **Common Flatpak sandboxing issues and solutions**
 
 It is written for:
 
-* Arch Linux & Arch-based distros (CachyOS, EndeavourOS, etc.)
-* KDE Plasma desktop
-* Users downloading apps that offer **`.AppImage` and `.deb`** formats
+- Arch Linux & Arch-based distros (CachyOS, EndeavourOS, etc.)
+- KDE Plasma desktop
+- Users downloading apps that offer **`.AppImage`, `.deb`, or Flatpak** formats
 
 ---
 
@@ -43,8 +50,8 @@ flowchart TD
 
 If an application provides the following options:
 
-* Linux (`.AppImage`)
-* Linux (`.deb`)
+- Linux (`.AppImage`)
+- Linux (`.deb`)
 
 ### ✅ Recommended: **AppImage**
 
@@ -52,16 +59,16 @@ If an application provides the following options:
 
 Reasons:
 
-* `.deb` is for Debian/Ubuntu (`apt`)
-* Arch uses `pacman` and does not support `.deb` natively
-* Converting `.deb` packages is fragile and error-prone
+- `.deb` is for Debian/Ubuntu (`apt`)
+- Arch uses `pacman` and does not support `.deb` natively
+- Converting `.deb` packages is fragile and error-prone
 
 ### Why AppImage Works Well on Arch
 
-* Distro-agnostic
-* Bundles its own dependencies
-* No system installation required
-* Works reliably on rolling-release systems
+- Distro-agnostic
+- Bundles its own dependencies
+- No system installation required
+- Works reliably on rolling-release systems
 
 ---
 
@@ -98,8 +105,8 @@ chmod +x MyApp-x86_64.AppImage
 
 Or via KDE:
 
-* Right-click → Properties → Permissions
-* Enable **"Is executable"**
+- Right-click → Properties → Permissions
+- Enable **"Is executable"**
 
 ---
 
@@ -141,9 +148,9 @@ chmod +x ~/.local/bin/myapp
 
 This ensures:
 
-* Stable paths
-* No accidental deletion
-* Cleaner desktop integration
+- Stable paths
+- No accidental deletion
+- Cleaner desktop integration
 
 ---
 
@@ -183,8 +190,8 @@ Categories=Development;Utility;
 
 ⚠️ Replace:
 
-* `/home/USER` with your actual home path
-* `myapp` with the AppImage filename
+- `/home/USER` with your actual home path
+- `myapp` with the AppImage filename
 
 ---
 
@@ -196,9 +203,9 @@ kbuildsycoca6
 
 The application will now appear in:
 
-* KDE Application Launcher
-* Search
-* Favorites / Task Manager (if pinned)
+- KDE Application Launcher
+- Search
+- Favorites / Task Manager (if pinned)
 
 ---
 
@@ -417,22 +424,22 @@ appimageupdate ~/.local/bin/myapp
 
 If you're using **AppImageLauncher**, it can help manage updates:
 
-* AppImageLauncher detects when you download a new version
-* It can prompt you to replace the old integrated version
-* Updates maintain your desktop integration automatically
+- AppImageLauncher detects when you download a new version
+- It can prompt you to replace the old integrated version
+- Updates maintain your desktop integration automatically
 
 ### Best Practices for Version Management
 
-* **Keep backups**: Always backup before updating
-* **Check release notes**: Review changelogs before updating
-* **Test thoroughly**: Verify the new version works with your workflow
-* **Version naming**: Some users keep multiple versions:
+- **Keep backups**: Always backup before updating
+- **Check release notes**: Review changelogs before updating
+- **Test thoroughly**: Verify the new version works with your workflow
+- **Version naming**: Some users keep multiple versions:
   ```bash
   ~/.local/bin/myapp-v1.0.0
   ~/.local/bin/myapp-v2.0.0
   ```
-* **Update regularly**: Check for updates monthly or when security issues are announced
-* **Verify sources**: Always download from official sources
+- **Update regularly**: Check for updates monthly or when security issues are announced
+- **Verify sources**: Always download from official sources
 
 ### Handling Multiple Versions
 
@@ -472,10 +479,10 @@ gpg --verify myapp.AppImage.sig myapp.AppImage
 
 ### Download from Trusted Sources
 
-* **Official websites**: Always download from the application's official website
-* **GitHub Releases**: Verify you're on the correct repository
-* **Avoid third-party mirrors**: Unless you trust the mirror operator
-* **Check URLs**: Verify download URLs match the official domain
+- **Official websites**: Always download from the application's official website
+- **GitHub Releases**: Verify you're on the correct repository
+- **Avoid third-party mirrors**: Unless you trust the mirror operator
+- **Check URLs**: Verify download URLs match the official domain
 
 ### Verify File Integrity
 
@@ -496,9 +503,9 @@ If checksums don't match, **do not run** the AppImage.
 
 ### Run with Appropriate Permissions
 
-* **User-level execution**: AppImages run as your user, not root
-* **Avoid running as root**: Never use `sudo` with AppImages unless absolutely necessary
-* **Check file permissions**: Ensure only you can execute:
+- **User-level execution**: AppImages run as your user, not root
+- **Avoid running as root**: Never use `sudo` with AppImages unless absolutely necessary
+- **Check file permissions**: Ensure only you can execute:
   ```bash
   ls -l ~/.local/bin/myapp
   # Should show: -rwxr-xr-x (owner executable, others not)
@@ -508,44 +515,44 @@ If checksums don't match, **do not run** the AppImage.
 
 AppImages are **not sandboxed** by default. They have access to:
 
-* Your home directory
-* Network access
-* System resources (CPU, memory, GPU)
-* Other running applications
+- Your home directory
+- Network access
+- System resources (CPU, memory, GPU)
+- Other running applications
 
 **Considerations:**
 
-* **Firewall**: Use a firewall to restrict network access if needed
-* **AppArmor/SELinux**: Can be configured to restrict AppImage behavior (advanced)
-* **Isolated execution**: Run in a VM or container for untrusted applications
-* **Review permissions**: Check what the application requests access to
+- **Firewall**: Use a firewall to restrict network access if needed
+- **AppArmor/SELinux**: Can be configured to restrict AppImage behavior (advanced)
+- **Isolated execution**: Run in a VM or container for untrusted applications
+- **Review permissions**: Check what the application requests access to
 
 ### AppImageLauncher Security Features
 
 AppImageLauncher provides some security benefits:
 
-* **Centralized management**: All AppImages in one location (`~/Applications/`)
-* **Verification prompts**: Asks before integrating new AppImages
-* **Isolation**: Can help prevent accidental execution of malicious files
+- **Centralized management**: All AppImages in one location (`~/Applications/`)
+- **Verification prompts**: Asks before integrating new AppImages
+- **Isolation**: Can help prevent accidental execution of malicious files
 
 ### When to Be Cautious
 
 **Red flags:**
 
-* Unsigned AppImages from unknown sources
-* AppImages downloaded from file-sharing sites
-* Checksums don't match
-* AppImages requesting root access unnecessarily
-* AppImages from unverified GitHub forks
-* AppImages with unusual file sizes (too small or suspiciously large)
+- Unsigned AppImages from unknown sources
+- AppImages downloaded from file-sharing sites
+- Checksums don't match
+- AppImages requesting root access unnecessarily
+- AppImages from unverified GitHub forks
+- AppImages with unusual file sizes (too small or suspiciously large)
 
 **Safe practices:**
 
-* Research the application before downloading
-* Check GitHub stars, issues, and community activity
-* Read user reviews and forum discussions
-* Start with well-known applications
-* Use AppImageLauncher for better management
+- Research the application before downloading
+- Check GitHub stars, issues, and community activity
+- Read user reviews and forum discussions
+- Start with well-known applications
+- Use AppImageLauncher for better management
 
 ### Reporting Security Issues
 
@@ -564,11 +571,11 @@ Both Flatpak and AppImage are modern Linux application distribution formats. Her
 
 ### Distribution Model
 
-| Aspect | Flatpak | AppImage |
-|--------|---------|----------|
-| **Distribution** | Centralized repositories (Flathub, etc.) | Direct download from developers |
-| **Discovery** | Via software centers and `flatpak search` | Manual download from websites |
-| **Installation** | `flatpak install app` | Download and make executable |
+| Aspect           | Flatpak                                   | AppImage                        |
+| ---------------- | ----------------------------------------- | ------------------------------- |
+| **Distribution** | Centralized repositories (Flathub, etc.)  | Direct download from developers |
+| **Discovery**    | Via software centers and `flatpak search` | Manual download from websites   |
+| **Installation** | `flatpak install app`                     | Download and make executable    |
 
 **Flatpak:** Applications are distributed through repositories like Flathub, making discovery and installation easier.
 
@@ -576,11 +583,11 @@ Both Flatpak and AppImage are modern Linux application distribution formats. Her
 
 ### Dependencies
 
-| Aspect | Flatpak | AppImage |
-|--------|---------|----------|
-| **Runtime** | Shared runtimes (e.g., `org.freedesktop.Platform`) | Bundled with application |
-| **Size** | Smaller per-app (shared dependencies) | Larger per-app (self-contained) |
-| **Updates** | Runtime updates benefit all apps | Each app updates independently |
+| Aspect      | Flatpak                                            | AppImage                        |
+| ----------- | -------------------------------------------------- | ------------------------------- |
+| **Runtime** | Shared runtimes (e.g., `org.freedesktop.Platform`) | Bundled with application        |
+| **Size**    | Smaller per-app (shared dependencies)              | Larger per-app (self-contained) |
+| **Updates** | Runtime updates benefit all apps                   | Each app updates independently  |
 
 **Flatpak:** Uses shared runtimes, reducing disk space. Multiple apps share the same runtime.
 
@@ -588,11 +595,11 @@ Both Flatpak and AppImage are modern Linux application distribution formats. Her
 
 ### Updates
 
-| Aspect | Flatpak | AppImage |
-|--------|---------|----------|
-| **Method** | `flatpak update` (automatic) | Manual download and replace |
-| **Frequency** | Centralized, regular updates | Per-developer schedule |
-| **Ease** | Single command updates all apps | Manual per-application |
+| Aspect        | Flatpak                         | AppImage                    |
+| ------------- | ------------------------------- | --------------------------- |
+| **Method**    | `flatpak update` (automatic)    | Manual download and replace |
+| **Frequency** | Centralized, regular updates    | Per-developer schedule      |
+| **Ease**      | Single command updates all apps | Manual per-application      |
 
 **Flatpak:** Updates are centralized and can be automated. One command updates all Flatpak applications.
 
@@ -602,24 +609,24 @@ Both Flatpak and AppImage are modern Linux application distribution formats. Her
 
 **Example: A text editor**
 
-* **Flatpak:** ~50-100 MB (shares runtime with other apps)
-* **AppImage:** ~100-200 MB (includes all dependencies)
+- **Flatpak:** ~50-100 MB (shares runtime with other apps)
+- **AppImage:** ~100-200 MB (includes all dependencies)
 
 **Total for 10 applications:**
 
-* **Flatpak:** ~500 MB (shared runtime) + ~50 MB per app = ~1 GB
-* **AppImage:** ~100-200 MB per app = ~1-2 GB
+- **Flatpak:** ~500 MB (shared runtime) + ~50 MB per app = ~1 GB
+- **AppImage:** ~100-200 MB per app = ~1-2 GB
 
 **Winner:** Flatpak for multiple applications, AppImage for single portable apps.
 
 ### Desktop Integration
 
-| Aspect | Flatpak | AppImage |
-|--------|---------|----------|
-| **Menu Integration** | Automatic | Manual (`.desktop` files) |
-| **Icons** | Automatic | Manual extraction |
-| **MIME Types** | Automatic | Manual configuration |
-| **File Associations** | Automatic | Manual setup |
+| Aspect                | Flatpak   | AppImage                  |
+| --------------------- | --------- | ------------------------- |
+| **Menu Integration**  | Automatic | Manual (`.desktop` files) |
+| **Icons**             | Automatic | Manual extraction         |
+| **MIME Types**        | Automatic | Manual configuration      |
+| **File Associations** | Automatic | Manual setup              |
 
 **Flatpak:** Full automatic integration with desktop environments.
 
@@ -627,12 +634,12 @@ Both Flatpak and AppImage are modern Linux application distribution formats. Her
 
 ### Security & Sandboxing
 
-| Aspect | Flatpak | AppImage |
-|--------|---------|----------|
-| **Sandboxing** | Yes (bubblewrap) | No (runs with user permissions) |
-| **Permissions** | Granular control | Full user access |
-| **Isolation** | Strong isolation | No isolation |
-| **Security Model** | Restrictive by default | Permissive by default |
+| Aspect             | Flatpak                | AppImage                        |
+| ------------------ | ---------------------- | ------------------------------- |
+| **Sandboxing**     | Yes (bubblewrap)       | No (runs with user permissions) |
+| **Permissions**    | Granular control       | Full user access                |
+| **Isolation**      | Strong isolation       | No isolation                    |
+| **Security Model** | Restrictive by default | Permissive by default           |
 
 **Flatpak:** Applications run in sandboxes with restricted access. Permissions can be managed via `flatpak override`.
 
@@ -642,36 +649,36 @@ Both Flatpak and AppImage are modern Linux application distribution formats. Her
 
 #### Choose **Flatpak** when:
 
-* You want automatic updates
-* You install many applications
-* You prefer centralized management
-* Security/sandboxing is important
-* You want easy discovery via software centers
-* You're okay with repository dependency
+- You want automatic updates
+- You install many applications
+- You prefer centralized management
+- Security/sandboxing is important
+- You want easy discovery via software centers
+- You're okay with repository dependency
 
 #### Choose **AppImage** when:
 
-* You need portable applications (USB drive, network share)
-* You want to run without installation
-* You prefer direct developer distribution
-* You need specific versions not in Flatpak repos
-* You want to test applications without system changes
-* You're on a system without Flatpak support
+- You need portable applications (USB drive, network share)
+- You want to run without installation
+- You prefer direct developer distribution
+- You need specific versions not in Flatpak repos
+- You want to test applications without system changes
+- You're on a system without Flatpak support
 
 ### Arch-Specific Considerations
 
 **Both work well on Arch:**
 
-* **Flatpak:** Available in official repos (`pacman -S flatpak`)
-* **AppImage:** Works out-of-the-box with `fuse2` installed
-* **Performance:** Both perform well on Arch
-* **Integration:** Both integrate with KDE Plasma
+- **Flatpak:** Available in official repos (`pacman -S flatpak`)
+- **AppImage:** Works out-of-the-box with `fuse2` installed
+- **Performance:** Both perform well on Arch
+- **Integration:** Both integrate with KDE Plasma
 
 **Recommendation:**
 
-* Use **Flatpak** for regularly-used applications that benefit from automatic updates
-* Use **AppImage** for portable tools, one-off applications, or when you need specific versions
-* Many users use both formats depending on the application
+- Use **Flatpak** for regularly-used applications that benefit from automatic updates
+- Use **AppImage** for portable tools, one-off applications, or when you need specific versions
+- Many users use both formats depending on the application
 
 ### Hybrid Approach
 
@@ -704,14 +711,14 @@ paru -S appimagelauncher-bin
 
 Recommended choice:
 
-* `appimagelauncher-bin` → precompiled, stable, fastest install
+- `appimagelauncher-bin` → precompiled, stable, fastest install
 
 ### What AppImageLauncher Does
 
-* Detects AppImages on first run
-* Offers **"Integrate and run"**
-* Automatically creates menu entries and icons
-* Moves AppImages to a managed location
+- Detects AppImages on first run
+- Offers **"Integrate and run"**
+- Automatically creates menu entries and icons
+- Moves AppImages to a managed location
 
 This is optional but convenient.
 
@@ -721,24 +728,24 @@ This is optional but convenient.
 
 ### Best Practices on Arch/KDE
 
-* Prefer **AppImage** over `.deb`
-* Install `fuse2`
-* Store AppImages in `~/.local/bin`
-* Use `.desktop` files for menu integration
-* Extract and use application icons for better integration
-* Keep backups before updating AppImages
-* Verify checksums and download from trusted sources
-* Use AppImageLauncher if managing many AppImages
-* Consider Flatpak for applications that benefit from automatic updates
+- Prefer **AppImage** over `.deb`
+- Install `fuse2`
+- Store AppImages in `~/.local/bin`
+- Use `.desktop` files for menu integration
+- Extract and use application icons for better integration
+- Keep backups before updating AppImages
+- Verify checksums and download from trusted sources
+- Use AppImageLauncher if managing many AppImages
+- Consider Flatpak for applications that benefit from automatic updates
 
 ### Mental Model
 
-* AppImage = portable executable
-* `.desktop` file = menu integration
-* FUSE = runtime requirement
-* Icon extraction = better visual integration
-* Manual updates = developer control
-* Security = user responsibility
+- AppImage = portable executable
+- `.desktop` file = menu integration
+- FUSE = runtime requirement
+- Icon extraction = better visual integration
+- Manual updates = developer control
+- Security = user responsibility
 
 Once set up, AppImages behave like native applications without touching system packages.
 
@@ -746,6 +753,6 @@ Once set up, AppImages behave like native applications without touching system p
 
 This README is suitable for:
 
-* Personal reference
-* Public repositories
-* New Linux users learning Arch/KDE workflows
+- Personal reference
+- Public repositories
+- New Linux users learning Arch/KDE workflows
