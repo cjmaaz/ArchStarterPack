@@ -1,3 +1,7 @@
+TODO: Also add the step to install or update the nvm, url below: note there can be newer version ask to check at repo (https://github.com/nvm-sh/nvm?tab=readme-ov-file#installing-and-updating):
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
+
+
 README — Minimal setup: Bare minimal config.fish + nvm function for Fish (Arch pacman nvm)
 
 Goal
