@@ -15,8 +15,9 @@
 ### Q: Do I need to use all the modules?
 
 **A:** No! Each module is independent. You can use:
+
 - Only CachyOS configuration for system optimization
-- Only LogiOps for mouse configuration  
+- Only LogiOps for mouse configuration
 - Only Node.js setup for development
 - Any combination you need
 
@@ -25,6 +26,7 @@
 ### Q: Will these configurations work on my system?
 
 **A:** The configurations are tested on ASUS X507UF hardware running CachyOS, but they should work on:
+
 - ✅ Any Arch-based distribution (Manjaro, EndeavourOS, etc.)
 - ✅ Systems with similar Intel + NVIDIA Optimus setups
 - ⚠️ Other hardware with modifications
@@ -37,12 +39,14 @@ Run `./check-prerequisites.sh` to verify compatibility.
 ### Q: Is this safe for beginners?
 
 **A:** The guides are written to be beginner-friendly with:
+
 - Detailed explanations
 - Safety checks before critical operations
 - Backup instructions
 - Rollback procedures
 
 However, system configuration always carries some risk. We recommend:
+
 1. Reading the full guide before starting
 2. Creating backups
 3. Testing on non-critical systems first
@@ -74,6 +78,7 @@ sudo cp /etc/mkinitcpio.conf /etc/mkinitcpio.conf.backup
 ### Q: How much will battery life improve?
 
 **A:** Results vary by usage, but typical improvements:
+
 - **Light usage:** 20-30% longer battery life
 - **Web browsing:** 15-25% improvement
 - **Video playback:** 10-20% improvement
@@ -96,9 +101,10 @@ The configurations optimize power management but don't perform miracles. Battery
 
 ### Q: Why are there two NVIDIA guides (main and deprecated)?
 
-**A:** 
+**A:**
+
 - **Main guide** (`asus_x_507_uf_readme.md`): Recommended for most users, maintains display flexibility
-- **Deprecated guide** (`asus_x_507_uf_nvidia_deprecated.md`): For users who *only* use external monitors and want to completely disable the internal screen
+- **Deprecated guide** (`asus_x_507_uf_nvidia_deprecated.md`): For users who _only_ use external monitors and want to completely disable the internal screen
 
 Use the main guide unless you have a specific reason to use the deprecated one.
 
@@ -115,6 +121,7 @@ Use the main guide unless you have a specific reason to use the deprecated one.
 ### Q: Which Logitech mice are supported?
 
 **A:** LogiOps supports many Logitech mice, including:
+
 - MX Master series (3S, 3, 2S, 1)
 - MX Anywhere series
 - MX Ergo
@@ -127,6 +134,7 @@ Check the [LogiOps GitHub](https://github.com/PixlOne/logiops) for full compatib
 ### Q: My mouse model isn't MX Master 3S. Can I still use this?
 
 **A:** Yes! The configuration file works as a template. You'll need to:
+
 1. Change the device name to match your mouse
 2. Find the CID codes for your mouse buttons (see readme.md)
 3. Adjust button mappings as needed
@@ -135,7 +143,8 @@ Check the [LogiOps GitHub](https://github.com/PixlOne/logiops) for full compatib
 
 ### Q: How do I find CID codes for my mouse buttons?
 
-**A:** 
+**A:**
+
 ```bash
 # Stop the service
 sudo systemctl stop logid
@@ -151,6 +160,7 @@ sudo logid -v
 ### Q: The gestures aren't working. What's wrong?
 
 **A:** Common issues:
+
 1. **Wrong CID codes:** Verify with `sudo logid -v`
 2. **Config syntax error:** Test with `sudo logid -t`
 3. **KDE shortcuts conflict:** Check System Settings → Shortcuts
@@ -169,6 +179,7 @@ sudo logid -v
 ### Q: Why not use fisher or bass for Fish + NVM?
 
 **A:** Our minimal approach:
+
 - ✅ No third-party plugin managers
 - ✅ Works with system package manager (pacman)
 - ✅ Easier to understand and maintain
@@ -182,6 +193,7 @@ You can use fisher/bass if you prefer, but this approach is simpler.
 ### Q: Does this work in VSCode's integrated terminal?
 
 **A:** Yes! The configuration is designed to work in:
+
 - Native Fish terminals
 - VSCode integrated terminal
 - Alacritty, Kitty, etc.
@@ -192,7 +204,8 @@ If you have issues, see nvm-fish-readme.md troubleshooting section.
 
 ### Q: How do I switch Node versions?
 
-**A:** 
+**A:**
+
 ```bash
 # List available versions
 nvm list-remote
@@ -212,6 +225,7 @@ nvm alias default 18
 ### Q: Can I use this with other shells (bash, zsh)?
 
 **A:** This module is specifically for Fish shell. For bash/zsh, use standard NVM installation:
+
 ```bash
 # Standard NVM works directly with bash/zsh
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
@@ -221,13 +235,16 @@ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
 
 ### Q: The `node` command is not found after setup. Why?
 
-**A:** 
+**A:**
+
 1. Ensure you've set a default Node version:
+
    ```bash
    bash -ic 'source /usr/share/nvm/init-nvm.sh && nvm install --lts && nvm alias default lts/*'
    ```
 
 2. Reload Fish:
+
    ```bash
    exec fish
    ```
@@ -244,7 +261,8 @@ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
 
 ### Q: What's the difference between TLP and thermald?
 
-**A:** 
+**A:**
+
 - **TLP:** Manages power profiles, CPU governors, USB autosuspend, battery thresholds (power management)
 - **thermald:** Manages thermal zones and cooling devices (thermal management)
 
@@ -254,7 +272,8 @@ They work together: TLP optimizes power, thermald keeps temperatures safe.
 
 ### Q: What's the difference between Intel P-State and CPUFreq?
 
-**A:** 
+**A:**
+
 - **Intel P-State:** Modern Intel driver (6th gen+), hardware-managed frequencies, better efficiency
 - **CPUFreq:** Legacy driver, software-managed frequencies, works on older CPUs
 
@@ -265,6 +284,7 @@ Use P-State on modern Intel CPUs (Skylake and newer).
 ### Q: Do I need to reboot after applying configurations?
 
 **A:** Usually yes, especially for:
+
 - GRUB/kernel parameter changes
 - Graphics driver changes
 - Power management service changes
@@ -276,6 +296,7 @@ Some settings can be applied without rebooting (like TLP configs), but rebooting
 ### Q: Can I mix-and-match settings from different guides?
 
 **A:** Generally yes, but be careful with:
+
 - ❌ Conflicting kernel parameters
 - ❌ Overlapping power management (TLP vs power-profiles-daemon)
 - ✅ Combining mouse config with system optimization
@@ -289,7 +310,8 @@ When in doubt, ask in the Issues section.
 
 ### Q: My system won't boot after changing GRUB settings. Help!
 
-**A:** 
+**A:**
+
 1. At GRUB menu, press `e` to edit boot entry
 2. Remove the problematic parameters from the line starting with `linux`
 3. Press `Ctrl+X` to boot
@@ -305,7 +327,8 @@ See [TROUBLESHOOTING.md](TROUBLESHOOTING.md) for more details.
 
 ### Q: How do I get help with a specific issue?
 
-**A:** 
+**A:**
+
 1. Check [TROUBLESHOOTING.md](TROUBLESHOOTING.md)
 2. Run diagnostics (shows executed commands):
    - Full system: `./cachy_os_config/diagnostics.sh`
@@ -322,7 +345,8 @@ See [TROUBLESHOOTING.md](TROUBLESHOOTING.md) for more details.
 
 ### Q: The configurations made things worse. What should I do?
 
-**A:** 
+**A:**
+
 1. **Don't panic!** Everything is reversible
 2. Follow the rollback instructions in the guide you used
 3. Restore from backups:
@@ -340,6 +364,7 @@ See [TROUBLESHOOTING.md](TROUBLESHOOTING.md) for more details.
 ### Q: Can I contribute my configurations for different hardware?
 
 **A:** Yes! We welcome contributions for:
+
 - Different laptop models
 - Different mice/peripherals
 - Different desktop environments
@@ -352,9 +377,10 @@ See [CONTRIBUTING.md](../CONTRIBUTING.md) for guidelines.
 ### Q: I found a bug or error. Where do I report it?
 
 **A:** Open an issue on GitHub with:
+
 - Description of the bug
 - Steps to reproduce
-- Expected vs actual behavior  
+- Expected vs actual behavior
 - Your system information (run `./check-prerequisites.sh`)
 
 ---
@@ -362,6 +388,7 @@ See [CONTRIBUTING.md](../CONTRIBUTING.md) for guidelines.
 ### Q: Can I translate the guides to other languages?
 
 **A:** Absolutely! Translations are welcome. Please:
+
 1. Fork the repository
 2. Create a language directory (e.g., `docs/es/` for Spanish)
 3. Translate the documentation
@@ -374,6 +401,7 @@ See [CONTRIBUTING.md](../CONTRIBUTING.md) for guidelines.
 ### Q: Can I use these configurations in my own projects?
 
 **A:** Yes! This project is open source under the MIT License. You can:
+
 - ✅ Use configurations in personal/commercial projects
 - ✅ Modify and adapt to your needs
 - ✅ Redistribute with attribution
@@ -403,7 +431,8 @@ paru -Ss brother
 
 ### Q: Should I use WiFi or USB for my printer?
 
-**A:** 
+**A:**
+
 - **WiFi (Recommended):** More flexible, can print from any device on network
 - **USB:** More reliable, faster for large jobs, good for single computer
 
@@ -413,7 +442,8 @@ You can set up both and choose based on needs.
 
 ### Q: Why use digiKam instead of Simple Scan?
 
-**A:** 
+**A:**
+
 - **Simple Scan:** Basic scanning, quick and simple
 - **digiKam:** Professional photo management, editing, organization, tagging, face detection, RAW support
 
@@ -427,11 +457,38 @@ Use Simple Scan for quick scans, digiKam for photo library management.
 
 ---
 
+## Pi-hole Module Questions
+
+### Q: Do I need a secondary DNS in DHCP?
+
+**A:** No. Set **only** the Pi-hole IP as DHCP DNS. A secondary DNS lets clients bypass Pi-hole. Redundancy belongs inside Pi-hole via multiple upstreams (e.g., Unbound + Cloudflare) not in DHCP.
+
+---
+
+### Q: How do I use Pi-hole with Unbound?
+
+**A:** Install Unbound on the Pi, listen on `127.0.0.1#5335`, then set Pi-hole’s upstream DNS to `127.0.0.1#5335`. See [`pi-hole/docs/unbound.md`](../pi-hole/docs/unbound.md) for the config snippet and diagram.
+
+---
+
+### Q: Is Pi-hole safe with IPv6 enabled?
+
+**A:** Yes, if the router advertises **only** Pi-hole as IPv6 DNS (RDNSS/DHCPv6). Ensure Pi-hole has a stable IPv6, and don’t hand out public IPv6 resolvers. See [`pi-hole/docs/ipv6.md`](../pi-hole/docs/ipv6.md).
+
+---
+
+### Q: Some apps still show ads—are they bypassing Pi-hole?
+
+**A:** Likely. Block outbound DNS (53/853) to anything except Pi-hole, and disable router DoH/DoT. For stubborn clients/browsers, enforce policies or block common DoH endpoints. See [`pi-hole/docs/hardcoded-dns.md`](../pi-hole/docs/hardcoded-dns.md).
+
+---
+
 ## Shell Commands Module Questions
 
 ### Q: What is the Shell Commands module?
 
 **A:** The Shell Commands module is a comprehensive learning guide covering Unix/Linux command-line tools. It includes:
+
 - 80+ hands-on practice exercises (beginner → expert)
 - 40+ command tutorials with real-world examples
 - Piping patterns and command combinations
@@ -444,7 +501,8 @@ It's designed for self-paced learning over 4-6 weeks.
 
 ### Q: Do I need shell knowledge to use ArchStarterPack?
 
-**A:** 
+**A:**
+
 - **For configuration modules (CachyOS, LogiOps, Node.js, Printer):** Basic copy-paste command knowledge is enough. The guides provide all commands.
 - **For advanced customization:** Shell command knowledge is helpful but not required.
 - **For the Shell Commands module itself:** No prerequisites! It starts from fundamentals.
@@ -456,6 +514,7 @@ The Shell Commands module is an optional learning resource to enhance your Linux
 ### Q: Can I use the Shell Commands module on non-Arch systems?
 
 **A:** **Yes!** The shell commands are universal across all Unix/Linux systems:
+
 - ✅ Works on: Ubuntu, Debian, Fedora, CentOS, macOS, WSL, etc.
 - ✅ Generic Linux examples work everywhere
 - ⚠️ Salesforce CLI examples require SF CLI installation (works on any OS)
@@ -467,12 +526,14 @@ Only the system configuration modules (CachyOS, LogiOps) are Arch-specific.
 
 ### Q: How long does it take to complete the Shell Commands course?
 
-**A:** 
+**A:**
+
 - **Minimum:** 4 weeks (1-2 hours/week) - Following the structured learning path
 - **Comfortable:** 6 weeks - With thorough practice and experimentation
 - **Self-paced:** As long as you need - Use as reference material
 
 **Breakdown:**
+
 - Week 1: Basics and beginner exercises (6-8 hours)
 - Week 2: Core commands and intermediate exercises (6-8 hours)
 - Week 3: Combinations and advanced exercises (6-8 hours)
@@ -484,7 +545,8 @@ You can also use it as a quick reference without completing all exercises.
 
 ### Q: What's the difference between the Shell Commands module and shell scripting?
 
-**A:** 
+**A:**
+
 - **Shell Commands Module:** Learn individual commands and how to combine them interactively
 - **Shell Scripting:** Write automated scripts (.sh files) using those commands
 
@@ -495,6 +557,7 @@ The Shell Commands module teaches you the building blocks. Once you master the c
 ### Q: Is this module useful for Salesforce developers?
 
 **A:** **Absolutely!** It includes Salesforce-specific sections:
+
 - SF CLI integration patterns (deployments, queries, tests)
 - Apex log analysis techniques
 - Deployment automation scripts
@@ -508,6 +571,7 @@ Plus, shell command knowledge is essential for CI/CD pipelines, log analysis, an
 ### Q: Can I contribute my own command patterns?
 
 **A:** Yes! We welcome contributions:
+
 1. Fork the repository
 2. Add your patterns to relevant sections
 3. Follow the existing format (examples + explanations)
@@ -520,6 +584,7 @@ See [CONTRIBUTING.md](../CONTRIBUTING.md) for guidelines.
 ### Q: Do I need to complete all 80 exercises?
 
 **A:** No! The exercises are optional practice:
+
 - **Selective approach:** Pick exercises relevant to your work
 - **Complete approach:** Do all 80 to master the material
 - **Reference approach:** Use exercises as examples when needed
@@ -531,12 +596,14 @@ However, completing exercises significantly improves retention and practical ski
 ### Q: What if I get stuck on an exercise?
 
 **A:** Each practice section includes:
+
 1. Clear problem descriptions
 2. Expected output examples
 3. Hints for complex problems
 4. Solutions (check the solutions file)
 
 If still stuck:
+
 - Search for the command's man page: `man grep`
 - Check the command's tutorial in `02-commands/`
 - Review the patterns in `03-combinations/`
@@ -547,6 +614,7 @@ If still stuck:
 ### Q: Are the examples real-world or just theoretical?
 
 **A:** **Real-world!** Examples include:
+
 - Actual Salesforce CLI workflows
 - Production log analysis patterns
 - Docker container monitoring
@@ -570,6 +638,7 @@ All patterns are used in production environments.
 ---
 
 **Pro Tip:** Before asking a question, try running:
+
 ```bash
 ./check-prerequisites.sh                           # Check system compatibility
 ./cachy_os_config/diagnostics.sh --redact          # Full system diagnostics (personal info masked)

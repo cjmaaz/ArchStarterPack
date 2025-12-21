@@ -15,6 +15,7 @@ This guide covers common issues encountered when using ArchStarterPack configura
 - [LogiOps/Mouse Issues](#logiops mouse-issues)
 - [Node.js/NVM Issues](#nodejsnvm-issues)
 - [General System Issues](#general-system-issues)
+- [Pi-hole/DNS Issues](#pi-holedns-issues)
 - [Recovery Procedures](#recovery-procedures)
 
 ---
@@ -26,6 +27,7 @@ This guide covers common issues encountered when using ArchStarterPack configura
 **Symptoms:** Black screen, kernel panic, or system hangs during boot
 
 **Causes:**
+
 - Incorrect kernel parameters
 - Missing initramfs modules
 - Conflicting driver settings
@@ -33,12 +35,14 @@ This guide covers common issues encountered when using ArchStarterPack configura
 **Solutions:**
 
 **Quick Fix (Boot once):**
+
 1. At GRUB menu, press `e` to edit
 2. Find line starting with `linux` or `linuxefi`
 3. Remove recently added parameters (especially `video=`, `nvidia_drm.modeset`, `i915.disable_display`)
 4. Press `Ctrl+X` to boot
 
 **Permanent Fix:**
+
 ```bash
 # Restore GRUB backup
 sudo cp /etc/default/grub.backup.* /etc/default/grub
@@ -57,6 +61,7 @@ sudo reboot
 **Symptoms:** System boots directly without showing GRUB menu
 
 **Solution:**
+
 ```bash
 # Edit GRUB config
 sudo nano /etc/default/grub
@@ -80,11 +85,13 @@ sudo grub-mkconfig -o /boot/grub/grub.cfg
 **Symptoms:** System shows kernel panic message
 
 **Common Causes:**
+
 1. Missing kernel modules in initramfs
 2. Wrong root filesystem parameter
 3. Corrupted initramfs
 
 **Solution:**
+
 ```bash
 # Boot from live USB
 
@@ -117,11 +124,13 @@ reboot
 **Symptoms:** Screen goes black after login or during boot
 
 **Causes:**
+
 - `nvidia_drm.modeset=1` conflicts
 - Missing NVIDIA modules in initramfs
 - Display manager issues
 
 **Solution 1 - Remove KMS:**
+
 ```bash
 # Edit GRUB
 sudo nano /etc/default/grub
@@ -136,6 +145,7 @@ sudo reboot
 ```
 
 **Solution 2 - Rebuild initramfs:**
+
 ```bash
 # Check if NVIDIA modules are loaded early
 cat /etc/mkinitcpio.conf.d/nvidia.conf
@@ -157,6 +167,7 @@ sudo reboot
 **Cause:** Applied `video=eDP-1:d` parameter
 
 **Solution:**
+
 ```bash
 # Edit GRUB
 sudo nano /etc/default/grub
@@ -182,6 +193,7 @@ sudo reboot
 **Symptoms:** Horizontal lines/tearing during video or scrolling
 
 **Solution for Intel:**
+
 ```bash
 # Create compositor config
 mkdir -p ~/.config
@@ -193,6 +205,7 @@ vsync = true;
 ```
 
 **Solution for NVIDIA:**
+
 ```bash
 # Create Xorg config
 sudo nano /etc/X11/xorg.conf.d/20-nvidia.conf
@@ -222,6 +235,7 @@ EndSection
 **Cause:** Both services try to control power management
 
 **Solution:**
+
 ```bash
 # Check what's running
 systemctl status tlp
@@ -247,6 +261,7 @@ sudo systemctl enable --now power-profiles-daemon
 **This is normal!** The configuration limits charge to extend battery lifespan.
 
 **To change thresholds:**
+
 ```bash
 sudo nano /etc/tlp.d/01-custom.conf
 
@@ -268,11 +283,13 @@ sudo tlp start
 **Symptoms:** CPU stuck at low frequencies even under load
 
 **Check current governor:**
+
 ```bash
 cpupower frequency-info
 ```
 
 **Fix:**
+
 ```bash
 # On AC power, set performance
 sudo cpupower frequency-set -g performance
@@ -295,6 +312,7 @@ echo 0 | sudo tee /sys/devices/system/cpu/intel_pstate/no_turbo
 **Symptoms:** High temperatures, thermal throttling
 
 **Check temperatures:**
+
 ```bash
 sensors
 watch -n1 sensors
@@ -303,6 +321,7 @@ watch -n1 sensors
 **Solutions:**
 
 1. **Verify thermald is running:**
+
    ```bash
    systemctl status thermald
    sudo systemctl enable --now thermald
@@ -313,10 +332,11 @@ watch -n1 sensors
 3. **Repaste thermal compound** (if old laptop)
 
 4. **Limit max CPU frequency:**
+
    ```bash
    # Temporary
    sudo cpupower frequency-set --max 3.0GHz
-   
+
    # Permanent - add to /etc/tlp.d/01-custom.conf:
    CPU_MAX_PERF_ON_AC=80
    CPU_MAX_PERF_ON_BAT=50
@@ -331,12 +351,14 @@ watch -n1 sensors
 **Symptoms:** `nvidia-smi` shows error, no NVIDIA modules loaded
 
 **Check:**
+
 ```bash
 lsmod | grep nvidia
 dmesg | grep -i nvidia
 ```
 
 **Solution:**
+
 ```bash
 # Reinstall NVIDIA driver
 sudo pacman -S nvidia-dkms nvidia-utils
@@ -358,12 +380,14 @@ sudo reboot
 **Symptoms:** Low FPS, sluggish graphics
 
 **Check GPU is being used:**
+
 ```bash
 nvidia-smi
 glxinfo | grep "OpenGL vendor"
 ```
 
 **Solution:**
+
 ```bash
 # Enable NVIDIA performance mode
 sudo nvidia-smi -pm 1
@@ -385,6 +409,7 @@ sudo nano /etc/environment
 **Symptoms:** `systemctl status logid` shows failed
 
 **Check logs:**
+
 ```bash
 journalctl -u logid -b
 ```
@@ -392,18 +417,22 @@ journalctl -u logid -b
 **Common causes:**
 
 1. **Config syntax error:**
+
    ```bash
    # Test configuration
    sudo logid -t
    ```
+
    Fix any syntax errors in `/etc/logid.cfg`
 
 2. **Mouse not detected:**
+
    ```bash
    # Run in debug mode
    sudo systemctl stop logid
    sudo logid -v
    ```
+
    Ensure mouse is powered on and connected
 
 3. **Missing dependencies:**
@@ -421,6 +450,7 @@ journalctl -u logid -b
 **Symptoms:** Button presses don't do what config specifies
 
 **Debug:**
+
 ```bash
 # Stop service
 sudo systemctl stop logid
@@ -432,6 +462,7 @@ sudo logid -v
 ```
 
 **Solution:**
+
 - Update CID codes in `/etc/logid.cfg` to match observed values
 - Verify button syntax in config
 - Check that keyboard shortcuts exist in your DE
@@ -443,10 +474,12 @@ sudo logid -v
 **Symptoms:** Swipes don't trigger actions
 
 **Check:**
+
 1. **KDE shortcuts exist:**
    System Settings → Shortcuts → Global Shortcuts
-   
+
 2. **Gesture button CID is correct:**
+
    ```bash
    sudo logid -v
    # Press gesture button and note CID
@@ -456,6 +489,7 @@ sudo logid -v
    Gestures need `mode = "OnRelease"` typically
 
 **Example fix:**
+
 ```bash
 sudo nano /etc/logid.cfg
 
@@ -487,6 +521,7 @@ sudo systemctl restart logid
 **Symptoms:** After Fish setup, `node` isn't recognized
 
 **Solution:**
+
 ```bash
 # Load NVM manually
 nvm-load
@@ -509,6 +544,7 @@ exec fish
 **Symptoms:** VSCode integrated terminal shows `csource` or `bass` errors
 
 **Solution:**
+
 ```bash
 # Check for conflicting config
 cat ~/.config/fish/config.fish
@@ -529,6 +565,7 @@ cat ~/.config/fish/functions/nvm.fish
 **Symptoms:** `nvm use 16` runs but `node -v` shows different version
 
 **Solution:**
+
 ```bash
 # Our wrapper syncs environment - should work
 # If not, reload shell after switch
@@ -547,16 +584,19 @@ echo $PATH | tr ':' '\n' | grep nvm
 ### Slow Boot Time
 
 **Check boot time:**
+
 ```bash
 systemd-analyze
 systemd-analyze blame
 ```
 
 **Common slow services:**
+
 - NetworkManager-wait-online.service (can disable)
 - plymouth (can disable if no splash needed)
 
 **Disable unwanted services:**
+
 ```bash
 sudo systemctl disable NetworkManager-wait-online.service
 ```
@@ -566,17 +606,20 @@ sudo systemctl disable NetworkManager-wait-online.service
 ### High CPU Usage
 
 **Check what's using CPU:**
+
 ```bash
 top
 htop  # If installed
 ```
 
 **Common causes:**
+
 - Runaway process
 - Background indexing (baloo on KDE)
 - System updates
 
 **Solution:**
+
 ```bash
 # Disable KDE indexing
 balooctl disable
@@ -584,6 +627,56 @@ balooctl disable
 # Kill problematic process
 kill <PID>
 ```
+
+---
+
+## Pi-hole/DNS Issues
+
+### Ads not blocked / clients bypassing Pi-hole
+
+**Checklist (in order):**
+
+1. Router DHCP Primary DNS = Pi-hole IP; Secondary DNS empty/`0.0.0.0`.
+2. Router DoH/DoT/Secure DNS = OFF.
+3. Clients renewed lease (toggle Wi-Fi or reboot).
+4. Pi-hole receiving queries (Dashboard increments).
+5. If still leaking: block outbound DNS (53/853) to anything except Pi-hole. See [`pi-hole/docs/hardcoded-dns.md`](../pi-hole/docs/hardcoded-dns.md).
+
+---
+
+### SSH host key warning after reflashing Pi-hole
+
+**Symptom:**
+
+```
+WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED
+```
+
+**Fix:**
+
+```bash
+ssh-keygen -R <pi-hole-ip>
+```
+
+Reconnect and accept the new host key.
+
+---
+
+### Pi-hole down = no internet
+
+This is expected when DNS is centralized (good sign that Pi-hole is authoritative). Fix Pi-hole instead of adding fallback DNS in DHCP. Keep a DHCP reservation for Pi-hole so its IP does not change.
+
+---
+
+### IPv6 clients bypass Pi-hole
+
+**Causes:** Router advertises public IPv6 DNS or Pi-hole lacks IPv6 address.
+**Fix:**
+
+1. Give Pi-hole a stable IPv6 address (reservation/static).
+2. Set router RDNSS/DHCPv6 DNS to Pi-hole IPv6 only.
+3. Retest: `dig AAAA example.com @<pi-hole-ipv6>`.
+   See [`pi-hole/docs/ipv6.md`](../pi-hole/docs/ipv6.md) for details.
 
 ---
 
@@ -620,18 +713,20 @@ sudo reboot
 1. **Boot from Arch/CachyOS live USB**
 
 2. **Mount your system:**
+
    ```bash
    # Find your root partition
    lsblk
-   
+
    # Mount it
    sudo mount /dev/sdXY /mnt
-   
+
    # Mount EFI (if UEFI)
    sudo mount /dev/sdXZ /mnt/boot/efi
    ```
 
 3. **Chroot into system:**
+
    ```bash
    sudo arch-chroot /mnt
    ```
@@ -639,6 +734,7 @@ sudo reboot
 4. **Fix configurations** (restore backups, edit files)
 
 5. **Rebuild:**
+
    ```bash
    mkinitcpio -P
    grub-mkconfig -o /boot/grub/grub.cfg
@@ -681,12 +777,14 @@ ls -lh "$BACKUP_DIR/"
 **Symptoms:** `lpinfo -v` doesn't show printer
 
 **Check Avahi:**
+
 ```bash
 systemctl status avahi-daemon
 ping BRWXXXX.local
 ```
 
 **Solution:**
+
 ```bash
 # Restart Avahi
 sudo systemctl restart avahi-daemon
@@ -702,6 +800,7 @@ sudo lpadmin -p BrotherDCP -E -v "ipp://192.168.1.XXX/ipp" -m everywhere
 **Symptoms:** `scanimage -L` shows no devices
 
 **Solution:**
+
 ```bash
 # Re-register scanner
 brsaneconfig5 -d
@@ -721,6 +820,7 @@ scanimage -L
 **Symptoms:** Jobs show as "processing" but don't print
 
 **Solution:**
+
 ```bash
 # Cancel all jobs
 cancel -a
@@ -737,6 +837,7 @@ lpstat -p
 ### digiKam Issues
 
 **digiKam won't start:**
+
 ```bash
 # Reset configuration
 mv ~/.config/digikamrc ~/.config/digikamrc.backup
@@ -744,12 +845,14 @@ digikam
 ```
 
 **Database corruption:**
+
 ```bash
 # Rebuild thumbnails database
 digikam --rebuild-thumbnails
 ```
 
 **Import issues:**
+
 - Check file permissions on photo directories
 - Ensure sufficient disk space
 - Try smaller batch imports
@@ -761,17 +864,19 @@ digikam --rebuild-thumbnails
 If your issue isn't covered here:
 
 1. **Run diagnostics (shows commands and output):**
+
    ```bash
    # Full system diagnostics
    ./cachy_os_config/diagnostics.sh --redact          # Redacts IPs, MACs, hostnames, serials
-   
+
    # DRM/display, power management, USB issues (creates directory with multiple files)
    ./cachy_os_config/drm-power-diagnostics.sh --redact
    ```
-   
+
    **Use `--redact` flag to automatically mask personal information before sharing.**
 
 2. **Check logs:**
+
    ```bash
    journalctl -b -p 3  # Boot errors
    dmesg | grep -i error  # Kernel errors
@@ -781,6 +886,7 @@ If your issue isn't covered here:
    [GitHub Issues](https://github.com/cjmaaz/ArchStarterPack/issues)
 
 4. **Open a new issue** with:
+
    - Problem description
    - Steps to reproduce
    - Diagnostic output

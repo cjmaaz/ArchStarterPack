@@ -10,6 +10,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+
+- **Pi-hole Network DNS Module** (`pi-hole/`) with quick start guide, router/DHCP wiring, and advanced docs for Unbound, IPv6-safe setup, and hardcoded DNS/DoH blocking.
 - **Brother Printer Setup Module** - Complete guide for Brother DCP-T820DW
   - USB and WiFi network printing setup
   - Scanner configuration with SANE
@@ -40,6 +42,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Learning resources document with curated materials
 
 ### Changed
+
 - Renamed `asus_x_507_uf_nvidia_depricated.md` to `asus_x_507_uf_nvidia_deprecated.md` (fixed typo)
 - Added deprecation warning banner to external monitor-only NVIDIA guide
 - Updated main README with proper section anchors and links
@@ -49,6 +52,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added metadata (Last Updated, Difficulty, Time Required) to major guides
 
 ### Fixed
+
 - Broken table of contents links in main README
 - Missing rollback instructions in NVIDIA configuration guide
 - Incomplete troubleshooting steps in deprecated NVIDIA guide
@@ -58,6 +62,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.0.0] - 2025-11-28
 
 ### Added
+
 - Initial release
 - CachyOS performance and power optimization guide for ASUS X507UF
 - External monitor-only NVIDIA Optimus configuration guide
@@ -71,11 +76,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Privacy-focused diagnostic scripts with `--redact` flag
 
 ### Hardware Support
+
 - ASUS X507UF (Intel i5-8250U + Intel UHD 620 + NVIDIA MX130)
 - Logitech MX Master 3S mouse
 - Generic Arch-based system optimization
 
 ### Configurations
+
 - TLP for AC/battery power management
 - thermald for thermal management
 - Intel P-State CPU governor optimization
@@ -107,6 +114,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Future Plans
 
 ### Planned for Next Release
+
 - Learning resources document with curated educational materials
 - Quick start guide for absolute beginners
 - Alternative configuration examples for different use cases
@@ -114,6 +122,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - System health check script
 
 ### Under Consideration
+
 - Support for additional hardware models
 - Configurations for other desktop environments
 - Additional peripheral configurations

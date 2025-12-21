@@ -14,6 +14,7 @@ A curated collection of configuration files, setup guides, and optimization scri
   - [Shell Commands Mastery Guide](#5-shell-commands-mastery-guide)
   - [Linux Package Management](#6-linux-package-management)
   - [System Optimization & Maintenance](#7-system-optimization--maintenance)
+- [Pi-hole Network DNS](#8-pi-hole-network-dns)
 - [Project Structure](#project-structure)
 - [Quick Start](#quick-start)
 - [Troubleshooting & FAQ](#troubleshooting--faq)
@@ -650,6 +651,42 @@ sudo ./scripts/system-maintenance.sh
 
 ---
 
+### 8. Pi-hole Network DNS
+
+**Location:** [`pi-hole/`](pi-hole/)
+**Difficulty:** Beginner to Intermediate
+**Time Required:** 45-70 minutes (router UI dependent)
+
+Run Pi-hole on a Raspberry Pi with authoritative DNS for your LAN. Includes quick start, router DHCP guidance, and advanced add-ons for privacy and reliability.
+
+#### What's Included
+
+- **[Pi-hole Guide](pi-hole/README.md)** — Central quick start, router DHCP settings, troubleshooting
+- **Advanced docs (under `pi-hole/docs/`):**
+  - `unbound.md` — Local recursive DNS with Unbound
+  - `ipv6.md` — IPv6-safe deployment
+  - `hardcoded-dns.md` — Blocking hardcoded DNS/DoH clients
+
+#### Highlights
+
+✅ Single DNS path (no secondary DNS)
+✅ Router DoH/DoT disablement guidance
+✅ DHCP reservation and verification checklist
+✅ Optional: Unbound recursion, IPv6, DNS firewalling
+
+#### Quick Start
+
+```bash
+# On the Pi
+sudo apt update
+sudo apt install -y openssh-server
+# Install Pi-hole via official installer, then set router DHCP DNS to Pi-hole only
+```
+
+Check `pi-hole/README.md` for router paths (TP-Link, ASUS, Netgear, OpenWRT) and verification steps.
+
+---
+
 ## Project Structure
 
 ```mermaid
@@ -661,6 +698,7 @@ graph TD
     Root --> Module5[shell-commands/<br/>Shell Commands Guide]
     Root --> Module6[linux-packages/<br/>Package Management]
     Root --> Module7[system-optimization/<br/>System Optimization]
+    Root --> Module8[pi-hole/<br/>Network DNS]
     Root --> Docs[docs/<br/>Documentation]
 
     Module5 --> PracticeEnv[practice-environment/<br/>Interactive Practice]
@@ -680,6 +718,7 @@ graph TD
     style Module5 fill:#00bcd4,color:#fff
     style Module6 fill:#795548,color:#fff
     style Module7 fill:#e91e63,color:#fff
+    style Module8 fill:#607d8b,color:#fff
     style PracticeEnv fill:#607d8b,color:#fff
 ```
 
@@ -848,6 +887,9 @@ flowchart TD
     Start --> Need7{System<br/>Optimization?}
     Need7 -->|Yes| Optimization[system-optimization/<br/>Optimization & Maintenance]
 
+    Start --> Need8{Network-wide<br/>DNS/Ad-blocking?}
+    Need8 -->|Yes| PiHole[pi-hole/<br/>Network DNS]
+
     CachyOS --> End([Start Configuration])
     LogiOps --> End
     NodeJS --> End
@@ -855,6 +897,7 @@ flowchart TD
     Shell --> End
     Packages --> End
     Optimization --> End
+    PiHole --> End
 
     style Start fill:#e1f5ff
     style End fill:#c8e6c9
@@ -865,6 +908,7 @@ flowchart TD
     style Shell fill:#00bcd4,color:#fff
     style Packages fill:#795548,color:#fff
     style Optimization fill:#e91e63,color:#fff
+    style PiHole fill:#607d8b,color:#fff
 ```
 
 **Module Selection:**
@@ -876,6 +920,7 @@ flowchart TD
 - For shell commands learning: `cd shell-commands/`
   - For package management: `cd linux-packages/`
 - For system optimization: `cd system-optimization/`
+- For network-wide DNS blocking: `cd pi-hole/`
 
 4. **Read the documentation:**
    Each module contains detailed README files with step-by-step instructions.
