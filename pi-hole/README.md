@@ -10,17 +10,23 @@ Centralize DNS and ad-blocking for your home network with Pi-hole on a Raspberry
 
 ## Key Terms (quick glossary)
 
-- **IP address:** Numeric address of a device (e.g., `192.168.0.109` or `fd00::109`).
-- **Gateway:** Your router’s LAN IP; the “exit” for your subnet (e.g., `192.168.0.1`).
-- **DHCP server:** Hands out IP + gateway + DNS to clients (usually the router).
-- **DHCP reservation:** Router mapping of a device MAC → fixed IP; survives reboots.
-- **DNS resolver (Pi-hole):** Answers domain lookups for your LAN; applies blocklists.
-- **Upstream DNS / recursion:** Where Pi-hole sends queries it can’t answer (Cloudflare/Google or local Unbound).
-- **DoH/DoT:** Encrypted DNS that can bypass Pi-hole if enabled on router/clients.
-- **RDNSS/DHCPv6:** IPv6 methods to advertise DNS; must point to Pi-hole to avoid bypass.
+- **IP address:** Numeric address of a device (e.g., `192.168.0.109`). See [Networking 101](docs/networking-101.md) and [Glossary: IP Address](../docs/GLOSSARY.md#ip-address).
+- **Subnet / subnet mask (/24):** Defines which IPs are local (e.g., `192.168.0.0/24`). See [Networking 101](docs/networking-101.md) and [Glossary: Subnet](../docs/GLOSSARY.md#subnet).
+- **Gateway:** Your router’s LAN IP; the “exit” for your subnet (e.g., `192.168.0.1`). See [Networking 101](docs/networking-101.md) and [Glossary: Gateway](../docs/GLOSSARY.md#gateway-default-gateway).
+- **DHCP server:** Hands out IP + gateway + DNS to clients (usually the router). See [DHCP Fundamentals](docs/dhcp.md) and [Glossary: DHCP](../docs/GLOSSARY.md#dhcp-dynamic-host-configuration-protocol).
+- **DHCP reservation:** Router mapping of a device MAC → fixed IP; survives reboots. See [DHCP Fundamentals](docs/dhcp.md) and [Glossary: DHCP Lease](../docs/GLOSSARY.md#dhcp-lease).
+- **DNS resolver (Pi-hole):** Answers domain lookups for your LAN; applies blocklists. See [DNS Fundamentals](docs/dns.md) and [Glossary: DNS](../docs/GLOSSARY.md#dns-domain-name-system).
+- **Upstream DNS / recursion:** Where Pi-hole sends queries it can’t answer (public resolver or local Unbound). See [DNS Fundamentals](docs/dns.md) and [Unbound](docs/unbound.md).
+- **DoH/DoT:** Encrypted DNS that can bypass Pi-hole if enabled on router/clients. See [DNS Fundamentals](docs/dns.md) and [Hardcoded DNS/DoH](docs/hardcoded-dns.md).
+- **RDNSS/DHCPv6:** IPv6 methods to advertise DNS; must point to Pi-hole to avoid bypass. See [IPv6-safe setup](docs/ipv6.md) and [Glossary: RDNSS](../docs/GLOSSARY.md#rdnss).
 
-See the fuller networking primer with examples in [`docs/learning.md`](docs/learning.md).
-For deeper learning, also see [`docs/dns.md`](docs/dns.md) and [`docs/dhcp.md`](docs/dhcp.md).
+Beginner path: [`docs/networking-101.md`](docs/networking-101.md) → [`docs/dhcp.md`](docs/dhcp.md) → [`docs/dns.md`](docs/dns.md) → setup below.
+You can also use the guided hub: [`docs/learning.md`](docs/learning.md).
+
+## Tools you’ll use (linked)
+
+- DNS checks: [`../shell-commands/02-commands/nslookup.md`](../shell-commands/02-commands/nslookup.md), [`../shell-commands/02-commands/dig.md`](../shell-commands/02-commands/dig.md)
+- Show your network config: Linux [`../shell-commands/02-commands/ip.md`](../shell-commands/02-commands/ip.md), Windows [`../shell-commands/02-commands/ipconfig.md`](../shell-commands/02-commands/ipconfig.md)
 
 ---
 

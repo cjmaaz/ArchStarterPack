@@ -4,6 +4,24 @@ Use this primer to understand the minimum networking concepts needed to keep Pi-
 
 ---
 
+## 0. If you’re brand new (start here)
+
+- If terms like **IP**, **gateway**, **subnet mask** are new: read [`networking-101.md`](networking-101.md) first.
+- If you want short definitions while reading: see the repo glossary: [`../../docs/GLOSSARY.md`](../../docs/GLOSSARY.md).
+- If you want deeper models:
+  - DNS (recursion, caching, DoH/DoT): [`dns.md`](dns.md)
+  - DHCP (DORA, leases, reservations): [`dhcp.md`](dhcp.md)
+
+### Tool primers used in this Pi-hole module
+
+- DNS checks: [`../../shell-commands/02-commands/nslookup.md`](../../shell-commands/02-commands/nslookup.md), [`../../shell-commands/02-commands/dig.md`](../../shell-commands/02-commands/dig.md)
+- Show your IP/gateway (Linux): [`../../shell-commands/02-commands/ip.md`](../../shell-commands/02-commands/ip.md)
+- Show your IP/gateway/DNS (Windows): [`../../shell-commands/02-commands/ipconfig.md`](../../shell-commands/02-commands/ipconfig.md)
+- Legacy interface view (macOS/older Linux guides): [`../../shell-commands/02-commands/ifconfig.md`](../../shell-commands/02-commands/ifconfig.md)
+- Reachability test: [`../../shell-commands/02-commands/ping.md`](../../shell-commands/02-commands/ping.md)
+
+---
+
 ## 1. Core Concepts (quick definitions + examples)
 
 - **IP address:** Numeric address of a device. Example: your router `192.168.0.1`, Pi-hole `192.168.0.109`, TV `192.168.0.42`. IPv6 example: `fd00::109`.
@@ -76,12 +94,12 @@ Symptoms:
 
 - Ads still showing
 - Pi-hole query counter low/flat
-- `nslookup` to public resolvers succeeds
+- [`nslookup`](../../shell-commands/02-commands/nslookup.md) to public resolvers succeeds
 
 Checks:
 
 - Client DNS config shows only Pi-hole.
-- `nslookup example.com 8.8.8.8` should fail or be blocked.
+- `nslookup example.com 8.8.8.8` should fail or be blocked (see [`nslookup`](../../shell-commands/02-commands/nslookup.md)).
 - Router firewall: block outbound 53/853 except to Pi-hole.
 - Disable router DoH/DoT; enforce browser policy where possible.
 
@@ -101,6 +119,11 @@ nslookup example.com 8.8.8.8
 # If Unbound is enabled
 dig google.com @<pi-ip> -p 53
 ```
+
+Learn these commands:
+
+- [`nslookup`](../../shell-commands/02-commands/nslookup.md)
+- [`dig`](../../shell-commands/02-commands/dig.md)
 
 On the router (if it has a diag page): confirm DHCP shows Pi-hole as the only DNS handed out.
 

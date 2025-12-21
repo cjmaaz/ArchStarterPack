@@ -4,6 +4,15 @@ This doc teaches DNS from first principles so Pi-hole configuration “clicks”
 
 ---
 
+## 0. Prerequisites (don’t skip if you’re new)
+
+- If you don’t know **IP/subnet/gateway** yet: read [`networking-101.md`](networking-101.md).
+- If you want the practical DNS commands first:
+  - [`../../shell-commands/02-commands/nslookup.md`](../../shell-commands/02-commands/nslookup.md)
+  - [`../../shell-commands/02-commands/dig.md`](../../shell-commands/02-commands/dig.md)
+
+---
+
 ## 1. What DNS is (in one sentence)
 
 **DNS translates names (e.g., `example.com`) into addresses (e.g., `93.184.216.34`)** and includes metadata like TTLs that control caching.
@@ -141,7 +150,7 @@ If the client uses DoH, Pi-hole never sees queries unless:
 
 ## 8. Exercises (teach your brain the model)
 
-1. **See which resolver answers your client**
+1. **See which resolver answers your client** (learn: [`nslookup`](../../shell-commands/02-commands/nslookup.md))
 
 ```bash
 nslookup example.com
@@ -149,7 +158,7 @@ nslookup example.com
 
 Confirm the “Server” line is your Pi-hole IP.
 
-2. **Prove bypass is blocked**
+2. **Prove bypass is blocked** (learn: [`nslookup`](../../shell-commands/02-commands/nslookup.md))
 
 ```bash
 nslookup example.com 8.8.8.8
@@ -166,5 +175,6 @@ After you add firewall rules, this should fail or be redirected.
 ## See Also
 
 - The Pi-hole networking primer: [`learning.md`](learning.md)
+- Networking 101 (IP/subnet/gateway/subnet mask): [`networking-101.md`](networking-101.md)
 - Unbound recursion with Pi-hole: [`unbound.md`](unbound.md)
 - Hardcoded DNS/DoH blocking patterns: [`hardcoded-dns.md`](hardcoded-dns.md)

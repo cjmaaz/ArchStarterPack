@@ -495,11 +495,20 @@ A curated collection of learning materials to help you understand the concepts a
 
 - [Pi-hole module README](../pi-hole/README.md) — quick start, router DHCP settings, troubleshooting.
 - [Networking primer](../pi-hole/docs/learning.md) — foundational terms (IP, DHCP, DNS, DoH/DoT), examples, firewall/NAT patterns, IPv6 avoidance of bypass, and verification drills.
+- [Networking 101](../pi-hole/docs/networking-101.md) — IP/subnet/gateway/subnet mask + LAN vs WAN + how this maps to router settings.
 - [DNS deep dive](../pi-hole/docs/dns.md) — recursion vs forwarding, root/TLD/authoritative, caching/TTL, why secondary DNS breaks blocking, and DoH/DoT bypass model.
 - [DHCP deep dive](../pi-hole/docs/dhcp.md) — DORA handshake, leases/renewals, DHCP reservation vs static IP, and why changes can take time to apply.
 - [Unbound guide](../pi-hole/docs/unbound.md) — local recursion.
 - [IPv6 guide](../pi-hole/docs/ipv6.md) — RDNSS/DHCPv6 done safely.
 - [Hardcoded DNS/DoH blocking](../pi-hole/docs/hardcoded-dns.md) — firewall/policy approaches.
+
+### Must Know Commands (used in Pi-hole verification)
+
+- [`nslookup`](../shell-commands/02-commands/nslookup.md) — quick “which DNS answered me?”
+- [`dig`](../shell-commands/02-commands/dig.md) — deeper DNS inspection (TTL, record types, Unbound tests)
+- [`ip`](../shell-commands/02-commands/ip.md) — Linux: show IP + gateway routes
+- [`ipconfig`](../shell-commands/02-commands/ipconfig.md) — Windows: show IP + gateway + DNS servers
+- [`ifconfig`](../shell-commands/02-commands/ifconfig.md) — legacy/macOS-friendly view (use `ip` on Linux when possible)
 
 ### Nice to Have (external)
 

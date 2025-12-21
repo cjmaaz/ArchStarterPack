@@ -4,6 +4,16 @@ This doc teaches DHCP so router settings for Pi-hole feel obvious instead of mag
 
 ---
 
+## 0. Prerequisites (don’t skip if you’re new)
+
+- If you don’t know **IP/subnet/gateway/subnet mask** yet: read [`networking-101.md`](networking-101.md).
+- If you need the “show me my IP/gateway/DNS” commands:
+  - Linux: [`../../shell-commands/02-commands/ip.md`](../../shell-commands/02-commands/ip.md)
+  - Windows: [`../../shell-commands/02-commands/ipconfig.md`](../../shell-commands/02-commands/ipconfig.md)
+  - DNS check: [`../../shell-commands/02-commands/nslookup.md`](../../shell-commands/02-commands/nslookup.md)
+
+---
+
 ## 1. What DHCP is
 
 **DHCP is the protocol that automatically gives devices network settings**:
@@ -117,9 +127,9 @@ Router DHCP DNS fields should be:
 
 1. Confirm client settings:
 
-- On Linux: `nmcli dev show | grep -E 'IP4.DNS|IP4.GATEWAY|IP4.ADDRESS'`
+- On Linux: prefer [`ip`](../../shell-commands/02-commands/ip.md) (`ip -4 a`, `ip -4 r`), or NetworkManager: `nmcli dev show | grep -E 'IP4.DNS|IP4.GATEWAY|IP4.ADDRESS'`
 - On macOS: `scutil --dns | head`
-- On Windows: `ipconfig /all`
+- On Windows: [`ipconfig /all`](../../shell-commands/02-commands/ipconfig.md)
 
 2. Force a fresh lease:
 
@@ -132,6 +142,8 @@ nslookup example.com
 ```
 
 The DNS “Server” should be your Pi-hole.
+
+Learn the tool: [`nslookup`](../../shell-commands/02-commands/nslookup.md)
 
 ---
 
