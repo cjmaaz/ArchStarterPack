@@ -35,7 +35,7 @@ Interpretation:
 
 If subnet masks are new to you, read:
 
-- [`../../pi-hole/docs/networking-101.md`](../../pi-hole/docs/networking-101.md)
+- [`../../networking/docs/ip-addressing.md`](../../networking/docs/ip-addressing.md)
 
 ### Example 2: Prefer the modern tool on Linux
 

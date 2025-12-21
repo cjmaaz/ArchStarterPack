@@ -1,6 +1,6 @@
 # Frequently Asked Questions (FAQ)
 
-**Last Updated:** November 2025
+**Last Updated:** December 2025
 
 ---
 
@@ -485,7 +485,7 @@ Use Simple Scan for quick scans, digiKam for photo library management.
 
 ### Q: Where can I learn the networking basics to keep Pi-hole authoritative?
 
-**A:** See the networking primer with real-world patterns, firewall/NAT examples, and verification drills: [`pi-hole/docs/learning.md`](../pi-hole/docs/learning.md).
+**A:** Start with the dedicated networking module (reading path + practice drills): [`networking/README.md`](../networking/README.md).
 
 ---
 

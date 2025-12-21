@@ -4,6 +4,16 @@
 
 ---
 
+## Prerequisites (recommended)
+
+- DHCP model (why DHCP DNS matters): [`../../networking/docs/dhcp.md`](../../networking/docs/dhcp.md)
+- DNS model (secondary DNS, DoH/DoT bypass): [`../../networking/docs/dns.md`](../../networking/docs/dns.md)
+- Home router model: [`../../networking/docs/home-router-model.md`](../../networking/docs/home-router-model.md)
+- Ports (53/853/443) and why they matter: [`../../networking/docs/tcp-udp-ports.md`](../../networking/docs/tcp-udp-ports.md)
+- NAT/firewall enforcement thinking: [`../../networking/docs/nat-firewalls.md`](../../networking/docs/nat-firewalls.md)
+
+---
+
 ## Threat model
 
 ```mermaid

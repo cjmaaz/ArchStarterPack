@@ -4,6 +4,14 @@
 
 ---
 
+## Prerequisites (recommended)
+
+- Networking basics (IP/subnet/gateway): [`../../networking/docs/ip-addressing.md`](../../networking/docs/ip-addressing.md)
+- DNS model (recursion, caching): [`../../networking/docs/dns.md`](../../networking/docs/dns.md)
+- DNS tool: [`../../shell-commands/02-commands/dig.md`](../../shell-commands/02-commands/dig.md)
+
+---
+
 ## Flow
 
 ```mermaid

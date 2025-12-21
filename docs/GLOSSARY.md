@@ -1,6 +1,6 @@
 # Glossary of Terms
 
-**Last Updated:** November 2025
+**Last Updated:** December 2025
 
 A comprehensive glossary of technical terms used throughout the ArchStarterPack documentation.
 
@@ -24,6 +24,13 @@ A comprehensive glossary of technical terms used throughout the ArchStarterPack 
 **Definition:** A lightweight, flexible Linux distribution that follows a rolling-release model
 **Context:** ArchStarterPack is designed for Arch-based systems
 **Related:** Manjaro, EndeavourOS, CachyOS
+
+### ARP (Address Resolution Protocol)
+
+**Definition:** IPv4 protocol that maps an IP address to a MAC address on the local network
+**Context:** Used when a device needs a MAC to send a frame to a local IP
+**Used in:** Understanding “same subnet but unreachable” issues
+**Learn More:** [Layer 2 (MAC/ARP)](../networking/docs/layer2-mac-arp.md), [`arp` command](../shell-commands/02-commands/arp.md)
 
 ### awk
 
@@ -126,35 +133,35 @@ A comprehensive glossary of technical terms used throughout the ArchStarterPack 
 **Definition:** Protocol that automatically assigns network settings to devices (IP, gateway, DNS)
 **Context:** Your router typically runs the DHCP server for your LAN
 **Used in:** Pi-hole module (router DHCP DNS must point to Pi-hole)
-**Learn More:** [DHCP Fundamentals](../pi-hole/docs/dhcp.md), [Networking 101](../pi-hole/docs/networking-101.md)
+**Learn More:** [DHCP](../networking/docs/dhcp.md), [IP Addressing](../networking/docs/ip-addressing.md)
 
 ### DHCP Lease
 
 **Definition:** Time-limited “contract” of assigned network settings from DHCP
 **Context:** Devices may keep old DNS until lease renewal
 **Used in:** Pi-hole troubleshooting (why DNS changes don’t apply instantly)
-**Learn More:** [DHCP Fundamentals](../pi-hole/docs/dhcp.md)
+**Learn More:** [DHCP](../networking/docs/dhcp.md)
 
 ### DNS (Domain Name System)
 
 **Definition:** System that maps names (example.com) to IP addresses (93.184.216.34)
 **Context:** Pi-hole blocks ads by filtering DNS lookups
 **Used in:** Pi-hole module (clients must use Pi-hole as DNS)
-**Learn More:** [DNS Fundamentals](../pi-hole/docs/dns.md)
+**Learn More:** [DNS](../networking/docs/dns.md)
 
 ### DoH (DNS over HTTPS)
 
 **Definition:** Encrypted DNS transported over HTTPS (port 443)
 **Context:** Can bypass Pi-hole because queries don’t go to Pi-hole
 **Used in:** Pi-hole hardcoded DNS/DoH blocking
-**Learn More:** [DNS Fundamentals](../pi-hole/docs/dns.md), [Hardcoded DNS/DoH Blocking](../pi-hole/docs/hardcoded-dns.md)
+**Learn More:** [DNS](../networking/docs/dns.md), [Hardcoded DNS/DoH Blocking](../pi-hole/docs/hardcoded-dns.md)
 
 ### DoT (DNS over TLS)
 
 **Definition:** Encrypted DNS transported over TLS (typically port 853)
 **Context:** Can bypass Pi-hole unless blocked or policy-disabled
 **Used in:** Pi-hole hardcoded DNS/DoH blocking
-**Learn More:** [DNS Fundamentals](../pi-hole/docs/dns.md), [Hardcoded DNS/DoH Blocking](../pi-hole/docs/hardcoded-dns.md)
+**Learn More:** [DNS](../networking/docs/dns.md), [Hardcoded DNS/DoH Blocking](../pi-hole/docs/hardcoded-dns.md)
 
 ---
 
@@ -181,6 +188,13 @@ A comprehensive glossary of technical terms used throughout the ArchStarterPack 
 **Definition:** Plugin manager for Fish shell
 **Context:** ArchStarterPack's Node.js setup avoids fisher for simplicity
 
+### Firewall
+
+**Definition:** Network policy enforcement controlling which traffic is allowed/blocked
+**Context:** Home routers typically use stateful firewalls with connection tracking
+**Used in:** Forcing DNS to Pi-hole and blocking bypass paths
+**Learn More:** [NAT and Firewalls](../networking/docs/nat-firewalls.md)
+
 ---
 
 ## G
@@ -194,7 +208,14 @@ A comprehensive glossary of technical terms used throughout the ArchStarterPack 
 **Definition:** The router IP your device uses to reach non-local networks (the “exit” of your subnet)
 **Context:** Commonly `192.168.0.1` in home networks
 **Used in:** Networking fundamentals and troubleshooting reachability to Pi-hole
-**Learn More:** [Networking 101](../pi-hole/docs/networking-101.md)
+**Learn More:** [IP Addressing](../networking/docs/ip-addressing.md)
+
+### Guest Network
+
+**Definition:** A separate Wi‑Fi/LAN segment intended for untrusted devices, usually isolated from the main LAN
+**Context:** Can prevent clients from reaching Pi-hole on the main LAN
+**Used in:** Pi-hole reachability and DNS timeout troubleshooting
+**Learn More:** [Routing/VLANs/Guest Networks](../networking/docs/routing-vlans-guest.md)
 
 ### grep
 
@@ -259,21 +280,21 @@ A comprehensive glossary of technical terms used throughout the ArchStarterPack 
 **Definition:** Numeric address of a device on a network
 **Context:** IPv4 example `192.168.0.109` (Pi-hole), IPv6 example `fd00::109`
 **Used in:** Pi-hole module (router DHCP advertises Pi-hole IP as DNS)
-**Learn More:** [Networking 101](../pi-hole/docs/networking-101.md)
+**Learn More:** [IP Addressing](../networking/docs/ip-addressing.md)
 
 ### IPv4
 
 **Definition:** Internet Protocol version 4 (32-bit addresses like `192.168.0.42`)
 **Context:** Most home LANs still primarily use IPv4 for local addressing
 **Used in:** Pi-hole DNS configuration and router DHCP settings
-**Learn More:** [Networking 101](../pi-hole/docs/networking-101.md)
+**Learn More:** [IP Addressing](../networking/docs/ip-addressing.md)
 
 ### IPv6
 
 **Definition:** Internet Protocol version 6 (128-bit addresses like `fd00::109`)
 **Context:** If IPv6 DNS is advertised incorrectly, clients can bypass Pi-hole
 **Used in:** Pi-hole IPv6-safe setup
-**Learn More:** [IPv6-Safe Pi-hole](../pi-hole/docs/ipv6.md), [Networking 101](../pi-hole/docs/networking-101.md)
+**Learn More:** [IPv6-Safe Pi-hole](../pi-hole/docs/ipv6.md), [IP Addressing](../networking/docs/ip-addressing.md)
 
 ### IPP (Internet Printing Protocol)
 
@@ -341,7 +362,7 @@ A comprehensive glossary of technical terms used throughout the ArchStarterPack 
 **Definition:** Your local home network (devices behind your router)
 **Context:** Pi-hole is deployed on the LAN and must be advertised by LAN DHCP
 **Used in:** Pi-hole module and router configuration steps
-**Learn More:** [Networking 101](../pi-hole/docs/networking-101.md)
+**Learn More:** [IP Addressing](../networking/docs/ip-addressing.md)
 
 ### LogiOps
 
@@ -357,6 +378,13 @@ A comprehensive glossary of technical terms used throughout the ArchStarterPack 
 ---
 
 ## M
+
+### MAC Address (Media Access Control)
+
+**Definition:** Link-layer identifier used for local frame delivery on Ethernet/Wi‑Fi (e.g., `AA:BB:CC:DD:EE:FF`)
+**Context:** DHCP reservations typically map MAC → IP
+**Used in:** DHCP reservations and LAN troubleshooting
+**Learn More:** [Layer 2 (MAC/ARP)](../networking/docs/layer2-mac-arp.md), [DHCP](../networking/docs/dhcp.md)
 
 ### mkinitcpio
 
@@ -377,6 +405,13 @@ A comprehensive glossary of technical terms used throughout the ArchStarterPack 
 **Definition:** Hybrid graphics technology (Intel iGPU + NVIDIA dGPU)
 **Context:** ASUS X507UF has Optimus; requires special power management
 **Challenge:** Proper configuration needed for good battery life
+
+### NAT (Network Address Translation)
+
+**Definition:** Translation of IP addresses/ports, commonly used to let many private LAN devices share one public IP
+**Context:** Not the same as firewalling; NAT is translation, firewall is policy
+**Used in:** Home router behavior and DNS enforcement patterns
+**Learn More:** [NAT and Firewalls](../networking/docs/nat-firewalls.md)
 
 ### NVM (Node Version Manager)
 
@@ -418,6 +453,13 @@ A comprehensive glossary of technical terms used throughout the ArchStarterPack 
 **Example:** `grep "ERROR" log.txt | wc -l` (count error lines)
 **Context:** Fundamental for command chaining and data processing
 **Learn More:** [Piping Patterns](../shell-commands/03-combinations/piping.md)
+
+### Port
+
+**Definition:** Logical endpoint on a host that identifies a service (IP identifies the host; port identifies the service)
+**Context:** DNS=53, DoT=853, DoH=443
+**Used in:** Understanding firewall rules and bypass paths
+**Learn More:** [TCP/UDP/Ports](../networking/docs/tcp-udp-ports.md)
 
 ### P-State
 
@@ -463,7 +505,7 @@ A comprehensive glossary of technical terms used throughout the ArchStarterPack 
 **Definition:** DNS resolver that performs full recursion (root → TLD → authoritative) to answer queries
 **Context:** Unbound is a common local recursive resolver used with Pi-hole
 **Used in:** Pi-hole + Unbound setup
-**Learn More:** [DNS Fundamentals](../pi-hole/docs/dns.md), [Unbound Guide](../pi-hole/docs/unbound.md)
+**Learn More:** [DNS](../networking/docs/dns.md), [Unbound Guide](../pi-hole/docs/unbound.md)
 
 ### RDNSS
 
@@ -504,6 +546,13 @@ A comprehensive glossary of technical terms used throughout the ArchStarterPack 
 - `;` (semicolon) - Execute commands sequentially
   **Learn More:** [Operators Guide](../shell-commands/01-basics/operators.md)
 
+### Stateful Firewall
+
+**Definition:** Firewall that tracks connection state and allows return traffic for established connections
+**Context:** Default “allow outbound, block unsolicited inbound” model on home routers
+**Used in:** Understanding why outbound DNS bypass works by default
+**Learn More:** [NAT and Firewalls](../networking/docs/nat-firewalls.md)
+
 ### stdin (Standard Input)
 
 **Definition:** Default input stream for programs (file descriptor 0)
@@ -534,14 +583,14 @@ A comprehensive glossary of technical terms used throughout the ArchStarterPack 
 **Definition:** A logical group of IP addresses that can communicate locally (e.g., `192.168.0.0/24`)
 **Context:** Devices must be in the same subnet (or routed correctly) to reach Pi-hole
 **Used in:** Pi-hole networking basics and troubleshooting
-**Learn More:** [Networking 101](../pi-hole/docs/networking-101.md)
+**Learn More:** [IP Addressing](../networking/docs/ip-addressing.md)
 
 ### Subnet Mask
 
 **Definition:** IPv4 representation of a subnet/prefix (common home mask: `255.255.255.0`)
 **Context:** Equivalent to CIDR `/24` in typical home networks
 **Used in:** Understanding IP ranges and local vs routed traffic
-**Learn More:** [Networking 101](../pi-hole/docs/networking-101.md)
+**Learn More:** [IP Addressing](../networking/docs/ip-addressing.md)
 
 ### SDDM
 
@@ -579,6 +628,13 @@ A comprehensive glossary of technical terms used throughout the ArchStarterPack 
 **Context:** Automatically adjusts settings based on AC/battery
 **Config:** `/etc/tlp.d/01-custom.conf`
 
+### TCP (Transmission Control Protocol)
+
+**Definition:** Connection-oriented transport protocol (reliable, ordered delivery)
+**Context:** Used by HTTPS (443) and DoT (853)
+**Used in:** Understanding ports and “connection refused/timeout” behaviors
+**Learn More:** [TCP/UDP/Ports](../networking/docs/tcp-udp-ports.md)
+
 ### Turbo Boost
 
 **Definition:** Intel technology to temporarily increase CPU frequency
@@ -590,7 +646,7 @@ A comprehensive glossary of technical terms used throughout the ArchStarterPack 
 **Definition:** DNS cache duration (seconds) indicating how long an answer may be cached
 **Context:** DNS changes may appear delayed because caches respect TTL
 **Used in:** Pi-hole DNS behavior and troubleshooting
-**Learn More:** [DNS Fundamentals](../pi-hole/docs/dns.md)
+**Learn More:** [DNS](../networking/docs/dns.md)
 
 ---
 
@@ -602,6 +658,13 @@ A comprehensive glossary of technical terms used throughout the ArchStarterPack 
 **Context:** Creates device nodes, handles hardware events
 **Usage:** Rules in `/etc/udev/rules.d/` configure device behavior
 
+### UDP (User Datagram Protocol)
+
+**Definition:** Connectionless transport protocol (low overhead, no built-in reliability)
+**Context:** Many DNS lookups use UDP 53 for speed
+**Used in:** DNS behavior and port-level troubleshooting
+**Learn More:** [TCP/UDP/Ports](../networking/docs/tcp-udp-ports.md)
+
 ---
 
 ## V
@@ -611,6 +674,13 @@ A comprehensive glossary of technical terms used throughout the ArchStarterPack 
 **Definition:** Synchronizes frame rate with monitor refresh rate
 **Context:** Eliminates screen tearing
 **Configuration:** Set in compositor (picom, KWin)
+
+### VLAN (Virtual LAN)
+
+**Definition:** Logical separation of networks at Layer 2, often used to segment guest/IoT devices
+**Context:** Guest networks are commonly separate VLANs/subnets with isolation rules
+**Used in:** Explaining why guest Wi‑Fi can’t reach Pi-hole
+**Learn More:** [Routing/VLANs/Guest Networks](../networking/docs/routing-vlans-guest.md)
 
 ---
 

@@ -62,9 +62,9 @@ ipconfig /flushdns
 
 Learn the model:
 
-- IP/subnet/gateway basics: [`../../pi-hole/docs/networking-101.md`](../../pi-hole/docs/networking-101.md)
-- DHCP basics (leases/renewals): [`../../pi-hole/docs/dhcp.md`](../../pi-hole/docs/dhcp.md)
-- DNS basics (why no secondary DNS): [`../../pi-hole/docs/dns.md`](../../pi-hole/docs/dns.md)
+- IP/subnet/gateway basics: [`../../networking/docs/ip-addressing.md`](../../networking/docs/ip-addressing.md)
+- DHCP basics (leases/renewals): [`../../networking/docs/dhcp.md`](../../networking/docs/dhcp.md)
+- DNS basics (why no secondary DNS): [`../../networking/docs/dns.md`](../../networking/docs/dns.md)
 
 ---
 

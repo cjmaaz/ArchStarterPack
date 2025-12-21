@@ -4,6 +4,15 @@
 
 ---
 
+## Prerequisites (recommended)
+
+- Networking basics (IP/subnet/gateway): [`../../networking/docs/ip-addressing.md`](../../networking/docs/ip-addressing.md)
+- DNS model (bypass, caching): [`../../networking/docs/dns.md`](../../networking/docs/dns.md)
+- Home router model (LAN vs WAN + where DNS lives): [`../../networking/docs/home-router-model.md`](../../networking/docs/home-router-model.md)
+- Routing/guest networks (why clients might not reach Pi-hole): [`../../networking/docs/routing-vlans-guest.md`](../../networking/docs/routing-vlans-guest.md)
+
+---
+
 ## Flow (IPv4 + IPv6)
 
 ```mermaid

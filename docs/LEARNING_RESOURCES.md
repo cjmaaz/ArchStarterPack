@@ -1,6 +1,6 @@
 # Learning Resources
 
-**Last Updated:** November 2025
+**Last Updated:** December 2025
 
 A curated collection of learning materials to help you understand the concepts and technologies used in ArchStarterPack.
 
@@ -9,6 +9,7 @@ A curated collection of learning materials to help you understand the concepts a
 ## Table of Contents
 
 - [Linux Fundamentals](#linux-fundamentals)
+- [Networking Fundamentals](#networking-fundamentals)
 - [Arch Linux Specific](#arch-linux-specific)
 - [Power Management](#power-management)
 - [Graphics & Display](#graphics--display)
@@ -40,6 +41,29 @@ A curated collection of learning materials to help you understand the concepts a
 - [Filesystem Hierarchy Standard](https://refspecs.linuxfoundation.org/FHS_3.0/fhs/index.html)
 - Understanding `/etc`, `/sys`, `/proc`, `/dev`
 - Level: Beginner to Intermediate
+
+---
+
+## Networking Fundamentals
+
+### ⭐ Networking Module (Internal Resource)
+
+This repo includes a dedicated networking learning track (beginner → practical) with a **systematic reading order** and **hands-on drills**.
+
+- **Start here:** [`../networking/README.md`](../networking/README.md)
+- **Core docs:** `../networking/docs/`
+  - IP addressing: [`../networking/docs/ip-addressing.md`](../networking/docs/ip-addressing.md)
+  - Layer 2 (MAC/ARP): [`../networking/docs/layer2-mac-arp.md`](../networking/docs/layer2-mac-arp.md)
+  - DHCP: [`../networking/docs/dhcp.md`](../networking/docs/dhcp.md)
+  - DNS: [`../networking/docs/dns.md`](../networking/docs/dns.md)
+  - TCP/UDP/Ports: [`../networking/docs/tcp-udp-ports.md`](../networking/docs/tcp-udp-ports.md)
+  - NAT/Firewalls: [`../networking/docs/nat-firewalls.md`](../networking/docs/nat-firewalls.md)
+  - Routing/VLANs/Guest networks: [`../networking/docs/routing-vlans-guest.md`](../networking/docs/routing-vlans-guest.md)
+  - Home router model: [`../networking/docs/home-router-model.md`](../networking/docs/home-router-model.md)
+  - Troubleshooting: [`../networking/docs/troubleshooting.md`](../networking/docs/troubleshooting.md)
+- **Practice drills index:** [`../networking/practice/drills.md`](../networking/practice/drills.md)
+
+**Why this exists:** it’s the conceptual foundation for modules like Pi-hole (DNS 53 / DoT 853 / DoH 443, DHCP DNS vs WAN DNS, bypass patterns, etc.).
 
 ---
 
@@ -494,10 +518,15 @@ A curated collection of learning materials to help you understand the concepts a
 ### Must Read (in this repo)
 
 - [Pi-hole module README](../pi-hole/README.md) — quick start, router DHCP settings, troubleshooting.
-- [Networking primer](../pi-hole/docs/learning.md) — foundational terms (IP, DHCP, DNS, DoH/DoT), examples, firewall/NAT patterns, IPv6 avoidance of bypass, and verification drills.
-- [Networking 101](../pi-hole/docs/networking-101.md) — IP/subnet/gateway/subnet mask + LAN vs WAN + how this maps to router settings.
-- [DNS deep dive](../pi-hole/docs/dns.md) — recursion vs forwarding, root/TLD/authoritative, caching/TTL, why secondary DNS breaks blocking, and DoH/DoT bypass model.
-- [DHCP deep dive](../pi-hole/docs/dhcp.md) — DORA handshake, leases/renewals, DHCP reservation vs static IP, and why changes can take time to apply.
+- [Networking module (start here)](../networking/README.md) — systematic reading path + practice drills.
+- [IP addressing](../networking/docs/ip-addressing.md) — IP/subnet/gateway/subnet mask + LAN vs WAN model.
+- [Layer 2 (MAC/ARP)](../networking/docs/layer2-mac-arp.md) — MAC addresses, ARP/neighbor resolution, why reservations use MAC.
+- [DHCP](../networking/docs/dhcp.md) — DORA, leases/renewals, reservation vs static IP.
+- [DNS](../networking/docs/dns.md) — recursion vs forwarding, caching/TTL, DoH/DoT bypass.
+- [TCP/UDP/Ports](../networking/docs/tcp-udp-ports.md) — ports, TCP vs UDP, why 53/853/443 matter.
+- [NAT and Firewalls](../networking/docs/nat-firewalls.md) — enforcement thinking for “DNS must go to Pi-hole”.
+- [Routing/VLANs/Guest networks](../networking/docs/routing-vlans-guest.md) — why guest Wi‑Fi often can’t reach LAN services.
+- [Home router model](../networking/docs/home-router-model.md) — where settings live (DHCP DNS vs WAN DNS).
 - [Unbound guide](../pi-hole/docs/unbound.md) — local recursion.
 - [IPv6 guide](../pi-hole/docs/ipv6.md) — RDNSS/DHCPv6 done safely.
 - [Hardcoded DNS/DoH blocking](../pi-hole/docs/hardcoded-dns.md) — firewall/policy approaches.

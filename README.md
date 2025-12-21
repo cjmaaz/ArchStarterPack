@@ -15,6 +15,7 @@ A curated collection of configuration files, setup guides, and optimization scri
   - [Linux Package Management](#6-linux-package-management)
   - [System Optimization & Maintenance](#7-system-optimization--maintenance)
 - [Pi-hole Network DNS](#8-pi-hole-network-dns)
+- [Networking Fundamentals](#9-networking-fundamentals)
 - [Project Structure](#project-structure)
 - [Quick Start](#quick-start)
 - [Troubleshooting & FAQ](#troubleshooting--faq)
@@ -688,6 +689,29 @@ Check `pi-hole/README.md` for router paths (TP-Link, ASUS, Netgear, OpenWRT) and
 
 ---
 
+### 9. Networking Fundamentals
+
+**Location:** [`networking/`](networking/)
+**Difficulty:** Beginner → Intermediate
+**Time Required:** 60-120 minutes (self-paced)
+
+Systematic learning path for home networking: IP addressing, subnet masks/prefixes, gateways, DHCP, DNS, and router UI models. Designed to make modules like Pi-hole feel intuitive instead of “patchwork settings.”
+
+#### What's Included
+
+- **[Networking Start Here](networking/README.md)** — guided reading order
+- **Core docs:** `networking/docs/` (IP addressing, DHCP, DNS, router model, troubleshooting)
+- **Practice drills:** `networking/practice/drills.md`
+
+#### Quick Start
+
+```bash
+cd networking/
+cat README.md
+```
+
+---
+
 ## Project Structure
 
 ```mermaid
@@ -700,6 +724,7 @@ graph TD
     Root --> Module6[linux-packages/<br/>Package Management]
     Root --> Module7[system-optimization/<br/>System Optimization]
     Root --> Module8[pi-hole/<br/>Network DNS]
+    Root --> Module9[networking/<br/>Networking Fundamentals]
     Root --> Docs[docs/<br/>Documentation]
 
     Module5 --> PracticeEnv[practice-environment/<br/>Interactive Practice]
@@ -720,6 +745,7 @@ graph TD
     style Module6 fill:#795548,color:#fff
     style Module7 fill:#e91e63,color:#fff
     style Module8 fill:#607d8b,color:#fff
+    style Module9 fill:#3f51b5,color:#fff
     style PracticeEnv fill:#607d8b,color:#fff
 ```
 
@@ -891,6 +917,9 @@ flowchart TD
     Start --> Need8{Network-wide<br/>DNS/Ad-blocking?}
     Need8 -->|Yes| PiHole[pi-hole/<br/>Network DNS]
 
+    Start --> Need9{Learn<br/>Networking?}
+    Need9 -->|Yes| Networking[networking/<br/>Networking Fundamentals]
+
     CachyOS --> End([Start Configuration])
     LogiOps --> End
     NodeJS --> End
@@ -899,6 +928,7 @@ flowchart TD
     Packages --> End
     Optimization --> End
     PiHole --> End
+    Networking --> End
 
     style Start fill:#e1f5ff
     style End fill:#c8e6c9
@@ -910,6 +940,7 @@ flowchart TD
     style Packages fill:#795548,color:#fff
     style Optimization fill:#e91e63,color:#fff
     style PiHole fill:#607d8b,color:#fff
+    style Networking fill:#3f51b5,color:#fff
 ```
 
 **Module Selection:**

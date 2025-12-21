@@ -101,7 +101,7 @@ If you have configured “block outbound DNS except Pi-hole,” this should fail
 
 ## Learn More (linked concepts)
 
-- Pi-hole learning hub: [`../../pi-hole/docs/learning.md`](../../pi-hole/docs/learning.md)
-- Networking fundamentals (IP/subnet/gateway): [`../../pi-hole/docs/networking-101.md`](../../pi-hole/docs/networking-101.md)
-- DNS deep dive (recursion, caching, DoH): [`../../pi-hole/docs/dns.md`](../../pi-hole/docs/dns.md)
+- Networking module (start here): [`../../networking/README.md`](../../networking/README.md)
+- IP/subnet/gateway fundamentals: [`../../networking/docs/ip-addressing.md`](../../networking/docs/ip-addressing.md)
+- DNS deep dive (recursion, caching, DoH): [`../../networking/docs/dns.md`](../../networking/docs/dns.md)
 - `dig` (more powerful DNS tool): [`dig.md`](dig.md)

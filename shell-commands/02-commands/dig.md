@@ -84,7 +84,7 @@ dig example.com @127.0.0.1 -p 5335
 
 ## Learn More
 
-- DNS mental model (recursion, caching, TTL, DoH): [`../../pi-hole/docs/dns.md`](../../pi-hole/docs/dns.md)
-- Pi-hole networking fundamentals: [`../../pi-hole/docs/networking-101.md`](../../pi-hole/docs/networking-101.md)
+- DNS mental model (recursion, caching, TTL, DoH): [`../../networking/docs/dns.md`](../../networking/docs/dns.md)
+- IP/subnet/gateway fundamentals: [`../../networking/docs/ip-addressing.md`](../../networking/docs/ip-addressing.md)
 - Unbound setup: [`../../pi-hole/docs/unbound.md`](../../pi-hole/docs/unbound.md)
 - `nslookup` (simpler quick checks): [`nslookup.md`](nslookup.md)

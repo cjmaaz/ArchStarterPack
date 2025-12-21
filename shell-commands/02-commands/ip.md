@@ -42,7 +42,7 @@ Interpretation:
 
 If you don’t know what `/24` means, read:
 
-- [`../../pi-hole/docs/networking-101.md`](../../pi-hole/docs/networking-101.md)
+- [`../../networking/docs/ip-addressing.md`](../../networking/docs/ip-addressing.md)
 
 ### Example 2: Find your default gateway (router)
 
@@ -82,7 +82,7 @@ DNS settings are not always shown by `ip`. Depending on your distro/stack, check
 
 For “what is DNS and why Pi-hole depends on it,” read:
 
-- [`../../pi-hole/docs/dns.md`](../../pi-hole/docs/dns.md)
+- [`../../networking/docs/dns.md`](../../networking/docs/dns.md)
 
 ---
 
