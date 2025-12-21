@@ -666,6 +666,7 @@ Run Pi-hole on a Raspberry Pi with authoritative DNS for your LAN. Includes quic
   - `unbound.md` — Local recursive DNS with Unbound
   - `ipv6.md` — IPv6-safe deployment
   - `hardcoded-dns.md` — Blocking hardcoded DNS/DoH clients
+  - `learning.md` — Networking primer, real-world patterns, firewall/DNS drills
 
 #### Highlights
 

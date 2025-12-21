@@ -483,6 +483,12 @@ Use Simple Scan for quick scans, digiKam for photo library management.
 
 ---
 
+### Q: Where can I learn the networking basics to keep Pi-hole authoritative?
+
+**A:** See the networking primer with real-world patterns, firewall/NAT examples, and verification drills: [`pi-hole/docs/learning.md`](../pi-hole/docs/learning.md).
+
+---
+
 ## Shell Commands Module Questions
 
 ### Q: What is the Shell Commands module?

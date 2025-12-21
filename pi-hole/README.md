@@ -139,6 +139,7 @@ Clients do not ask permission; many will bypass Pi-hole if a secondary DNS exist
 - Local recursive DNS with Unbound: see [`docs/unbound.md`](docs/unbound.md)
 - IPv6-safe setup: see [`docs/ipv6.md`](docs/ipv6.md)
 - Blocking hardcoded DNS / DoH clients: see [`docs/hardcoded-dns.md`](docs/hardcoded-dns.md)
+- Networking primer and real-world patterns: see [`docs/learning.md`](docs/learning.md)
 
 ---
 
