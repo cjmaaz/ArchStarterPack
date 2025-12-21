@@ -15,6 +15,7 @@ A curated collection of learning materials to help you understand the concepts a
 - [Hardware & Drivers](#hardware--drivers)
 - [Shell Scripting](#shell-scripting)
 - [Development Tools](#development-tools)
+- [Pi-hole & DNS Fundamentals](#pi-hole--dns-fundamentals)
 
 ---
 
@@ -23,16 +24,19 @@ A curated collection of learning materials to help you understand the concepts a
 ### Essential Linux Concepts
 
 **The Linux Command Line**
+
 - [The Linux Command Line Book](http://linuxcommand.org/tlcl.php) - Free comprehensive guide
 - [Linux Journey](https://linuxjourney.com/) - Interactive learning platform
 - Level: Beginner
 
 **Understanding the Linux Boot Process**
+
 - [Arch Wiki: Boot Process](https://wiki.archlinux.org/title/Arch_boot_process)
 - Topics: GRUB, initramfs, kernel parameters
 - Level: Intermediate
 
 **Linux File System Hierarchy**
+
 - [Filesystem Hierarchy Standard](https://refspecs.linuxfoundation.org/FHS_3.0/fhs/index.html)
 - Understanding `/etc`, `/sys`, `/proc`, `/dev`
 - Level: Beginner to Intermediate
@@ -44,31 +48,37 @@ A curated collection of learning materials to help you understand the concepts a
 ### Official Resources
 
 **Arch Wiki**
+
 - [https://wiki.archlinux.org/](https://wiki.archlinux.org/)
 - **Essential reading!** Best Linux documentation available
 - Covers everything from installation to advanced configuration
 
 **Arch Linux Forums**
+
 - [https://bbs.archlinux.org/](https://bbs.archlinux.org/)
 - Community support and discussions
 - Search before posting
 
 **CachyOS Documentation**
+
 - [CachyOS Wiki](https://wiki.cachyos.org/)
 - CachyOS-specific optimizations and features
 
 ### Key Arch Wiki Pages for ArchStarterPack
 
 **Package Management**
+
 - [pacman](https://wiki.archlinux.org/title/Pacman)
 - [System Maintenance](https://wiki.archlinux.org/title/System_maintenance)
 
 **Boot & Kernel**
+
 - [GRUB](https://wiki.archlinux.org/title/GRUB)
 - [Kernel Parameters](https://wiki.archlinux.org/title/Kernel_parameters)
 - [mkinitcpio](https://wiki.archlinux.org/title/Mkinitcpio)
 
 **Hardware**
+
 - [Laptop](https://wiki.archlinux.org/title/Laptop) - Essential for laptop users
 - [ASUS Laptops](https://wiki.archlinux.org/title/ASUS_Linux)
 
@@ -79,12 +89,14 @@ A curated collection of learning materials to help you understand the concepts a
 ### CPU Frequency Scaling
 
 **Intel P-State Driver**
+
 - [Arch Wiki: CPU Frequency Scaling](https://wiki.archlinux.org/title/CPU_frequency_scaling)
 - [Kernel Documentation: Intel P-State](https://www.kernel.org/doc/html/latest/admin-guide/pm/intel_pstate.html)
 - Understanding governors: performance, powersave, schedutil
 - Level: Intermediate
 
 **CPU Governors Explained**
+
 - [Red Hat: CPU Performance](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/power_management_guide/cpufreq_governors)
 - When to use each governor
 - Level: Beginner to Intermediate
@@ -92,6 +104,7 @@ A curated collection of learning materials to help you understand the concepts a
 ### Battery Optimization
 
 **TLP - Power Management**
+
 - [TLP Documentation](https://linrunner.de/tlp/)
 - [Arch Wiki: TLP](https://wiki.archlinux.org/title/TLP)
 - Understanding TLP configuration
@@ -99,12 +112,14 @@ A curated collection of learning materials to help you understand the concepts a
 - Level: Intermediate
 
 **thermald - Thermal Management**
+
 - [GitHub: thermald](https://github.com/intel/thermal_daemon)
 - [Arch Wiki: thermald](https://wiki.archlinux.org/title/Thermald)
 - How thermal management works
 - Level: Intermediate
 
 **Power Profiles Daemon**
+
 - [Arch Wiki: power-profiles-daemon](https://wiki.archlinux.org/title/Power_profiles_daemon)
 - Alternative to TLP (choose one)
 - Level: Beginner
@@ -112,11 +127,13 @@ A curated collection of learning materials to help you understand the concepts a
 ### General Power Management
 
 **Comprehensive Guide**
+
 - [Arch Wiki: Power Management](https://wiki.archlinux.org/title/Power_management)
 - Complete overview of Linux power management
 - Level: Intermediate to Advanced
 
 **Laptop-Specific Optimizations**
+
 - [Arch Wiki: Laptop/Power](https://wiki.archlinux.org/title/Laptop#Power_management)
 - Battery care and longevity tips
 - Level: Beginner to Intermediate
@@ -128,12 +145,14 @@ A curated collection of learning materials to help you understand the concepts a
 ### Intel Graphics
 
 **Intel HD/UHD Graphics**
+
 - [Arch Wiki: Intel Graphics](https://wiki.archlinux.org/title/Intel_graphics)
 - i915 driver configuration
 - GuC/HuC firmware loading
 - Level: Intermediate
 
 **Intel Graphics Optimization**
+
 - [01.org: Linux Graphics](https://01.org/linuxgraphics)
 - Official Intel Linux graphics documentation
 - Level: Advanced
@@ -141,17 +160,20 @@ A curated collection of learning materials to help you understand the concepts a
 ### NVIDIA
 
 **NVIDIA Drivers**
+
 - [Arch Wiki: NVIDIA](https://wiki.archlinux.org/title/NVIDIA)
 - Driver installation and configuration
 - Level: Intermediate
 
 **NVIDIA Optimus (Hybrid Graphics)**
+
 - [Arch Wiki: NVIDIA Optimus](https://wiki.archlinux.org/title/NVIDIA_Optimus)
 - Understanding hybrid graphics
 - Power management strategies
 - Level: Intermediate to Advanced
 
 **NVIDIA Official Documentation**
+
 - [NVIDIA Linux Driver README](https://download.nvidia.com/XFree86/Linux-x86_64/latest/README/)
 - Comprehensive driver documentation
 - Level: Advanced
@@ -159,11 +181,13 @@ A curated collection of learning materials to help you understand the concepts a
 ### Display Servers
 
 **Xorg (X11)**
+
 - [Arch Wiki: Xorg](https://wiki.archlinux.org/title/Xorg)
 - Configuration in `/etc/X11/xorg.conf.d/`
 - Level: Intermediate
 
 **Wayland**
+
 - [Arch Wiki: Wayland](https://wiki.archlinux.org/title/Wayland)
 - Modern display protocol
 - NVIDIA support status
@@ -176,16 +200,19 @@ A curated collection of learning materials to help you understand the concepts a
 ### Understanding Linux Hardware
 
 **Hardware Detection**
+
 - [Arch Wiki: Monitoring](https://wiki.archlinux.org/title/List_of_applications#System_monitoring)
 - Tools: `lspci`, `lsusb`, `lshw`, `inxi`
 - Level: Beginner
 
 **ACPI - Power & Thermal Interface**
+
 - [Arch Wiki: ACPI](https://wiki.archlinux.org/title/ACPI)
 - Understanding ACPI tables and events
 - Level: Intermediate to Advanced
 
 **Kernel Modules**
+
 - [Arch Wiki: Kernel Module](https://wiki.archlinux.org/title/Kernel_module)
 - Loading, configuration in `/etc/modprobe.d/`
 - Level: Intermediate
@@ -193,11 +220,13 @@ A curated collection of learning materials to help you understand the concepts a
 ### Storage
 
 **NVMe SSDs**
+
 - [Arch Wiki: NVMe](https://wiki.archlinux.org/title/Solid_state_drive/NVMe)
 - NVMe-specific optimizations
 - Level: Intermediate
 
 **SSD Optimization**
+
 - [Arch Wiki: SSD](https://wiki.archlinux.org/title/Solid_state_drive)
 - TRIM, I/O schedulers
 - Level: Intermediate
@@ -209,6 +238,7 @@ A curated collection of learning materials to help you understand the concepts a
 ### ⭐ Shell Commands Mastery Guide (Internal Resource)
 
 **ArchStarterPack Shell Commands Module**
+
 - [Shell Commands README](../shell-commands/README.md) - Start here!
 - Complete course from beginner to expert
 - 80+ hands-on practice exercises with solutions
@@ -216,6 +246,7 @@ A curated collection of learning materials to help you understand the concepts a
 - Level: Beginner to Expert
 
 **What's Covered:**
+
 - **Basics:** Operators, redirection, piping
 - **Commands:** 40+ essential tools (grep, sed, awk, jq, curl, find, xargs, etc.)
 - **Combinations:** Piping patterns, command chaining, advanced workflows
@@ -224,6 +255,7 @@ A curated collection of learning materials to help you understand the concepts a
 - **Linux Systems:** Web servers, Docker, network analysis, system monitoring
 
 **Learning Path:**
+
 1. [Shell Operators](../shell-commands/01-basics/operators.md) - Pipes, redirects, chaining
 2. [Essential Commands](../shell-commands/02-commands/) - grep, sed, awk, jq, and more
 3. [Piping Patterns](../shell-commands/03-combinations/piping.md) - Chain commands effectively
@@ -233,6 +265,7 @@ A curated collection of learning materials to help you understand the concepts a
 **Time Commitment:** 4-6 weeks self-paced (1-2 hours per week)
 
 **Perfect For:**
+
 - Salesforce developers learning shell commands
 - System administrators wanting structured practice
 - DevOps engineers needing quick reference
@@ -243,11 +276,13 @@ A curated collection of learning materials to help you understand the concepts a
 ### Bash Scripting
 
 **Learning Bash**
+
 - [Bash Guide for Beginners](https://tldp.org/LDP/Bash-Beginners-Guide/html/)
 - [Advanced Bash-Scripting Guide](https://tldp.org/LDP/abs/html/)
 - Level: Beginner to Advanced
 
 **Shell Scripting Best Practices**
+
 - [Google Shell Style Guide](https://google.github.io/styleguide/shellguide.html)
 - Writing safe and maintainable scripts
 - Level: Intermediate
@@ -255,11 +290,13 @@ A curated collection of learning materials to help you understand the concepts a
 ### Fish Shell
 
 **Official Resources**
+
 - [Fish Shell Documentation](https://fishshell.com/docs/current/)
 - Comprehensive guide to Fish
 - Level: Beginner to Intermediate
 
 **Fish vs Bash**
+
 - [Fish Tutorial](https://fishshell.com/docs/current/tutorial.html)
 - Understanding Fish syntax differences
 - Level: Beginner
@@ -271,16 +308,19 @@ A curated collection of learning materials to help you understand the concepts a
 ### Node.js & NVM
 
 **Node.js Basics**
+
 - [Node.js Documentation](https://nodejs.org/en/docs/)
 - Official Node.js guide
 - Level: Beginner to Intermediate
 
 **NVM Usage**
+
 - [NVM GitHub](https://github.com/nvm-sh/nvm)
 - Managing multiple Node versions
 - Level: Beginner
 
 **npm Package Management**
+
 - [npm Documentation](https://docs.npmjs.com/)
 - Package installation and management
 - Level: Beginner
@@ -288,6 +328,7 @@ A curated collection of learning materials to help you understand the concepts a
 ### Version Control
 
 **Git Essentials**
+
 - [Pro Git Book](https://git-scm.com/book/en/v2) - Free online book
 - [Git Official Tutorial](https://git-scm.com/docs/gittutorial)
 - Level: Beginner to Advanced
@@ -299,11 +340,13 @@ A curated collection of learning materials to help you understand the concepts a
 ### Logitech Devices
 
 **LogiOps Documentation**
+
 - [LogiOps GitHub](https://github.com/PixlOne/logiops)
 - Official documentation and examples
 - Level: Intermediate
 
 **HID Devices on Linux**
+
 - [Arch Wiki: Input Devices](https://wiki.archlinux.org/title/Mouse)
 - Understanding Linux input subsystem
 - Level: Intermediate
@@ -315,14 +358,17 @@ A curated collection of learning materials to help you understand the concepts a
 ### YouTube Channels
 
 **Linux Basics**
+
 - [LearnLinuxTV](https://www.youtube.com/@LearnLinuxTV)
 - [DistroTube](https://www.youtube.com/@DistroTube)
 
 **Arch Linux**
+
 - [EF - Tech Made Simple](https://www.youtube.com/@ef-techmade-simple)
 - [Mental Outlaw](https://www.youtube.com/@MentalOutlaw)
 
 **System Administration**
+
 - [The Linux Foundation](https://www.youtube.com/@LinuxfoundationOrg)
 - [Network Chuck](https://www.youtube.com/@NetworkChuck)
 
@@ -333,15 +379,18 @@ A curated collection of learning materials to help you understand the concepts a
 ### Recommended Reading
 
 **Linux Administration**
+
 - "How Linux Works" by Brian Ward
 - "The Linux Command Line" by William Shotts (free online)
 - "Linux Bible" by Christopher Negus
 
 **System Programming**
+
 - "The Linux Programming Interface" by Michael Kerrisk
 - "Understanding the Linux Kernel" by Daniel P. Bovet
 
 **Shell Scripting**
+
 - "Learning the bash Shell" by Cameron Newham
 - "Wicked Cool Shell Scripts" by Dave Taylor
 
@@ -352,14 +401,17 @@ A curated collection of learning materials to help you understand the concepts a
 ### Forums & Discussion
 
 **Arch Linux**
+
 - [Arch Forums](https://bbs.archlinux.org/)
 - [r/archlinux](https://www.reddit.com/r/archlinux/)
 
 **CachyOS**
+
 - [CachyOS Discord](https://discord.gg/cachyos)
 - [CachyOS Forum](https://forum.cachyos.org/)
 
 **General Linux**
+
 - [r/linux](https://www.reddit.com/r/linux/)
 - [r/linuxquestions](https://www.reddit.com/r/linuxquestions/)
 - [Unix & Linux Stack Exchange](https://unix.stackexchange.com/)
@@ -371,6 +423,7 @@ A curated collection of learning materials to help you understand the concepts a
 ### For CachyOS Module
 
 **Must Read:**
+
 1. [Arch Wiki: Power Management](https://wiki.archlinux.org/title/Power_management)
 2. [Arch Wiki: TLP](https://wiki.archlinux.org/title/TLP)
 3. [Arch Wiki: Intel Graphics](https://wiki.archlinux.org/title/Intel_graphics)
@@ -378,52 +431,89 @@ A curated collection of learning materials to help you understand the concepts a
 5. [Kernel Parameters Documentation](https://www.kernel.org/doc/html/latest/admin-guide/kernel-parameters.html)
 
 **Nice to Have:**
+
 - [Intel P-State Documentation](https://www.kernel.org/doc/html/latest/admin-guide/pm/intel_pstate.html)
 - [TLP Configuration Reference](https://linrunner.de/tlp/settings/)
 
 ### For LogiOps Module
 
 **Must Read:**
+
 1. [LogiOps GitHub](https://github.com/PixlOne/logiops)
 2. [LogiOps Configuration Examples](https://github.com/PixlOne/logiops/tree/master/examples)
 
 **Nice to Have:**
+
 - [Arch Wiki: Logitech MX Master](https://wiki.archlinux.org/title/Logitech_MX_Master)
 - Understanding HID++ protocol
 
 ### For Node.js Module
 
 **Must Read:**
+
 1. [Fish Shell Documentation](https://fishshell.com/docs/current/)
 2. [NVM GitHub](https://github.com/nvm-sh/nvm)
 
 **Nice to Have:**
+
 - [Fish Shell Tutorial](https://fishshell.com/docs/current/tutorial.html)
 - Node.js version management best practices
 
 ### For Shell Commands Module
 
 **Start Here:**
+
 1. [Shell Commands README](../shell-commands/README.md) - Course overview
 2. [Operators Guide](../shell-commands/01-basics/operators.md) - Fundamentals
 3. [grep Tutorial](../shell-commands/02-commands/grep.md) - Most essential command
 
 **Core Commands to Master:**
+
 - Text processing: grep, sed, awk, cut, sort, uniq
 - File operations: find, cat, tail/head
 - Data tools: jq (JSON), curl/wget (network)
 - Utilities: xargs, tee, column
 
 **Practice Path:**
+
 1. [Beginner Exercises](../shell-commands/04-practice/beginner.md) - 20 problems
 2. [Intermediate Exercises](../shell-commands/04-practice/intermediate.md) - 20 problems
 3. [Advanced Exercises](../shell-commands/04-practice/advanced.md) - 20 problems
 4. [Expert Exercises](../shell-commands/04-practice/expert.md) - 20 problems
 
 **Salesforce Developers:**
+
 - [SF CLI Patterns](../shell-commands/05-salesforce/sf-cli-patterns.md)
 - [Apex Log Analysis](../shell-commands/05-salesforce/log-analysis.md)
 - [Deployment Scripts](../shell-commands/05-salesforce/deployment-scripts.md)
+
+---
+
+## Pi-hole & DNS Fundamentals
+
+### Must Read (in this repo)
+
+- [Pi-hole module README](../pi-hole/README.md) — quick start, router DHCP settings, troubleshooting.
+- [Networking primer](../pi-hole/docs/learning.md) — foundational terms (IP, DHCP, DNS, DoH/DoT), examples, firewall/NAT patterns, IPv6 avoidance of bypass, and verification drills.
+- [DNS deep dive](../pi-hole/docs/dns.md) — recursion vs forwarding, root/TLD/authoritative, caching/TTL, why secondary DNS breaks blocking, and DoH/DoT bypass model.
+- [DHCP deep dive](../pi-hole/docs/dhcp.md) — DORA handshake, leases/renewals, DHCP reservation vs static IP, and why changes can take time to apply.
+- [Unbound guide](../pi-hole/docs/unbound.md) — local recursion.
+- [IPv6 guide](../pi-hole/docs/ipv6.md) — RDNSS/DHCPv6 done safely.
+- [Hardcoded DNS/DoH blocking](../pi-hole/docs/hardcoded-dns.md) — firewall/policy approaches.
+
+### Nice to Have (external)
+
+- [Pi-hole Docs](https://docs.pi-hole.net/)
+- [Arch Wiki: DNS](https://wiki.archlinux.org/title/Domain_name_resolution)
+- [Arch Wiki: systemd-resolved](https://wiki.archlinux.org/title/Systemd-resolved) (understand when it is or isn’t in the path)
+- [Unbound Docs](https://nlnetlabs.nl/projects/unbound/about/)
+- [DoH Background](https://datatracker.ietf.org/doc/html/rfc8484) (high level)
+
+### Practice / Verification Ideas
+
+- From a client: `nslookup doubleclick.net <pi-ip>` (expect block), `nslookup example.com 8.8.8.8` (expect fail/blocked after firewall), `dig AAAA example.com @<pi-hole-ipv6>` for IPv6 path.
+- On router: confirm DHCP shows only Pi-hole DNS; ensure DoH/DoT is off.
+- On Pi-hole: if using Unbound, test `dig google.com @127.0.0.1 -p 5335` and watch Pi-hole query log grow while browsing.
 
 ---
 
@@ -456,30 +546,35 @@ A curated collection of learning materials to help you understand the concepts a
 ### Path 4: Shell Commands Mastery (4-6 weeks)
 
 **Week 1: Fundamentals**
+
 1. Read [operators.md](../shell-commands/01-basics/operators.md) and [redirection.md](../shell-commands/01-basics/redirection.md)
 2. Master grep, cat, tail/head commands
 3. Complete beginner exercises 1-10
 4. Practice basic piping patterns
 
 **Week 2: Core Commands**
+
 1. Learn sed, awk, and cut for text processing
 2. Master jq for JSON processing
 3. Complete beginner exercises 11-20
 4. Complete intermediate exercises 1-10
 
 **Week 3: Combinations & Patterns**
+
 1. Study [piping patterns](../shell-commands/03-combinations/piping.md)
 2. Learn [command chaining](../shell-commands/03-combinations/chaining.md)
 3. Complete intermediate exercises 11-20
 4. Complete advanced exercises 1-10
 
 **Week 4: Advanced & Expert**
+
 1. Master xargs, find, and complex pipelines
 2. Complete advanced exercises 11-20
 3. Study [Salesforce CLI patterns](../shell-commands/05-salesforce/sf-cli-patterns.md)
 4. Complete expert exercises 1-20
 
 **Week 5-6: Real-World Application**
+
 1. Build automation scripts for your workflow
 2. Practice [deployment automation](../shell-commands/05-salesforce/deployment-scripts.md)
 3. Analyze logs with [log analysis patterns](../shell-commands/05-salesforce/log-analysis.md)
@@ -508,6 +603,7 @@ A curated collection of learning materials to help you understand the concepts a
 ### Learning by Doing
 
 The best way to learn is to:
+
 1. Read the documentation
 2. Understand the concepts
 3. Apply the configuration

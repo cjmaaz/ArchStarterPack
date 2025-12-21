@@ -8,6 +8,22 @@ Centralize DNS and ad-blocking for your home network with Pi-hole on a Raspberry
 
 ---
 
+## Key Terms (quick glossary)
+
+- **IP address:** Numeric address of a device (e.g., `192.168.0.109` or `fd00::109`).
+- **Gateway:** Your router’s LAN IP; the “exit” for your subnet (e.g., `192.168.0.1`).
+- **DHCP server:** Hands out IP + gateway + DNS to clients (usually the router).
+- **DHCP reservation:** Router mapping of a device MAC → fixed IP; survives reboots.
+- **DNS resolver (Pi-hole):** Answers domain lookups for your LAN; applies blocklists.
+- **Upstream DNS / recursion:** Where Pi-hole sends queries it can’t answer (Cloudflare/Google or local Unbound).
+- **DoH/DoT:** Encrypted DNS that can bypass Pi-hole if enabled on router/clients.
+- **RDNSS/DHCPv6:** IPv6 methods to advertise DNS; must point to Pi-hole to avoid bypass.
+
+See the fuller networking primer with examples in [`docs/learning.md`](docs/learning.md).
+For deeper learning, also see [`docs/dns.md`](docs/dns.md) and [`docs/dhcp.md`](docs/dhcp.md).
+
+---
+
 ## What This Covers
 
 - Reliable Pi-hole install on Raspberry Pi OS Lite (64-bit)
@@ -140,6 +156,8 @@ Clients do not ask permission; many will bypass Pi-hole if a secondary DNS exist
 - IPv6-safe setup: see [`docs/ipv6.md`](docs/ipv6.md)
 - Blocking hardcoded DNS / DoH clients: see [`docs/hardcoded-dns.md`](docs/hardcoded-dns.md)
 - Networking primer and real-world patterns: see [`docs/learning.md`](docs/learning.md)
+- DNS deep dive (recursion, caching, DoH/DoT): see [`docs/dns.md`](docs/dns.md)
+- DHCP deep dive (leases, reservations, renewals): see [`docs/dhcp.md`](docs/dhcp.md)
 
 ---
 

@@ -4,7 +4,29 @@ Use this primer to understand the minimum networking concepts needed to keep Pi-
 
 ---
 
-## 1. DNS/DHCP Flow (Authoritative Path)
+## 1. Core Concepts (quick definitions + examples)
+
+- **IP address:** Numeric address of a device. Example: your router `192.168.0.1`, Pi-hole `192.168.0.109`, TV `192.168.0.42`. IPv6 example: `fd00::109`.
+- **Subnet:** Group of IPs that talk directly. Example: `192.168.0.0/24` covers `192.168.0.1–192.168.0.254`.
+- **Gateway:** Router LAN IP; traffic leaves your subnet here (e.g., `192.168.0.1`).
+- **DHCP server:** Hands out IP + gateway + DNS. Usually the router. It must point DNS to Pi-hole only.
+- **DHCP reservation:** Router maps a device MAC → fixed IP (e.g., Pi-hole MAC → `192.168.0.109`). Survives reboots and avoids conflicts; preferred over static IP on the Pi.
+- **Static IP:** Manually set on a device. Risk: conflicts or wrong gateway/DNS. Use only if you cannot set a reservation.
+- **DNS resolver (Pi-hole):** Answers domain lookups for your LAN and applies blocklists. It can forward to upstream or recurse locally (Unbound).
+- **Upstream DNS:** Where Pi-hole sends queries it cannot answer (Cloudflare `1.1.1.1`, Google `8.8.8.8`, or Unbound on `127.0.0.1#5335`).
+- **Recursive vs forwarder:** Recursive (Unbound) walks root → authoritative servers (better privacy, no single provider). Forwarder just passes queries to a provider.
+- **DoH/DoT:** Encrypted DNS. If enabled on router/clients, Pi-hole can’t inspect traffic; disable or block endpoints/policy-enforce.
+- **RDNSS/DHCPv6:** IPv6 ways to advertise DNS. Must list only Pi-hole IPv6; otherwise clients bypass over IPv6.
+- **NAT + firewall:** Decide what leaves your LAN. Use to block DNS to anything except Pi-hole (and optionally DNAT redirect stubborn clients).
+
+If you want the “full story” (with diagrams):
+
+- DNS deep dive (recursion, caching, DoH/DoT): [`dns.md`](dns.md)
+- DHCP deep dive (DORA, leases, reservations): [`dhcp.md`](dhcp.md)
+
+---
+
+## 2. DNS/DHCP Flow (Authoritative Path)
 
 ```mermaid
 flowchart LR
@@ -26,7 +48,7 @@ Principles:
 
 ---
 
-## 2. Router DHCP Patterns (LAN side)
+## 3. Router DHCP Patterns (LAN side)
 
 Common UI paths:
 
@@ -48,7 +70,7 @@ Real-world note: Many ISP routers expose “Internet DNS” but hide DHCP DNS un
 
 ---
 
-## 3. Detecting DNS Bypass (Clients Behaving Badly)
+## 4. Detecting DNS Bypass (Clients Behaving Badly)
 
 Symptoms:
 
@@ -65,7 +87,7 @@ Checks:
 
 ---
 
-## 4. Verification Drills (Do These After Config)
+## 5. Verification Drills (Do These After Config)
 
 On a client:
 
@@ -84,7 +106,7 @@ On the router (if it has a diag page): confirm DHCP shows Pi-hole as the only DN
 
 ---
 
-## 5. Firewall / NAT Patterns (Optional but Strong)
+## 6. Firewall / NAT Patterns (Optional but Strong)
 
 Goal: allow DNS only to Pi-hole, block the rest.
 
@@ -109,7 +131,7 @@ ip6 tcp dport 53 drop
 
 ---
 
-## 6. IPv6 Essentials (Avoid Bypass)
+## 7. IPv6 Essentials (Avoid Bypass)
 
 ```mermaid
 flowchart LR
@@ -131,7 +153,7 @@ Must-do:
 
 ---
 
-## 7. Real-World Scenarios & Tips
+## 8. Real-World Scenarios & Tips
 
 - ISP routers with locked DNS: look for LAN/DHCP override or place Pi-hole behind a better router; fallback is DNAT on an advanced router.
 - Guest/IoT VLANs: ensure their DHCP points to Pi-hole; consider firewall rules to block cross-VLAN except DNS to Pi-hole.
@@ -141,7 +163,52 @@ Must-do:
 
 ---
 
-## 8. If Things Break
+## 9. If Things Break
+
+---
+
+## 10. Concept Walk-Throughs (with examples)
+
+### A) DHCP handing out Pi-hole (happy path)
+
+1. Router DHCP has:
+   - Gateway: `192.168.0.1`
+   - Primary DNS: `192.168.0.109` (Pi-hole)
+   - Secondary DNS: empty
+2. Laptop joins Wi-Fi, gets lease:
+   - IP `192.168.0.42`
+   - DNS `192.168.0.109`
+3. Laptop runs `nslookup example.com` → asks Pi-hole → Pi-hole forwards to upstream/Unbound → returns answer (blocked if on list).
+
+### B) Bypass via secondary DNS (what goes wrong)
+
+1. Router DHCP has Primary DNS = Pi-hole, Secondary DNS = `8.8.8.8`.
+2. Some clients prefer the secondary; ads appear; Pi-hole dashboard shows few queries.
+3. Fix: remove secondary DNS; block outbound 53/853 to non-Pi-hole; renew leases.
+
+### C) DoH on router (what goes wrong)
+
+1. Router “Secure DNS/DoH” enabled.
+2. Router encrypts DNS straight to the internet; Pi-hole never sees queries.
+3. Fix: disable DoH/DoT on router; keep DHCP DNS = Pi-hole.
+
+### D) IPv6 bypass
+
+1. Router hands out public IPv6 DNS via RDNSS.
+2. Clients with IPv6 use that DNS, skipping Pi-hole.
+3. Fix: give Pi-hole stable IPv6; set RDNSS/DHCPv6 DNS = Pi-hole IPv6 only; retest with `dig AAAA`.
+
+### E) Stubborn devices (smart TV)
+
+1. TV hardcodes `8.8.8.8`.
+2. Add firewall rule: allow DNS only to Pi-hole; drop others. Optional DNAT: redirect 53 to Pi-hole.
+3. Verify: `nslookup example.com 8.8.8.8` should fail/redirect.
+
+### F) Recursive Pi-hole with Unbound
+
+1. Install Unbound, listen on `127.0.0.1#5335`.
+2. Pi-hole upstream = `127.0.0.1#5335`; disable other upstreams.
+3. Benefit: privacy (no single provider), independence from public resolvers.
 
 - No internet when Pi-hole is down: expected—Pi-hole is authoritative. Fix Pi-hole; do not add secondary DNS.
 - SSH host key changed after reflash:
