@@ -16,6 +16,7 @@ A curated collection of configuration files, setup guides, and optimization scri
   - [System Optimization & Maintenance](#7-system-optimization--maintenance)
 - [Pi-hole Network DNS](#8-pi-hole-network-dns)
 - [Networking Fundamentals](#9-networking-fundamentals)
+- [Android Debloating & Privacy](#10-android-debloating--privacy)
 - [Project Structure](#project-structure)
 - [Quick Start](#quick-start)
 - [Troubleshooting & FAQ](#troubleshooting--faq)
@@ -669,7 +670,6 @@ Run Pi-hole on a Raspberry Pi with authoritative DNS for your LAN. Includes quic
   - `unbound.md` — Local recursive DNS with Unbound
   - `ipv6.md` — IPv6-safe deployment
   - `hardcoded-dns.md` — Blocking hardcoded DNS/DoH clients
-  - `learning.md` — Networking primer, real-world patterns, firewall/DNS drills
 
 #### Highlights
 
@@ -714,6 +714,21 @@ cat README.md
 
 ---
 
+### 10. Android Debloating & Privacy
+
+**Location:** [`android/`](android/)
+**Difficulty:** Beginner → Intermediate
+**Time Required:** 30-60 minutes (self-paced)
+
+Practical workflow for reducing Android telemetry and bloat safely. Learn how to trace “mystery domains” (often discovered via Pi-hole) back to the responsible app/package, then debloat in a reversible way.
+
+#### What's Included
+
+- **[Android Module (Start Here)](android/README.md)** — reading order, glossary, links to Pi-hole/DNS concepts
+- **[Android Debloating Guide](android/debloat.md)** — ADB setup, safety model, investigation workflow, known telemetry domains, Pi-hole regex deny examples
+
+---
+
 ## Project Structure
 
 ```mermaid
@@ -727,6 +742,7 @@ graph TD
     Root --> Module7[system-optimization/<br/>System Optimization]
     Root --> Module8[pi-hole/<br/>Network DNS]
     Root --> Module9[networking/<br/>Networking Fundamentals]
+    Root --> Module10[android/<br/>Android Debloating]
     Root --> Docs[docs/<br/>Documentation]
 
     Module5 --> PracticeEnv[practice-environment/<br/>Interactive Practice]
@@ -748,6 +764,7 @@ graph TD
     style Module7 fill:#e91e63,color:#fff
     style Module8 fill:#607d8b,color:#fff
     style Module9 fill:#3f51b5,color:#fff
+    style Module10 fill:#009688,color:#fff
     style PracticeEnv fill:#607d8b,color:#fff
 ```
 

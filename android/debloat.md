@@ -1,210 +1,267 @@
+# Android Privacy & Debloating (Beginner → Advanced)
 
-```markdown
-# 🛡️ Android Privacy & Bloatware Hunter
+Take back control of your device. This guide helps you:
 
-> **Take back control of your device.** A comprehensive guide and toolkit for identifying background telemetry, analyzing battery drain, and safely debloating Android devices (OxygenOS, ColorOS, MIUI, OneUI, etc.).
+- identify background telemetry (domains / connections / trackers)
+- map “suspicious traffic” back to the responsible app/service
+- safely debloat (without bricking your phone)
 
----
+Works on common Android skins (OxygenOS/ColorOS, MIUI, OneUI, etc.).
 
-## 📖 Table of Contents
-1. [The "Why": Understanding the Problem](#-the-why-understanding-the-problem)
-2. [Prerequisites: Setting up ADB](#-prerequisites-setting-up-adb)
-3. [Phase 1: Automated Debloating (The Easy Way)](#-phase-1-automated-debloating-the-easy-way)
-4. [Phase 2: The Detective Work (Manual Investigation)](#-phase-2-the-detective-work-manual-investigation)
-   - [Network Sniffing](#41-network-sniffing-finding-spies)
-   - [Battery Drain Analysis](#42-battery-drain-analysis)
-   - [Foreground & Service Inspection](#43-foreground--service-inspection)
-5. [Phase 3: On-Device Monitoring Tools](#-phase-3-on-device-monitoring-tools)
-6. [Known Telemetry Domains](#-known-telemetry-domains)
+Related:
+
+- Pi-hole enforcement patterns: [`../pi-hole/docs/hardcoded-dns.md`](../pi-hole/docs/hardcoded-dns.md)
+- DNS fundamentals: [`../networking/docs/dns.md`](../networking/docs/dns.md)
+- Prefer a systematic reading path: [`docs/README.md`](docs/README.md)
 
 ---
 
-## 🧠 The "Why": Understanding the Problem
+## Table of Contents
 
-Modern Android skins are often packed with system services that run constantly in the background. While some are useful, many exist primarily for:
-* **Telemetry:** Sending usage data to remote servers (e.g., `allawnos.com`, `heytapmobile.com`).
-* **Ecosystem Lock-in:** Services like **Ubiquitous Manager Service** that constantly scan for proprietary accessories (watches, tablets).
-* **Bloatware:** Pre-installed apps that consume battery and resources without adding value to you.
-
-This repository helps you **identify** these connections, **understand** which app is responsible, and **remove** (debloat) them safely.
+1. [The why](#the-why)
+2. [Safety model (what “debloat” means)](#safety-model-what-debloat-means)
+3. [Prerequisites: ADB setup](#prerequisites-adb-setup)
+4. [Workflow: Pi-hole clue → app → fix](#workflow-pi-hole-clue--app--fix)
+5. [Phase 1: Automated debloating (recommended start)](#phase-1-automated-debloating-recommended-start)
+6. [Phase 2: Detective work (manual investigation)](#phase-2-detective-work-manual-investigation)
+7. [Phase 3: On-device monitoring tools](#phase-3-on-device-monitoring-tools)
+8. [Known telemetry domains + Pi-hole regex deny](#known-telemetry-domains--pi-hole-regex-deny)
+9. [Disclaimer](#disclaimer)
 
 ---
 
-## ⚙️ Prerequisites: Setting up ADB
+## The why
 
-To communicate with your phone at a system level, you need **ADB (Android Debug Bridge)**.
+Modern Android builds often include vendor services that run constantly in the background. Some are useful. Others primarily exist for:
 
-### 1. Install ADB
-**Arch Linux / Manjaro / EndeavourOS:**
+- **Telemetry**: sending usage/diagnostics to vendor endpoints (e.g., `allawnos.com`, `heytapmobile.com`)
+- **Ecosystem lock-in**: vendor cloud accounts, app stores, assistants, accessory ecosystems
+- **Bloatware**: pre-installed apps you don’t use, still consuming CPU/battery/network
+
+The goal is not “remove everything”. The goal is: understand what’s running, stop what you don’t want, keep the phone stable.
+
+---
+
+## Safety model (what “debloat” means)
+
+Prefer safer actions first:
+
+- **Uninstall for user 0 (recommended)**: removes the app for the main user, but does not delete the system APK.
+  - Typical command: `pm uninstall --user 0 <package>`
+  - Often reversible (without root).
+- **Disable**: prevents the app from running/launching.
+  - Typical command: `pm disable-user --user 0 <package>`
+- **Reduce permissions**: keep the app, reduce the data it can collect.
+
+Rule of thumb:
+
+- Start with community “Recommended” lists (UAD-ng).
+- Change one thing at a time.
+- Keep a small rollback log (what you removed/disabled).
+
+### Rollback / restore (quick recipes)
+
 ```bash
-sudo pacman -S android-tools
+# Re-install an app you uninstalled for user 0
+adb shell cmd package install-existing <package>
 
+# Re-enable an app you disabled
+adb shell pm enable <package>
+
+# List packages including “uninstalled for user 0”
+adb shell pm list packages -u
 ```
 
-**Debian / Ubuntu / Pop!_OS:**
+---
+
+## Prerequisites: ADB setup
+
+ADB (Android Debug Bridge) lets you inspect packages, logs, and sometimes traffic clues.
+
+### Install ADB
+
+Arch Linux:
+
+```bash
+sudo pacman -S android-tools
+```
+
+Debian/Ubuntu:
 
 ```bash
 sudo apt install adb fastboot
-
 ```
 
-**Windows:**
+Windows:
 
-1. Download [SDK Platform Tools](https://developer.android.com/studio/releases/platform-tools).
-2. Extract the folder.
-3. Open CMD/PowerShell in that folder.
+- Download [SDK Platform Tools](https://developer.android.com/studio/releases/platform-tools)
+- Extract and open PowerShell/CMD in that folder
 
-### 2. Prepare Your Phone
+### Prepare your phone
 
-1. Go to **Settings > About Phone > Version**.
-2. Tap **Build Number** 7 times until you see *"You are now a developer!"*.
-3. Go to **Settings > System > Developer Options**.
-4. Enable **USB Debugging**.
-5. Connect your phone to your PC.
-6. Run `adb devices` in your terminal.
-7. **Check your phone screen** and tap "Allow" (Tick "Always allow from this computer").
+1. Enable Developer Options (tap Build Number 7 times).
+2. Enable USB Debugging.
+3. Connect the phone and run:
+
+```bash
+adb devices
+```
+
+Approve the prompt on the phone.
 
 ---
 
-## 🚀 Phase 1: Automated Debloating (The Easy Way)
+## Workflow: Pi-hole clue → app → fix
 
-The safest way to remove bloatware is using **Universal Android Debloater - Next Generation (UAD-ng)**. It uses community-maintained lists to prevent you from breaking your phone.
+If you run Pi-hole, you’ll often discover telemetry like this:
+
+1. You see a domain in Pi-hole Query Log (e.g., `allawnos.com`)
+2. You want to know which app/service is responsible
+3. You debloat/disable the responsible package (and optionally add regex deny rules)
+
+Mental model:
+
+```mermaid
+flowchart LR
+    Phone[Android_device]
+    Router[Router]
+    PiHole[PiHole]
+    Internet[Internet]
+    Clue[Blocked_domain_in_PiHole]
+    ADB[ADB_investigation]
+    UID[UID_to_package]
+    Action[Debloat_disable_uninstall]
+
+    Phone --> Router --> PiHole --> Internet
+    Clue --> ADB --> UID --> Action
+```
+
+Important:
+
+- DNS blocks show what the phone tried to resolve, not always which app did it.
+- Apps can bypass Pi-hole via hardcoded DNS / DoH. For enforcement, see `../pi-hole/docs/hardcoded-dns.md`.
+
+---
+
+## Phase 1: Automated debloating (recommended start)
+
+The safest start is **Universal Android Debloater - Next Generation (UAD-ng)**. It uses community lists to reduce breakage risk.
 
 ### How to use UAD-ng
 
-1. **Download:** Get the latest release for your OS from [GitHub Releases](https://github.com/Universal-Debloater-Alliance/universal-android-debloater-next-generation/releases).
-2. **Launch:**
-* **Linux:** Open terminal in the download folder and run:
+1. Download from [GitHub Releases](https://github.com/Universal-Debloater-Alliance/universal-android-debloater-next-generation/releases)
+2. Launch (Linux example):
+
 ```bash
 chmod +x uad-ng-linux-x86_64
 ./uad-ng-linux-x86_64
-
 ```
 
+3. Debloat:
 
-
-
-3. **Debloat:**
-* The tool will auto-detect your phone model.
-* **Stick to the "Recommended" list** initially.
-* Search for specific packages you found suspicious (e.g., "OnePlus", "Analytics").
-* Select and click **Uninstall Selection**.
-
-
-
-> **Note:** This does not delete files from the System partition (which requires Root). It uninstalls them for `user 0`, effectively stopping them from ever running.
+- Start with “Recommended”
+- Search for vendor analytics/telemetry/cloud packages
+- Uninstall for user 0 (UAD-ng does this)
 
 ---
 
-## 🕵️‍♂️ Phase 2: The Detective Work (Manual Investigation)
+## Phase 2: Detective work (manual investigation)
 
-If you see suspicious activity (like Pi-hole blocks) and don't know which app causes it, use these manual commands.
+Use this when you see a domain (Pi-hole) but want to attribute it to an app.
 
-### 4.1 Network Sniffing: Finding Spies
+### Network clues
 
-If you see pings to `allawnos.com`, find out WHO is doing it.
-
-**Step A: See active connections**
-Run this while the phone is active to see live connections:
+Show active connections:
 
 ```bash
 adb shell netstat -tp
-
 ```
 
-*Look for the IP/Domain in the "Foreign Address" column. The far-right column shows the PID/Program Name.*
-
-**Step B: The "Logcat" Sniffer**
-Stream system logs and filter for the domain name:
+Logcat filter for a domain:
 
 ```bash
 adb shell "logcat | grep 'allawnos.com'"
-
 ```
 
-*Wait for a hit. It will look like: `UID=10145 connected to...*`
-
-**Step C: Identify the App by UID**
-If you found a UID (e.g., `10145`), find the app name:
+If you see a UID, map it to a package:
 
 ```bash
 adb shell pm list packages --uid 10145
-
 ```
 
-### 4.2 Battery Drain Analysis
+### Battery drain clues
 
-Figure out what is keeping your phone awake.
-
-**Check Battery Stats:**
+Quick stats:
 
 ```bash
 adb shell dumpsys battery
-
 ```
 
-**Find "Wakelocks" (Apps preventing sleep):**
-This command is advanced but powerful. It dumps all battery usage stats:
+Detailed:
 
 ```bash
 adb shell dumpsys batterystats > battery_log.txt
-
 ```
 
-*Open `battery_log.txt` on your PC and search for "Wake lock".*
+Search for “Wake lock” / package names.
 
-### 4.3 Foreground & Service Inspection
+### Foreground/service clues
 
-**Who is on screen RIGHT NOW?**
-Great for finding invisible overlays or checking what app just opened.
+Focused app:
 
 ```bash
 adb shell dumpsys window | grep -E 'mCurrentFocus|mFocusedApp'
-
 ```
 
-**List ALL running background services:**
+Running services (long output):
 
 ```bash
 adb shell dumpsys activity services
-
 ```
 
 ---
 
-## 📱 Phase 3: On-Device Monitoring Tools
+## Phase 3: On-device monitoring tools
 
-If you want to monitor traffic *on the phone itself* without a PC:
+If you want visibility without a PC:
 
-### 1. PCAPdroid (Network Monitor)
-
-* **What it does:** acts as a local VPN to log all network connections.
-* **Use case:** You can see exactly which app connects to which server in real-time. It can even decrypt HTTPS traffic if configured.
-* [Download from F-Droid](https://f-droid.org/en/packages/com.emanuelef.remote_capture/)
-
-### 2. TrackerControl
-
-* **What it does:** Identifies and blocks trackers in apps using a massive database of known tracking signatures.
-* **Use case:** Instantly see if your "Flashlight App" is trying to send data to Facebook or Google.
-* [Download from F-Droid](https://f-droid.org/en/packages/net.kollnig.missioncontrol.fdroid/)
+- **PCAPdroid**: local VPN that logs connections and can export PCAPs
+  - F-Droid: [PCAPdroid](https://f-droid.org/en/packages/com.emanuelef.remote_capture/)
+- **TrackerControl**: identifies/blocks trackers via signatures
+  - F-Droid: [TrackerControl](https://f-droid.org/en/packages/net.kollnig.missioncontrol.fdroid/)
 
 ---
 
-## 📝 Known Telemetry Domains
+## Known telemetry domains + Pi-hole regex deny
 
-*(Add to your Pi-hole Blocklist)*
+Use as a starting point. Verify with Pi-hole query logs / PCAPdroid if you’re unsure.
 
-| Domain | Associated Service | Notes |
-| --- | --- | --- |
-| `allawnos.com` | OPPO/OnePlus Cloud | Unified OS telemetry (Weather, OTA, User Experience) |
-| `heytapmobile.com` | HeyTap (OPPO) | Cloud sync, App Market, Browser services |
-| `tracking.miui.com` | Xiaomi | MIUI Analytics |
-| `data.mistat.xiaomi.com` | Xiaomi | User Experience Program |
+| Domain                   | Associated service  | Notes                                              |
+| ------------------------ | ------------------- | -------------------------------------------------- |
+| `allawnos.com`           | OPPO/OnePlus cloud  | Often appears as vendor telemetry (weather/OTA/UX) |
+| `heytapmobile.com`       | HeyTap (OPPO)       | Cloud sync, App Market, vendor services            |
+| `heytapdl.com`           | HeyTap download/CDN | Vendor downloads/updates                           |
+| `tracking.miui.com`      | Xiaomi              | MIUI analytics                                     |
+| `data.mistat.xiaomi.com` | Xiaomi              | User Experience Program                            |
+| `samsungads.com`         | Samsung             | Ads / ad measurement (example; verify on device)   |
+
+### Pi-hole “Regex deny” examples (OEM telemetry)
+
+These match the base domain and all subdomains:
+
+- `(^|\\.)heytapmobile\\.com$`
+- `(^|\\.)heytapdl\\.com$`
+- `(^|\\.)allawnos\\.com$`
+
+Can add more regex for other OEMs:
+
+- Find candidate domains in Pi-hole Query Log / PCAPdroid.
+- Block the base domain with: `(^|\\.)domain\\.tld$`
 
 ---
 
-## ⚠️ Disclaimer
+## Disclaimer
 
-* **Backup your data.**
-* Removing "Expert" or "Unsafe" packages can cause boot loops.
-* I am not responsible for bricked devices. **Always read what a package does before removing it.**
+- Backup your data.
+- Removing “Expert”/“Unsafe” packages can cause boot loops.
+- You are responsible for changes you make; verify packages before removing.

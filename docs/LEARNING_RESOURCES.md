@@ -10,6 +10,7 @@ A curated collection of learning materials to help you understand the concepts a
 
 - [Linux Fundamentals](#linux-fundamentals)
 - [Networking Fundamentals](#networking-fundamentals)
+- [Android Debloating & Privacy](#android-debloating--privacy)
 - [Arch Linux Specific](#arch-linux-specific)
 - [Power Management](#power-management)
 - [Graphics & Display](#graphics--display)
@@ -64,6 +65,28 @@ This repo includes a dedicated networking learning track (beginner → practical
 - **Practice drills index:** [`../networking/practice/drills.md`](../networking/practice/drills.md)
 
 **Why this exists:** it’s the conceptual foundation for modules like Pi-hole (DNS 53 / DoT 853 / DoH 443, DHCP DNS vs WAN DNS, bypass patterns, etc.).
+
+---
+
+## Android Debloating & Privacy
+
+### ⭐ Android Module (Internal Resource)
+
+This repo includes an Android debloating + privacy workflow designed to pair well with Pi-hole:
+
+- how to interpret “mystery domains” in Pi-hole query logs
+- how to attribute them to an Android UID/package via ADB
+- how to debloat safely (uninstall for user 0 / disable) with rollback recipes
+
+- **Start here:** [`../android/README.md`](../android/README.md)
+- **Structured reading path:** [`../android/docs/README.md`](../android/docs/README.md)
+- **Single-page version:** [`../android/debloat.md`](../android/debloat.md)
+
+### Recommended external tools (optional)
+
+- **UAD-ng (Universal Android Debloater - Next Generation)**: https://github.com/Universal-Debloater-Alliance/universal-android-debloater-next-generation
+- **PCAPdroid** (on-device network monitor): https://f-droid.org/en/packages/com.emanuelef.remote_capture/
+- **TrackerControl** (tracker detection/blocking): https://f-droid.org/en/packages/net.kollnig.missioncontrol.fdroid/
 
 ---
 

@@ -489,6 +489,54 @@ Use Simple Scan for quick scans, digiKam for photo library management.
 
 ---
 
+## Android Module Questions
+
+### Q: Do I need root to debloat?
+
+**A:** No. The Android module focuses on safer “no-root” debloating:
+
+- **Uninstall for user 0** (removes for the main user, not the system partition)
+- **Disable** packages (prevents them from running)
+
+Start here: [`android/README.md`](../android/README.md).
+
+---
+
+### Q: What does “uninstall for user 0” mean?
+
+**A:** It removes the app for the main Android user (user 0), but usually does **not** delete the system APK. This makes it more reversible than deleting system apps.
+
+Rollback/restore: [`android/docs/safety-rollback.md`](../android/docs/safety-rollback.md).
+
+---
+
+### Q: How do I restore something I removed/disabled?
+
+**A:** Use the rollback recipes:
+
+- Reinstall: `adb shell cmd package install-existing <package>`
+- Re-enable: `adb shell pm enable <package>`
+
+See: [`android/docs/safety-rollback.md`](../android/docs/safety-rollback.md).
+
+---
+
+### Q: Pi-hole shows a domain, but how do I know which Android app caused it?
+
+**A:** Pi-hole shows “what domain was resolved,” not “which app did it.” Use ADB/logcat to map UID → package, then debloat/disable the responsible package.
+
+See: [`android/docs/investigation.md`](../android/docs/investigation.md).
+
+---
+
+### Q: Some apps still bypass Pi-hole. Why?
+
+**A:** Some apps/devices use hardcoded DNS or DoH/DoT. Fix by enforcing DNS on the router/firewall (allow DNS only to Pi-hole; block/redirect other DNS).
+
+See: [`pi-hole/docs/hardcoded-dns.md`](../pi-hole/docs/hardcoded-dns.md).
+
+---
+
 ## Shell Commands Module Questions
 
 ### Q: What is the Shell Commands module?

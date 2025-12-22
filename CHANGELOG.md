@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - **Pi-hole Network DNS Module** (`pi-hole/`) with quick start guide, router/DHCP wiring, and advanced docs for Unbound, IPv6-safe setup, and hardcoded DNS/DoH blocking.
+- **Android Debloating & Privacy Module** (`android/`) with an ADB-based investigation workflow, safe debloat model, and starter telemetry domains + Pi-hole regex deny examples.
 - **Brother Printer Setup Module** - Complete guide for Brother DCP-T820DW
   - USB and WiFi network printing setup
   - Scanner configuration with SANE

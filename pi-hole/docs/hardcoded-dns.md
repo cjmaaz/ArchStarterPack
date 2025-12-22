@@ -92,6 +92,21 @@ We enforce that DNS traffic (plain or encrypted) must go to Pi-hole, or is block
 
 ---
 
+## OEM telemetry domains (Pi-hole “Regex deny” examples)
+
+If you’re seeing vendor telemetry domains from phones (common with OPPO/OnePlus variants), you can add Pi-hole regex deny rules that match the base domain and all subdomains:
+
+- `(^|\\.)heytapmobile\\.com$`
+- `(^|\\.)heytapdl\\.com$`
+- `(^|\\.)allawnos\\.com$`
+
+Note: Can add more regex for other OEMs.
+
+- Discover candidate domains in **Pi-hole Query Log** (or a phone-side monitor like PCAPdroid).
+- Prefer blocking the base domain with a safe regex: `(^|\\.)domain\\.tld$`
+
+---
+
 ## Verification
 
 From a client:

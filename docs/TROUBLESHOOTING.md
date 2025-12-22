@@ -1,6 +1,6 @@
 # Troubleshooting Guide
 
-**Last Updated:** November 2025
+**Last Updated:** December 2025
 
 This guide covers common issues encountered when using ArchStarterPack configurations and their solutions.
 
