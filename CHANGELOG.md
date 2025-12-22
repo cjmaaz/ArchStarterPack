@@ -47,7 +47,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added deprecation warning banner to external monitor-only NVIDIA guide
 - Updated main README with proper section anchors and links
 - Fixed `gksudo` → `sudo` in CachyOS configuration guide (gksudo is deprecated)
-- Enhanced NVM Fish functions with detailed comments
+- Updated `node_started/` Fish + NVM setup to split the wrapper (`nvm.fish`) from the environment loader (`nvm-load.fish`) and documented Fish `nvm use` limitations.
 - Improved LogiOps configuration with comprehensive CID explanations
 - Added metadata (Last Updated, Difficulty, Time Required) to major guides
 

@@ -202,7 +202,8 @@ Minimal, clean configuration for NVM (Node Version Manager) in Fish shell. No bl
 
 #### What's Included
 
-- **[NVM Fish Setup Guide](node_started/nvm-fish-readme.md)** - Complete minimal setup instructions
+- **[Node.js Setup (main README)](node_started/README.md)** - Explains the Fish/NVM issue and what `config.fish` + `nvm.fish` + `nvm-load.fish` are doing
+- **[NVM Fish Setup Guide](node_started/nvm-fish-readme.md)** - Detailed copy/paste setup instructions
 
   - Installation requirements
   - Fish shell integration
@@ -216,10 +217,8 @@ Minimal, clean configuration for NVM (Node Version Manager) in Fish shell. No bl
   - No fisher or bass required
   - Clean, maintainable approach
 
-- **[NVM Fish Functions](node_started/nvm.fish)** - NVM wrapper and loader functions
-  - `nvm` wrapper that syncs bash environment to Fish
-  - `nvm-load` function for session initialization
-  - PATH synchronization
+- **[NVM Fish Functions](node_started/nvm.fish)** - `nvm` wrapper (runs `nvm` via bash)
+- **[NVM Fish Loader](node_started/nvm-load.fish)** - `nvm-load` env sync (loads default Node into Fish PATH)
 
 #### Philosophy
 
@@ -245,6 +244,7 @@ mkdir -p ~/.config/fish/functions
 # Copy configurations
 cp config.fish ~/.config/fish/config.fish
 cp nvm.fish ~/.config/fish/functions/nvm.fish
+cp nvm-load.fish ~/.config/fish/functions/nvm-load.fish
 
 # Reload shell
 exec fish
@@ -256,6 +256,8 @@ bash -ic 'source /usr/share/nvm/init-nvm.sh && nvm install --lts && nvm alias de
 node -v
 nvm --version
 ```
+
+**Note (Fish shell / `nvm use`)**: `nvm use <version>` runs in a bash subprocess and won’t automatically update the current Fish session’s PATH. Use `nvm-load` after switching (or open a new shell). See `node_started/nvm-fish-readme.md`.
 
 ---
 
