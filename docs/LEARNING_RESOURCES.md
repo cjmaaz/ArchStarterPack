@@ -11,6 +11,7 @@ A curated collection of learning materials to help you understand the concepts a
 - [Linux Fundamentals](#linux-fundamentals)
 - [Networking Fundamentals](#networking-fundamentals)
 - [Android Debloating & Privacy](#android-debloating--privacy)
+- [Virtualization Fundamentals](#virtualization-fundamentals)
 - [Arch Linux Specific](#arch-linux-specific)
 - [Power Management](#power-management)
 - [Graphics & Display](#graphics--display)
@@ -87,6 +88,49 @@ This repo includes an Android debloating + privacy workflow designed to pair wel
 - **UAD-ng (Universal Android Debloater - Next Generation)**: https://github.com/Universal-Debloater-Alliance/universal-android-debloater-next-generation
 - **PCAPdroid** (on-device network monitor): https://f-droid.org/en/packages/com.emanuelef.remote_capture/
 - **TrackerControl** (tracker detection/blocking): https://f-droid.org/en/packages/net.kollnig.missioncontrol.fdroid/
+
+---
+
+## Virtualization Fundamentals
+
+### ⭐ VM Module (Internal Resource)
+
+This repo includes a comprehensive virtualization learning track for KVM/QEMU/libvirt:
+
+- **Start here:** [`../vm/README.md`](../vm/README.md)
+- **Structured reading path:** [`../vm/docs/README.md`](../vm/docs/README.md)
+- **Core docs:** `../vm/docs/`
+  - Virtualization basics: [`../vm/docs/virtualization-basics.md`](../vm/docs/virtualization-basics.md)
+  - Installation & setup: [`../vm/docs/installation-setup.md`](../vm/docs/installation-setup.md)
+  - VM networking: [`../vm/docs/networking.md`](../vm/docs/networking.md)
+  - Performance tuning: [`../vm/docs/performance.md`](../vm/docs/performance.md)
+  - Video & display: [`../vm/docs/video-display.md`](../vm/docs/video-display.md)
+  - Storage management: [`../vm/docs/storage.md`](../vm/docs/storage.md)
+  - Advanced topics: [`../vm/docs/advanced.md`](../vm/docs/advanced.md)
+  - Troubleshooting: [`../vm/docs/troubleshooting.md`](../vm/docs/troubleshooting.md)
+- **Practice drills index:** [`../vm/practice/drills.md`](../vm/practice/drills.md)
+
+**Why this exists:** provides a complete learning path from installation to advanced topics like GPU passthrough, with hands-on practice drills.
+
+### External Resources
+
+**Arch Wiki**
+
+- [KVM](https://wiki.archlinux.org/title/KVM) - Comprehensive KVM guide
+- [QEMU](https://wiki.archlinux.org/title/QEMU) - QEMU configuration and optimization
+- [libvirt](https://wiki.archlinux.org/title/Libvirt) - libvirt management
+- [PCI passthrough](https://wiki.archlinux.org/title/PCI_passthrough_via_OVMF) - GPU passthrough guide
+
+**Official Documentation**
+
+- [QEMU Documentation](https://www.qemu.org/documentation/) - Official QEMU docs
+- [libvirt Documentation](https://libvirt.org/docs.html) - libvirt API and usage
+
+**Learning Path**
+
+1. **Beginner:** Start with [`../vm/docs/virtualization-basics.md`](../vm/docs/virtualization-basics.md) and [`../vm/docs/installation-setup.md`](../vm/docs/installation-setup.md)
+2. **Intermediate:** Learn networking ([`../vm/docs/networking.md`](../vm/docs/networking.md)) and performance ([`../vm/docs/performance.md`](../vm/docs/performance.md))
+3. **Advanced:** Explore GPU passthrough and automation ([`../vm/docs/advanced.md`](../vm/docs/advanced.md))
 
 ---
 

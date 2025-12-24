@@ -489,6 +489,109 @@ Use Simple Scan for quick scans, digiKam for photo library management.
 
 ---
 
+## VM Module Questions
+
+### Q: Do I need hardware virtualization support?
+
+**A:** Yes! Your CPU must support hardware virtualization:
+
+- **Intel:** VT-x (check with `lscpu | grep -i vmx`)
+- **AMD:** AMD-V / SVM (check with `lscpu | grep -i svm`)
+
+If nothing appears, enable virtualization in BIOS/UEFI. There's no software workaround.
+
+**Learn more:** [`../vm/docs/installation-setup.md`](../vm/docs/installation-setup.md)
+
+---
+
+### Q: Why can't I manage VMs without sudo?
+
+**A:** You need to add your user to the `libvirt` group:
+
+```bash
+sudo usermod -aG libvirt $(whoami)
+```
+
+⚠️ **You must log out and log back in** for this to take effect.
+
+**Learn more:** [`../vm/docs/installation-setup.md`](../vm/docs/installation-setup.md), [`../shell-commands/02-commands/usermod.md`](../shell-commands/02-commands/usermod.md)
+
+---
+
+### Q: My VM has no internet. What's wrong?
+
+**A:** Common causes:
+
+1. **libvirt default network inactive:** `sudo virsh net-start default`
+2. **Firewall blocking VM traffic:** Add UFW rules for `virbr0`
+3. **Guest interface not configured:** Check interface name and create NetworkManager profile
+
+**Learn more:** [`../vm/docs/networking.md`](../vm/docs/networking.md), [`../vm/docs/troubleshooting.md`](../vm/docs/troubleshooting.md)
+
+---
+
+### Q: Ping works but apt update hangs. Why?
+
+**A:** This is usually an IPv6 issue in NAT networking. Disable IPv6 in the VM:
+
+```bash
+sudo nano /etc/sysctl.d/99-disable-ipv6.conf
+```
+
+Add:
+
+```
+net.ipv6.conf.all.disable_ipv6 = 1
+net.ipv6.conf.default.disable_ipv6 = 1
+```
+
+Apply: `sudo sysctl --system`
+
+**Learn more:** [`../vm/docs/networking.md`](../vm/docs/networking.md)
+
+---
+
+### Q: My VM feels slow despite low CPU usage. Why?
+
+**A:** VM performance is dominated by graphics, not CPU. Try:
+
+1. **Use Virtio-GPU** instead of QXL (if supported)
+2. **Disable 3D acceleration** (often causes lag)
+3. **Reduce desktop animations** (GNOME/KDE/XFCE)
+4. **Enable host CPU passthrough** in virt-manager
+
+**Learn more:** [`../vm/docs/performance.md`](../vm/docs/performance.md), [`../vm/docs/video-display.md`](../vm/docs/video-display.md)
+
+---
+
+### Q: What's the difference between NAT and bridged networking?
+
+**A:**
+
+- **NAT (default):** VM hidden behind host, works out of the box, safe
+- **Bridged:** VM on same network as host, appears as separate machine, requires bridge setup
+
+Use NAT for learning/testing, bridged for servers/labs.
+
+**Learn more:** [`../vm/docs/networking.md`](../vm/docs/networking.md), [`../vm/docs/advanced.md`](../vm/docs/advanced.md)
+
+---
+
+### Q: Should I install qemu-guest-agent?
+
+**A:** Yes! It provides:
+
+- Accurate IP reporting in virt-manager
+- Clean shutdown/reboot
+- Better display resizing
+- Clipboard integration
+
+Install inside VM: `sudo apt install -y qemu-guest-agent`
+
+**Learn more:** [`../vm/docs/performance.md`](../vm/docs/performance.md)
+
+---
+
 ## Android Module Questions
 
 ### Q: Do I need root to debloat?

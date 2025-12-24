@@ -217,6 +217,20 @@ A comprehensive glossary of technical terms used throughout the ArchStarterPack 
 **Used in:** Pi-hole reachability and DNS timeout troubleshooting
 **Learn More:** [Routing/VLANs/Guest Networks](../networking/docs/routing-vlans-guest.md)
 
+### Guest (VM)
+
+**Definition:** The virtual machine running inside a host
+**Context:** Thinks it has dedicated hardware but shares host resources
+**Used in:** VM module for understanding virtualization concepts
+**Learn More:** [Virtualization Basics](../vm/docs/virtualization-basics.md)
+
+### Guest Agent (qemu-guest-agent)
+
+**Definition:** Service inside VM that improves host↔guest integration
+**Context:** Provides accurate IP reporting, clean shutdown, display resizing, clipboard integration
+**Used in:** VM performance and management
+**Learn More:** [Performance Tuning](../vm/docs/performance.md)
+
 ### grep
 
 **Definition:** Global Regular Expression Print - search text using patterns
@@ -271,6 +285,21 @@ A comprehensive glossary of technical terms used throughout the ArchStarterPack 
 **Definition:** Hardware-managed CPU frequency states (Intel 6th gen+)
 **Context:** Enabled with `intel_pstate=active`
 
+### Host (VM)
+
+**Definition:** The physical machine running the hypervisor and virtual machines
+**Context:** Manages resources (CPU, RAM, disk, network) for guest VMs
+**Used in:** VM module for understanding virtualization concepts
+**Learn More:** [Virtualization Basics](../vm/docs/virtualization-basics.md)
+
+### Hypervisor
+
+**Definition:** Software layer that manages and runs virtual machines
+**Context:** KVM is a Type 1 hypervisor (runs in kernel), QEMU provides Type 2 interface
+**Types:** Type 1 (bare metal) vs Type 2 (hosted)
+**Used in:** VM module for understanding virtualization architecture
+**Learn More:** [Virtualization Basics](../vm/docs/virtualization-basics.md)
+
 ---
 
 ## I
@@ -320,6 +349,14 @@ A comprehensive glossary of technical terms used throughout the ArchStarterPack 
 **Context:** Must include required drivers (NVIDIA, NVMe) for early boot
 **Command:** `mkinitcpio -P` rebuilds initramfs
 
+### IOMMU (Input/Output Memory Management Unit)
+
+**Definition:** Hardware feature that enables device passthrough to VMs
+**Context:** Required for GPU passthrough (VFIO)
+**Types:** Intel VT-d, AMD-Vi
+**Used in:** VM advanced topics (GPU passthrough)
+**Learn More:** [Advanced Topics](../vm/docs/advanced.md), [dmesg command](../shell-commands/02-commands/dmesg.md)
+
 ---
 
 ## J
@@ -353,6 +390,13 @@ A comprehensive glossary of technical terms used throughout the ArchStarterPack 
 **Definition:** Desktop environment
 **Context:** LogiOps gestures configured for KDE shortcuts by default
 
+### KVM (Kernel-based Virtual Machine)
+
+**Definition:** Linux kernel module enabling hardware-assisted virtualization
+**Context:** Provides hypervisor functionality using CPU virtualization extensions (VT-x/AMD-V)
+**Used in:** VM module for creating and managing virtual machines
+**Learn More:** [Virtualization Basics](../vm/docs/virtualization-basics.md), [Installation & Setup](../vm/docs/installation-setup.md)
+
 ---
 
 ## L
@@ -374,6 +418,13 @@ A comprehensive glossary of technical terms used throughout the ArchStarterPack 
 
 **Definition:** Kernel version with extended support/stability
 **Context:** `linux-lts` package provides LTS kernel
+
+### libvirt
+
+**Definition:** Management daemon and API for virtual machines, storage, and networks
+**Context:** Provides unified interface for managing VMs (abstraction layer)
+**Used in:** VM module for VM lifecycle management
+**Learn More:** [Virtualization Basics](../vm/docs/virtualization-basics.md), [virsh command](../shell-commands/02-commands/virsh.md)
 
 ---
 
@@ -431,6 +482,13 @@ A comprehensive glossary of technical terms used throughout the ArchStarterPack 
 ### Optimus
 
 **See:** NVIDIA Optimus
+
+### OVMF (Open Virtual Machine Firmware)
+
+**Definition:** UEFI firmware for virtual machines
+**Context:** Required for modern guest OSes (Windows 10/11, modern Linux)
+**Used in:** VM installation and configuration
+**Learn More:** [Installation & Setup](../vm/docs/installation-setup.md)
 
 ---
 
@@ -549,9 +607,24 @@ A comprehensive glossary of technical terms used throughout the ArchStarterPack 
 ### Stateful Firewall
 
 **Definition:** Firewall that tracks connection state and allows return traffic for established connections
-**Context:** Default “allow outbound, block unsolicited inbound” model on home routers
+**Context:** Default "allow outbound, block unsolicited inbound" model on home routers
 **Used in:** Understanding why outbound DNS bypass works by default
 **Learn More:** [NAT and Firewalls](../networking/docs/nat-firewalls.md)
+
+### SPICE
+
+**Definition:** Remote display protocol for virtual machines
+**Context:** Default display protocol in virt-manager, better performance than VNC
+**Used in:** VM display configuration
+**Learn More:** [Video & Display](../vm/docs/video-display.md)
+
+### Snapshot (VM)
+
+**Definition:** Point-in-time recovery point for a virtual machine
+**Context:** Allows reverting VM to previous state, requires qcow2 disk format
+**Types:** Disk-only snapshot, memory snapshot (save state)
+**Used in:** VM storage management and experimentation
+**Learn More:** [Storage Management](../vm/docs/storage.md), [virsh command](../shell-commands/02-commands/virsh.md)
 
 ### stdin (Standard Input)
 
@@ -669,11 +742,60 @@ A comprehensive glossary of technical terms used throughout the ArchStarterPack 
 
 ## V
 
+### VFIO (Virtual Function I/O)
+
+**Definition:** Linux kernel framework for device passthrough to virtual machines
+**Context:** Required for GPU passthrough, uses IOMMU
+**Used in:** VM advanced topics (GPU passthrough)
+**Learn More:** [Advanced Topics](../vm/docs/advanced.md)
+
+### virt-manager
+
+**Definition:** Graphical user interface for libvirt
+**Context:** User-friendly GUI for creating and managing VMs, comparable to VirtualBox
+**Used in:** VM module for VM management
+**Learn More:** [Virtualization Basics](../vm/docs/virtualization-basics.md), [Installation & Setup](../vm/docs/installation-setup.md)
+
+### virsh
+
+**Definition:** Command-line interface for libvirt
+**Context:** Scriptable, reproducible VM management tool
+**Used in:** VM module for automation and advanced management
+**Learn More:** [virsh command](../shell-commands/02-commands/virsh.md), [Advanced Topics](../vm/docs/advanced.md)
+
+### virbr0
+
+**Definition:** libvirt's default virtual bridge for NAT networking
+**Context:** Private virtual bridge on host, provides DHCP/DNS to VMs
+**Used in:** VM networking configuration
+**Learn More:** [VM Networking](../vm/docs/networking.md), [ip command](../shell-commands/02-commands/ip.md)
+
+### Virtio
+
+**Definition:** Paravirtualized device framework for virtual machines
+**Context:** Includes Virtio-GPU (video), Virtio-NIC (network), provides better performance than emulated devices
+**Used in:** VM performance and networking configuration
+**Learn More:** [Performance Tuning](../vm/docs/performance.md), [Video & Display](../vm/docs/video-display.md)
+
+### VNC (Virtual Network Computing)
+
+**Definition:** Remote display protocol for virtual machines
+**Context:** Alternative to SPICE, more compatible but less performant
+**Used in:** VM display configuration
+**Learn More:** [Video & Display](../vm/docs/video-display.md)
+
 ### VSync (Vertical Synchronization)
 
 **Definition:** Synchronizes frame rate with monitor refresh rate
 **Context:** Eliminates screen tearing
 **Configuration:** Set in compositor (picom, KWin)
+
+### VT-x (Intel Virtualization Technology)
+
+**Definition:** Intel's hardware-assisted virtualization extension
+**Context:** Required for KVM on Intel CPUs, check with `lscpu | grep -i vmx`
+**Used in:** VM installation prerequisites
+**Learn More:** [Installation & Setup](../vm/docs/installation-setup.md), [lscpu command](../shell-commands/02-commands/lscpu.md)
 
 ### VLAN (Virtual LAN)
 

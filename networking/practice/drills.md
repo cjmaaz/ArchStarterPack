@@ -32,6 +32,14 @@ Use this as the “lab workbook” for the networking module.
 
 - [`nat-firewall-drills.md`](nat-firewall-drills.md)
 
+7. Routing: forwarding decisions and routing tables
+
+- [`routing-drills.md`](routing-drills.md)
+
+8. VLANs: isolation and guest networks
+
+- [`vlan-drills.md`](vlan-drills.md)
+
 ---
 
 ## Where to go next

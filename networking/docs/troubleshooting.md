@@ -105,8 +105,15 @@ If you’re stuck, classify the failure:
 
 ---
 
-## 4. Next: practice drills
+## 4. Practice Drills
 
 To build intuition, run the drills:
 
 - [`../practice/drills.md`](../practice/drills.md)
+
+---
+
+## Next
+
+- Home router model (where settings live): [`home-router-model.md`](home-router-model.md)
+- Apply this knowledge to Pi-hole: [`../../pi-hole/README.md`](../../pi-hole/README.md)

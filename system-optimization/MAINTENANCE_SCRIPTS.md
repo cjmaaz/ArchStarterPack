@@ -4,9 +4,57 @@
 
 This guide covers using the provided maintenance scripts, scheduling automated tasks, and integrating maintenance into your workflow.
 
+## What Are Maintenance Scripts?
+
+### Definition
+
+**Maintenance scripts** are automated programs that perform system maintenance tasks like checking health, cleaning caches, removing packages, and optimizing system settings.
+
+### Why Maintenance Scripts Exist
+
+**The problem:** Manual maintenance is:
+
+- **Time-consuming:** Takes time to run commands
+- **Easy to forget:** May forget to maintain system
+- **Error-prone:** Can make mistakes
+- **Inconsistent:** May not maintain regularly
+
+**The solution:** Maintenance scripts:
+
+- **Automate tasks:** Run maintenance automatically
+- **Save time:** Faster than manual work
+- **Reduce errors:** Scripts don't make mistakes
+- **Ensure consistency:** Maintenance happens regularly
+
+**Real-world analogy:**
+
+- **Maintenance scripts = Automated cleaning** (like Roomba for your system)
+- **Manual maintenance = Manual cleaning** (time-consuming, easy to skip)
+- **Automation = Scheduled cleaning** (happens automatically)
+- **Result = Cleaner system with less effort**
+
+### How Maintenance Scripts Work
+
+**Step-by-step process:**
+
+1. **Script runs:** Executes maintenance commands
+2. **Checks system:** Analyzes system state
+3. **Performs tasks:** Cleans, optimizes, removes
+4. **Reports results:** Shows what was done
+5. **Logs activity:** Records maintenance actions
+
 ---
 
 ## Available Scripts
+
+**What scripts provide:** Pre-built automation for common maintenance tasks.
+
+**Why use scripts:**
+
+- **Convenience:** No need to remember commands
+- **Safety:** Built-in safety checks
+- **Consistency:** Same process every time
+- **Efficiency:** Faster than manual work
 
 All scripts are located in the `scripts/` directory:
 
@@ -17,11 +65,66 @@ All scripts are located in the `scripts/` directory:
 | `cleanup-cache.sh`      | Clean all caches         | Shows what will be removed      | Yes           |
 | `system-maintenance.sh` | Full system maintenance  | Comprehensive, includes updates | Yes           |
 
+**Script purposes explained:**
+
+**1. `check-optimization.sh`:**
+
+- **What it does:** Checks system health without making changes
+- **Safety:** Read-only, completely safe
+- **Root needed:** No (reads system info only)
+- **Use:** Monitor system, check before maintenance
+
+**2. `cleanup-packages.sh`:**
+
+- **What it does:** Removes orphaned packages
+- **Safety:** Interactive, asks for confirmation
+- **Root needed:** Yes (removes packages)
+- **Use:** Clean up unused packages
+
+**3. `cleanup-cache.sh`:**
+
+- **What it does:** Cleans all caches (pacman, paru, flatpak, etc.)
+- **Safety:** Shows what will be removed
+- **Root needed:** Yes (cleans system caches)
+- **Use:** Free up disk space
+
+**4. `system-maintenance.sh`:**
+
+- **What it does:** Full system maintenance (updates, cleanup, optimization)
+- **Safety:** Comprehensive with safety checks
+- **Root needed:** Yes (system-wide changes)
+- **Use:** Complete system maintenance
+
 ---
 
 ## check-optimization.sh
 
 **Purpose:** Check system health and optimization status without making changes.
+
+### What This Script Does
+
+**Definition:** **check-optimization.sh** is a read-only diagnostic script that analyzes your system's health and optimization status without modifying anything.
+
+**Why it exists:**
+
+- **Safe monitoring:** Check system without risk
+- **Identify issues:** Find problems before they become serious
+- **Baseline measurement:** Know current system state
+- **Planning:** Understand what needs optimization
+
+**How it works:**
+
+- **Reads system info:** Gathers information from system
+- **Analyzes data:** Processes information
+- **Reports findings:** Shows system status
+- **No changes:** Doesn't modify anything
+
+**Real-world analogy:**
+
+- **check-optimization.sh = Health checkup** (doctor checks your health)
+- **System = Patient** (what's being checked)
+- **Report = Health report** (shows what's found)
+- **No treatment = Read-only** (just checks, doesn't fix)
 
 ### Usage
 
@@ -36,6 +139,12 @@ cd system-optimization
 ./scripts/check-optimization.sh
 ```
 
+**What this does:**
+
+- **`./scripts/check-optimization.sh`:** Runs script from current directory
+- **Requires:** Script file in `scripts/` directory
+- **Result:** System health report
+
 **Run directly from GitHub (no download needed):**
 
 ```bash
@@ -49,18 +158,89 @@ curl -s https://raw.githubusercontent.com/cjmaaz/ArchStarterPack/master/system-o
 curl -s https://raw.githubusercontent.com/cjmaaz/ArchStarterPack/master/system-optimization/scripts/check-optimization.sh | bash
 ```
 
+**What this does:**
+
+- **Downloads script:** Fetches script from GitHub
+- **Runs immediately:** Executes without saving
+- **No installation:** No need to download manually
+- **Always latest:** Uses latest version from GitHub
+
+**How it works:**
+
+1. **`curl -s`:** Downloads script silently
+2. **`bash <(...)`:** Runs script in bash
+3. **Script executes:** Performs health check
+4. **Shows results:** Displays system status
+
 ### What It Checks
 
-- Disk usage (`df -h`)
-- Memory usage (`free -h`)
-- Pacman cache size
-- Paru cache size
-- Flatpak cache size
-- Journal log size
-- Orphaned packages count
-- Outdated packages
-- Service status
-- Boot time analysis
+**Why check these things:**
+
+- **Disk usage:** Know if disk space is low
+- **Memory usage:** See if memory is adequate
+- **Cache sizes:** Identify large caches
+- **Package status:** Find orphaned/outdated packages
+- **System health:** Overall system status
+
+**1. Disk usage (`df -h`):**
+
+- **What:** Shows disk space usage
+- **Why:** Identify low disk space
+- **Use:** Know if cleanup needed
+
+**2. Memory usage (`free -h`):**
+
+- **What:** Shows RAM usage
+- **Why:** Identify memory issues
+- **Use:** Know if memory optimization needed
+
+**3. Pacman cache size:**
+
+- **What:** Size of pacman package cache
+- **Why:** See if cache cleanup needed
+- **Use:** Plan cache cleanup
+
+**4. Paru cache size:**
+
+- **What:** Size of AUR build cache
+- **Why:** See if AUR cache cleanup needed
+- **Use:** Plan AUR cache cleanup
+
+**5. Flatpak cache size:**
+
+- **What:** Size of Flatpak cache
+- **Why:** See if Flatpak cleanup needed
+- **Use:** Plan Flatpak cleanup
+
+**6. Journal log size:**
+
+- **What:** Size of systemd journal logs
+- **Why:** See if log rotation needed
+- **Use:** Plan log cleanup
+
+**7. Orphaned packages count:**
+
+- **What:** Number of orphaned packages
+- **Why:** See if package cleanup needed
+- **Use:** Plan package cleanup
+
+**8. Outdated packages:**
+
+- **What:** Packages with available updates
+- **Why:** Know if updates available
+- **Use:** Plan system updates
+
+**9. Service status:**
+
+- **What:** Status of system services
+- **Why:** Identify service issues
+- **Use:** Troubleshoot service problems
+
+**10. Boot time analysis:**
+
+- **What:** System boot time breakdown
+- **Why:** Identify slow boot services
+- **Use:** Plan boot optimization
 
 ### Output Example
 

@@ -103,3 +103,6 @@ See:
 ## Next
 
 - Troubleshooting flow: [`troubleshooting.md`](troubleshooting.md)
+- DHCP (how DHCP DNS works): [`dhcp.md`](dhcp.md)
+- DNS (understanding DNS bypass): [`dns.md`](dns.md)
+- NAT and firewalls (enforcing DNS policies): [`nat-firewalls.md`](nat-firewalls.md)

@@ -1,272 +1,143 @@
-# KVM + QEMU + virt-manager
+# Virtualization with KVM + QEMU + libvirt
 
-### Arch Linux Virtualization Starter Guide
+This module is a **systematic learning path** to understand and use KVM/QEMU/libvirt virtualization on Arch Linux. Learn how to create, configure, and manage virtual machines for learning, testing, and production use.
 
-This document describes how to set up **KVM + QEMU + virt-manager** on an Arch-based Linux system (including CachyOS) for running other Linux distributions in virtual machines.
-
-This setup is:
-
-* 100% free and open-source
-* Native to the Linux kernel
-* Faster and more stable than VirtualBox on rolling-release systems
-* Suitable for learning, testing, and long-term use
+If you're here because "my VM has no internet" or "my VM feels slow," you likely have a **networking** or **performance configuration** issue.
 
 ---
 
-## What This Stack Is (Conceptual Overview)
+## Start Here (recommended reading order)
 
-Before installing anything, it helps to know what each piece does:
+Follow the structured path in [`docs/README.md`](docs/README.md) for a complete learning journey, or jump to specific topics:
 
-* **KVM (Kernel-based Virtual Machine)**
-  A Linux kernel module that enables hardware-assisted virtualization.
-  This is the core technology — if KVM works, everything else builds on top.
-
-* **QEMU**
-  A userspace emulator and virtualizer. When paired with KVM, it provides near-native performance.
-
-* **libvirt**
-  A daemon and API that manages virtual machines, storage, and networks.
-
-* **virt-manager**
-  A graphical user interface for libvirt. Comparable to VirtualBox’s GUI, but more powerful and more Linux-native.
-
-Think of it as:
-
-> Kernel (KVM) → Engine (QEMU) → Control Plane (libvirt) → Dashboard (virt-manager)
+1. **Virtualization basics** (what is KVM/QEMU/libvirt?)
+   - [`docs/virtualization-basics.md`](docs/virtualization-basics.md)
+2. **Installation & setup** (hardware check, packages, permissions, first VM)
+   - [`docs/installation-setup.md`](docs/installation-setup.md)
+3. **VM networking** (NAT, bridges, DHCP, firewall)
+   - [`docs/networking.md`](docs/networking.md)
+4. **Performance tuning** (CPU, memory, graphics, guest agent)
+   - [`docs/performance.md`](docs/performance.md)
+5. **Video & display** (Virtio vs QXL, 3D acceleration, SPICE vs VNC)
+   - [`docs/video-display.md`](docs/video-display.md)
+6. **Storage** (disk formats, snapshots, backups)
+   - [`docs/storage.md`](docs/storage.md)
+7. **Advanced topics** (GPU passthrough, bridged networking, automation)
+   - [`docs/advanced.md`](docs/advanced.md)
+8. **Troubleshooting** (common issues and solutions)
+   - [`docs/troubleshooting.md`](docs/troubleshooting.md)
+9. **Practice drills** (hands-on verification)
+   - [`practice/drills.md`](practice/drills.md)
 
 ---
 
 ## Prerequisites
 
-### 1. Hardware Virtualization Support
+Before starting, ensure you have:
 
-Your CPU **must** support virtualization.
-
-Check with:
-
-```bash
-lscpu | grep -i virtualization
-```
-
-Expected output:
-
-* `VT-x` → Intel CPUs
-* `AMD-V` → AMD CPUs
-
-If nothing appears:
-
-* Reboot into BIOS/UEFI
-* Enable **Intel VT-x** or **SVM / AMD-V**
-* Save and reboot
-
-No software workaround exists for this.
+- **Hardware virtualization support** (VT-x for Intel, AMD-V for AMD)
+  - Check: [`../shell-commands/02-commands/lscpu.md`](../shell-commands/02-commands/lscpu.md)
+- **Basic networking knowledge** (recommended but not required)
+  - If unfamiliar with NAT, DHCP, DNS: [`../networking/README.md`](../networking/README.md)
+- **Arch Linux or Arch-based distribution** (CachyOS, Manjaro, EndeavourOS, etc.)
+- **Root/sudo access** (for installation and service management)
 
 ---
 
-### 2. Kernel Support
+## Quick Start
 
-Arch-based distributions ship with KVM support enabled by default.
-No custom kernel builds are required.
+1. **Verify hardware support:**
 
----
+   ```bash
+   lscpu | grep -i virtualization
+   ```
 
-## Installation (pacman)
+   Should show `VT-x` (Intel) or `AMD-V` (AMD). If not, enable in BIOS.
 
-Install the full virtualization stack:
+2. **Install packages:**
 
-```bash
-sudo pacman -S qemu-full virt-manager virt-viewer dnsmasq bridge-utils libvirt edk2-ovmf
-```
+   ```bash
+   sudo pacman -S qemu-full virt-manager virt-viewer dnsmasq bridge-utils libvirt edk2-ovmf
+   ```
 
-### What these packages provide
+3. **Enable libvirt:**
 
-* `qemu-full` → QEMU with full feature set
-* `virt-manager` → GUI VM manager
-* `virt-viewer` → Lightweight VM console
-* `libvirt` → VM management daemon
-* `dnsmasq` → Virtual networking
-* `bridge-utils` → Network bridges (future-proofing)
-* `edk2-ovmf` → UEFI firmware for modern guest OSes
+   ```bash
+   sudo systemctl enable --now libvirtd
+   ```
 
----
+4. **Add user to libvirt group:**
 
-## Enable and Start libvirt
+   ```bash
+   sudo usermod -aG libvirt $(whoami)
+   ```
 
-libvirt must be running for any VM to work.
+   ⚠️ **Log out and log back in** for this to take effect.
 
-```bash
-sudo systemctl enable --now libvirtd
-```
+5. **Launch virt-manager:**
+   ```bash
+   virt-manager
+   ```
 
-Verify status:
-
-```bash
-systemctl status libvirtd
-```
-
-You should see `active (running)`.
+For detailed explanations and troubleshooting, see [`docs/installation-setup.md`](docs/installation-setup.md).
 
 ---
 
-## User Permissions (Important)
+## Tools you'll use (with docs)
 
-To manage virtual machines without root access, add your user to the `libvirt` group:
-
-```bash
-sudo usermod -aG libvirt $(whoami)
-```
-
-⚠️ **You must log out and log back in** for this to take effect.
-
-Skipping this step leads to confusing permission errors later.
-
----
-
-## Launching virt-manager
-
-Start the GUI:
-
-```bash
-virt-manager
-```
-
-On first launch:
-
-* Default connection should be **QEMU/KVM**
-* Status should show **Connected**
-* No errors about permissions or hypervisor availability
-
-If virt-manager opens but cannot connect, permissions or libvirtd status is usually the cause.
+- **VM management:** [`../shell-commands/02-commands/virsh.md`](../shell-commands/02-commands/virsh.md)
+- **CPU info:** [`../shell-commands/02-commands/lscpu.md`](../shell-commands/02-commands/lscpu.md)
+- **Kernel modules:** [`../shell-commands/02-commands/lsmod.md`](../shell-commands/02-commands/lsmod.md)
+- **System logs:** [`../shell-commands/02-commands/dmesg.md`](../shell-commands/02-commands/dmesg.md)
+- **Service management:** [`../shell-commands/02-commands/systemctl.md`](../shell-commands/02-commands/systemctl.md)
+- **User management:** [`../shell-commands/02-commands/usermod.md`](../shell-commands/02-commands/usermod.md), [`../shell-commands/02-commands/groups.md`](../shell-commands/02-commands/groups.md)
+- **Network config:** [`../shell-commands/02-commands/nmcli.md`](../shell-commands/02-commands/nmcli.md), [`../shell-commands/02-commands/resolvectl.md`](../shell-commands/02-commands/resolvectl.md)
+- **Firewall:** [`../shell-commands/02-commands/ufw.md`](../shell-commands/02-commands/ufw.md)
+- **Network inspection:** [`../shell-commands/02-commands/ip.md`](../shell-commands/02-commands/ip.md), [`../shell-commands/02-commands/ping.md`](../shell-commands/02-commands/ping.md)
 
 ---
 
-## Creating Your First Virtual Machine
+## How this connects to other modules
 
-1. Click **Create New Virtual Machine**
-2. Choose **Local install media (ISO image)**
-3. Select a Linux ISO file
-4. Allow automatic OS detection (or override if needed)
-5. Allocate:
-
-   * Memory (RAM)
-   * CPU cores
-6. Create virtual disk (qcow2 recommended)
-7. Finish and boot
-
-That’s it. You are now running a Linux distro inside Linux.
+- **Networking module:** Understanding NAT, bridges, DHCP, and DNS helps troubleshoot VM networking issues. See [`../networking/README.md`](../networking/README.md).
+- **System optimization:** Host performance tuning affects VM performance. See [`../system-optimization/README.md`](../system-optimization/README.md).
+- **Pi-hole:** VMs can use Pi-hole for DNS filtering. See [`../pi-hole/README.md`](../pi-hole/README.md).
 
 ---
 
-## Recommended Defaults (Sane Choices)
+## Key Concepts (Quick Glossary)
 
-* **Disk format**: `qcow2`
-  Supports snapshots and compression
+- **KVM (Kernel-based Virtual Machine):** Linux kernel module enabling hardware-assisted virtualization
+- **QEMU:** Userspace emulator/virtualizer that provides the VM runtime
+- **libvirt:** Management daemon and API for VMs, storage, and networks
+- **virt-manager:** Graphical UI for libvirt (like VirtualBox's GUI)
+- **virsh:** Command-line interface for libvirt
+- **Guest:** The virtual machine running inside the host
+- **Host:** The physical machine running the hypervisor
+- **NAT:** Network Address Translation (default VM networking mode)
+- **virbr0:** libvirt's default virtual bridge for NAT networking
+- **qcow2:** Copy-on-write disk image format (supports snapshots)
+- **Guest Agent:** Service inside VM for better host↔guest integration
 
-* **Firmware**: UEFI (OVMF)
-  Better compatibility with modern distros
-
-* **Display**: SPICE
-  Best balance of performance and features
-
-* **Network**: NAT (default)
-  Works out of the box, safe for beginners
-
----
-
-## Networking Notes
-
-By default, libvirt creates a NATed virtual network:
-
-* Guests can access the internet
-* Host is protected
-* No extra configuration required
-
-Advanced setups (bridged networking, VLANs, etc.) can be added later without reinstalling anything.
+For full definitions, see [`../docs/GLOSSARY.md`](../docs/GLOSSARY.md).
 
 ---
 
-## Storage Location
-
-Default VM storage paths:
-
-* Images: `/var/lib/libvirt/images/`
-* XML configs: `/etc/libvirt/qemu/`
-
-These are managed automatically by libvirt.
-Manual editing is rarely needed.
-
----
-
-## Troubleshooting
-
-### virt-manager shows “QEMU/KVM not available”
-
-* Ensure virtualization is enabled in BIOS
-* Verify KVM modules are loaded:
-
-  ```bash
-  lsmod | grep kvm
-  ```
-
-### Permission denied errors
-
-* Confirm user is in `libvirt` group:
-
-  ```bash
-  groups
-  ```
-* Log out and log back in
-
-### Black screen or boot issues
-
-* Ensure UEFI firmware (OVMF) is selected
-* Try switching display from SPICE to VNC (temporary debugging)
-
----
-
-## Why This Instead of VirtualBox?
+## Why KVM/QEMU instead of VirtualBox?
 
 On Arch-based systems:
 
-* Kernel updates are frequent
-* VirtualBox kernel modules can break
-* KVM is part of the kernel itself
-
-This means:
-
-* Fewer breakages
-* Better performance
-* Less maintenance over time
-
-This is the same stack used on:
-
-* Linux servers
-* CI systems
-* Cloud infrastructure
-* Professional virtualization environments
+- **KVM is part of the kernel** → fewer breakages with kernel updates
+- **Better performance** → hardware-assisted virtualization
+- **More stable** → same stack used in production servers and cloud infrastructure
+- **More powerful** → advanced features like GPU passthrough, live migration
 
 ---
 
-## Uninstall (Clean Removal)
+## Next Steps
 
-If you ever want to remove everything:
-
-```bash
-sudo systemctl disable --now libvirtd
-sudo pacman -Rns qemu-full virt-manager virt-viewer dnsmasq bridge-utils libvirt edk2-ovmf
-```
-
-VM images may remain in `/var/lib/libvirt/images/` if created manually — remove if desired.
-
----
-
-## Final Notes
-
-This setup is ideal for:
-
-* Learning Linux distributions
-* Testing configs safely
-* Running experimental environments
-* Long-term, stable virtualization on Arch
-
-Once configured, it rarely needs attention — which is exactly what good infrastructure should do.
+1. **New to virtualization?** Start with [`docs/virtualization-basics.md`](docs/virtualization-basics.md)
+2. **Ready to install?** Follow [`docs/installation-setup.md`](docs/installation-setup.md)
+3. **VM networking issues?** See [`docs/networking.md`](docs/networking.md)
+4. **VM feels slow?** Check [`docs/performance.md`](docs/performance.md)
+5. **Want hands-on practice?** Try [`practice/drills.md`](practice/drills.md)

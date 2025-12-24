@@ -13,6 +13,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - **Pi-hole Network DNS Module** (`pi-hole/`) with quick start guide, router/DHCP wiring, and advanced docs for Unbound, IPv6-safe setup, and hardcoded DNS/DoH blocking.
 - **Android Debloating & Privacy Module** (`android/`) with an ADB-based investigation workflow, safe debloat model, and starter telemetry domains + Pi-hole regex deny examples.
+- **Virtualization Module** (`vm/`) - Complete KVM/QEMU/libvirt learning path
+  - Structured documentation (`vm/docs/`) covering virtualization basics, installation, networking, performance, video/display, storage, advanced topics, and troubleshooting
+  - Practice drills (`vm/practice/`) for setup verification, networking, performance tuning, and virsh command practice
+  - Command documentation for virsh, lscpu, lsmod, dmesg, systemctl, usermod, groups, nmcli, resolvectl, ufw
+  - Cross-integration with networking module for foundational concepts
 - **Brother Printer Setup Module** - Complete guide for Brother DCP-T820DW
   - USB and WiFi network printing setup
   - Scanner configuration with SANE

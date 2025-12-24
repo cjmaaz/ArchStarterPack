@@ -80,9 +80,40 @@ DNS settings are not always shown by `ip`. Depending on your distro/stack, check
 - `cat /etc/resolv.conf`
 - NetworkManager: `nmcli dev show`
 
-For “what is DNS and why Pi-hole depends on it,” read:
+For "what is DNS and why Pi-hole depends on it," read:
 
 - [`../../networking/docs/dns.md`](../../networking/docs/dns.md)
+
+---
+
+## VM Context
+
+### Check virbr0 Interface (libvirt Virtual Bridge)
+
+**On host, check libvirt bridge:**
+
+```bash
+ip a show virbr0
+```
+
+**Expected output:**
+
+```
+3: virbr0: <BROADCAST,MULTICAST,UP,LOWER_UP> ...
+    inet 192.168.122.1/24 brd 192.168.122.255 ...
+```
+
+**What to verify:**
+
+- Interface exists
+- Has IP address (typically `192.168.122.1`)
+- State is `UP`
+
+**If interface missing:**
+
+- Start default network: `sudo virsh net-start default` (on host)
+
+**Learn more:** [`../../vm/docs/networking.md`](../../vm/docs/networking.md)
 
 ---
 

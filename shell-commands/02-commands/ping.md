@@ -21,22 +21,23 @@ ping6 hostname                   # IPv6 ping
 
 ## Common Options
 
-| Option | Purpose |
-|--------|---------|
-| `-c NUM` | Send NUM packets then stop |
-| `-i SEC` | Wait SEC seconds between packets |
-| `-s SIZE` | Packet size in bytes |
-| `-W SEC` | Timeout in seconds |
-| `-q` | Quiet (summary only) |
-| `-v` | Verbose |
-| `-4` | IPv4 only |
-| `-6` | IPv6 only |
+| Option    | Purpose                          |
+| --------- | -------------------------------- |
+| `-c NUM`  | Send NUM packets then stop       |
+| `-i SEC`  | Wait SEC seconds between packets |
+| `-s SIZE` | Packet size in bytes             |
+| `-W SEC`  | Timeout in seconds               |
+| `-q`      | Quiet (summary only)             |
+| `-v`      | Verbose                          |
+| `-4`      | IPv4 only                        |
+| `-6`      | IPv6 only                        |
 
 ---
 
 ## Examples
 
 ### Basic Usage
+
 ```bash
 # Continuous ping (Ctrl+C to stop)
 ping google.com
@@ -49,6 +50,7 @@ ping -c 1 192.168.1.1
 ```
 
 ### Timing and Intervals
+
 ```bash
 # Ping every 2 seconds
 ping -i 2 google.com
@@ -61,6 +63,7 @@ ping -i 0.2 -c 10 google.com
 ```
 
 ### Packet Size
+
 ```bash
 # Large packets
 ping -s 1000 google.com
@@ -73,6 +76,7 @@ ping -M do -s 1472 google.com
 ```
 
 ### Quiet Mode
+
 ```bash
 # Summary only
 ping -q -c 100 google.com
@@ -84,6 +88,7 @@ ping -q -c 100 google.com
 ```
 
 ### Connectivity Checks
+
 ```bash
 # Test if host is up
 if ping -c 1 -W 2 server.com &> /dev/null; then
@@ -103,6 +108,7 @@ done
 ```
 
 ### Statistics and Monitoring
+
 ```bash
 # Collect statistics
 ping -c 100 -q google.com | tail -2
@@ -115,6 +121,7 @@ ping -c 10 -q google.com | awk -F'/' '/^rtt/ {print "Average:", $5, "ms"}'
 ```
 
 ### Network Troubleshooting
+
 ```bash
 # Test local network
 ping -c 4 192.168.1.1  # Gateway
@@ -132,6 +139,7 @@ ping -M do -s 1473 -c 4 google.com  # May fragment
 ```
 
 ### Continuous Monitoring
+
 ```bash
 # Log pings with timestamp
 ping google.com | while read line; do
@@ -144,6 +152,7 @@ awk -F'[%,]' '{if ($3 > 0) print "ALERT: Packet loss detected:", $3"%"}'
 ```
 
 ### Salesforce Connectivity
+
 ```bash
 # Test Salesforce instance reachability
 ping -c 4 login.salesforce.com
@@ -156,6 +165,7 @@ ping -c 1 -W 2 login.salesforce.com && echo "Salesforce reachable" || echo "Cann
 ```
 
 ### Scripting Examples
+
 ```bash
 # Health check script
 #!/bin/bash
@@ -179,6 +189,27 @@ done
 
 ---
 
-**All Phases Complete! Final step: README update**
+## VM Context
 
-**Next**: Update [README.md](../README.md)
+### Test VM Networking
+
+**Inside VM, verify connectivity:**
+
+```bash
+# Test gateway (libvirt dnsmasq)
+ping -c 3 192.168.122.1
+
+# Test internet
+ping -c 3 8.8.8.8
+
+# Test DNS resolution
+ping -c 3 google.com
+```
+
+**If ping works but apt fails:**
+
+- IPv6 issue (common in NAT)
+- Firewall blocking HTTP/HTTPS
+- See [`../../vm/docs/networking.md`](../../vm/docs/networking.md)
+
+**Learn more:** [`../../vm/docs/networking.md`](../../vm/docs/networking.md), [`../../vm/docs/troubleshooting.md`](../../vm/docs/troubleshooting.md)

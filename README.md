@@ -720,12 +720,61 @@ cat README.md
 **Difficulty:** Beginner → Intermediate
 **Time Required:** 30-60 minutes (self-paced)
 
-Practical workflow for reducing Android telemetry and bloat safely. Learn how to trace “mystery domains” (often discovered via Pi-hole) back to the responsible app/package, then debloat in a reversible way.
+Practical workflow for reducing Android telemetry and bloat safely. Learn how to trace "mystery domains" (often discovered via Pi-hole) back to the responsible app/package, then debloat in a reversible way.
 
 #### What's Included
 
 - **[Android Module (Start Here)](android/README.md)** — reading order, glossary, links to Pi-hole/DNS concepts
 - **[Android Debloating Guide](android/debloat.md)** — ADB setup, safety model, investigation workflow, known telemetry domains, Pi-hole regex deny examples
+
+---
+
+### 11. Virtualization with KVM/QEMU/libvirt
+
+**Location:** [`vm/`](vm/)
+**Difficulty:** Beginner → Advanced
+**Time Required:** 60-120 minutes (self-paced)
+
+Complete learning path for KVM/QEMU/libvirt virtualization on Arch Linux. Create, configure, and manage virtual machines for learning, testing, and production use.
+
+#### What's Included
+
+- **[VM Module (Start Here)](vm/README.md)** — entry point with reading path and quick start
+- **Structured docs:** `vm/docs/` (virtualization basics, installation, networking, performance, video/display, storage, advanced topics, troubleshooting)
+- **Practice drills:** `vm/practice/` (setup verification, networking, performance, virsh commands)
+
+#### Key Features
+
+✅ Hardware virtualization support verification
+✅ Complete installation and setup guide
+✅ VM networking (NAT, bridges, firewall configuration)
+✅ Performance tuning (CPU, memory, graphics, guest agent)
+✅ Video/display configuration (Virtio vs QXL, 3D acceleration)
+✅ Storage management (qcow2, snapshots, backups)
+✅ Advanced topics (GPU passthrough, bridged networking, automation)
+✅ Comprehensive troubleshooting guide
+
+#### Quick Start
+
+```bash
+cd vm/
+
+# Verify hardware support
+lscpu | grep -i virtualization
+
+# Install packages
+sudo pacman -S qemu-full virt-manager virt-viewer dnsmasq bridge-utils libvirt edk2-ovmf
+
+# Enable libvirt
+sudo systemctl enable --now libvirtd
+
+# Add user to libvirt group
+sudo usermod -aG libvirt $(whoami)
+# Log out and log back in
+
+# Launch virt-manager
+virt-manager
+```
 
 ---
 
@@ -765,6 +814,7 @@ graph TD
     style Module8 fill:#607d8b,color:#fff
     style Module9 fill:#3f51b5,color:#fff
     style Module10 fill:#009688,color:#fff
+    style Module11 fill:#795548,color:#fff
     style PracticeEnv fill:#607d8b,color:#fff
 ```
 
@@ -939,6 +989,9 @@ flowchart TD
     Start --> Need9{Learn<br/>Networking?}
     Need9 -->|Yes| Networking[networking/<br/>Networking Fundamentals]
 
+    Start --> Need10{Virtualization<br/>VMs?}
+    Need10 -->|Yes| VM[vm/<br/>KVM/QEMU/libvirt]
+
     CachyOS --> End([Start Configuration])
     LogiOps --> End
     NodeJS --> End
@@ -948,6 +1001,7 @@ flowchart TD
     Optimization --> End
     PiHole --> End
     Networking --> End
+    VM --> End
 
     style Start fill:#e1f5ff
     style End fill:#c8e6c9
@@ -960,6 +1014,7 @@ flowchart TD
     style Optimization fill:#e91e63,color:#fff
     style PiHole fill:#607d8b,color:#fff
     style Networking fill:#3f51b5,color:#fff
+    style VM fill:#795548,color:#fff
 ```
 
 **Module Selection:**
@@ -972,6 +1027,7 @@ flowchart TD
   - For package management: `cd linux-packages/`
 - For system optimization: `cd system-optimization/`
 - For network-wide DNS blocking: `cd pi-hole/`
+- For virtualization/VMs: `cd vm/`
 
 4. **Read the documentation:**
    Each module contains detailed README files with step-by-step instructions.
