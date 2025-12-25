@@ -36,7 +36,7 @@
 **Step-by-step process:**
 
 1. **Pi-hole receives query:** Device asks Pi-hole "What is IP of example.com?"
-2. **Pi-hole checks blocklist:** Pi-hole checks if domain is blocked
+2. **Pi-hole checks blocklist:** Pi-hole checks if domain is blocked (see [Blocklists and Whitelists Guide](blocklists-whitelists.md) for managing blocklists)
 3. **If blocked:** Pi-hole returns `0.0.0.0` (blocked)
 4. **If allowed:** Pi-hole forwards query to Unbound (not public DNS)
 5. **Unbound resolves:** Unbound queries root servers, TLD servers, authoritative servers
@@ -126,6 +126,8 @@ flowchart LR
 - **Blocking first:** Blocklists checked before resolution
 - **Privacy preserved:** Blocked domains never queried
 - **Efficiency:** Don't waste time resolving blocked domains
+
+**Learn more:** See [Blocklists and Whitelists Guide](blocklists-whitelists.md) for managing and enhancing your blocklists.
 
 **3. Pi-hole forwards to Unbound:**
 
@@ -786,7 +788,7 @@ $ dig google.com @192.168.0.109
 **Why this matters:**
 
 - **Pi-hole first:** All queries go through Pi-hole first
-- **Blocklists applied:** Pi-hole checks blocklists before forwarding
+- **Blocklists applied:** Pi-hole checks blocklists before forwarding (see [Blocklists and Whitelists Guide](blocklists-whitelists.md) for enhancing blocking)
 - **Unbound second:** Unbound only resolves allowed domains
 - **Architecture:** Clients → Pi-hole → Unbound (not Clients → Unbound)
 

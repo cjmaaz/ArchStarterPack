@@ -62,6 +62,8 @@ Rules:
 
    Expect blocked domains to resolve to `::` or Pi-hole sink address.
 
+   **Note:** Blocklists apply to both IPv4 and IPv6 queries. See [Blocklists and Whitelists Guide](blocklists-whitelists.md) for managing your blocklists.
+
 5. **Firewall sanity (optional)**
    - Block outbound DNS (53/853) except to Pi-hole addresses (v4 + v6).
    - This prevents IPv6 DNS leakage to public resolvers.

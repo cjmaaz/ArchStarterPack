@@ -1016,6 +1016,7 @@ pi@192.168.0.109's password:
 
 ## Advanced Topics (separate docs)
 
+- **Blocklists and Whitelists:** Enhance blocking with well-maintained lists: see [`docs/blocklists-whitelists.md`](docs/blocklists-whitelists.md)
 - Local recursive DNS with Unbound: see [`docs/unbound.md`](docs/unbound.md)
 - IPv6-safe setup: see [`docs/ipv6.md`](docs/ipv6.md)
 - Blocking hardcoded DNS / DoH clients: see [`docs/hardcoded-dns.md`](docs/hardcoded-dns.md)
