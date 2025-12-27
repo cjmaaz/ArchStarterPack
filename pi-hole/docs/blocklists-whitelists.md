@@ -215,13 +215,52 @@ https://raw.githubusercontent.com/ShadowWhisperer/BlockLists/RAW/ads.txt
 - **Community-driven:** Community contributions
 - **Categorized:** Clear organization
 
-### 6. Other Well-Maintained Repositories
+### 6. r0xd4n3t Pi-hole Adblock Lists
 
-**r0xd4n3t/pihole-adblock-lists:**
+**Repository:** [`https://github.com/r0xd4n3t/pihole-adblock-lists`](https://github.com/r0xd4n3t/pihole-adblock-lists)
 
-- **Repository:** [`https://github.com/r0xd4n3t/pihole-adblock-lists`](https://github.com/r0xd4n3t/pihole-adblock-lists)
-- **What it is:** Consolidated list of adblock lists, automatically updated daily
-- **Raw URL:** `https://raw.githubusercontent.com/r0xd4n3t/pihole-adblock-lists/main/pihole_adlists.txt`
+**What it is:** A comprehensive consolidated blocklist containing over 1.4 million domains, automatically updated daily. This list aggregates multiple well-known blocklists into a single file optimized for Pi-hole.
+
+**Available list:**
+
+- **pihole_adlists.txt:** Comprehensive consolidated blocklist - 1,480,646+ domains
+  - **Raw URL:** [`https://raw.githubusercontent.com/r0xd4n3t/pihole-adblock-lists/main/pihole_adlists.txt`](https://raw.githubusercontent.com/r0xd4n3t/pihole-adblock-lists/main/pihole_adlists.txt)
+
+**How to use:**
+
+1. **Get raw URL:** Use the raw GitHub URL:
+   ```
+   https://raw.githubusercontent.com/r0xd4n3t/pihole-adblock-lists/main/pihole_adlists.txt
+   ```
+2. **Add to Pi-hole:** Paste URL in Pi-hole Admin → Group Management → Adlists → Add
+3. **Update Gravity:** Run `pihole -g` to download and apply the list
+
+**What this list includes:**
+
+- **Advertising domains:** Ad-serving networks and services
+- **Tracking domains:** Analytics and tracking services
+- **Malicious domains:** Malware, phishing, and scam domains
+- **Suspicious domains:** Potentially unwanted domains
+- **NSFW content:** Adult content domains (if applicable)
+
+**Why this repository:**
+
+- **Comprehensive:** Over 1.4 million domains in a single list
+- **Daily updates:** Automatically updated every day
+- **Consolidated:** Combines multiple trusted sources
+- **Pi-hole optimized:** Formatted specifically for Pi-hole
+- **Well-maintained:** Active development and regular updates
+
+**Note:** This is a very large list. While comprehensive, it may cause more false positives than smaller, curated lists. Consider starting with smaller lists and adding this one if you need maximum blocking coverage.
+
+**Repository information:**
+
+- **License:** MIT license
+- **Last modified:** Regularly updated (check repository for latest date)
+- **Contact:** r0xd4n3t
+- **Donation:** [`https://ko-fi.com/r0xd4n3t`](https://ko-fi.com/r0xd4n3t)
+
+### 7. Other Well-Maintained Repositories
 
 **stevejenkins/pi-hole-lists:**
 
