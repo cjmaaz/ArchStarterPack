@@ -303,15 +303,39 @@ Success
 
 **PCAPdroid:**
 
-- **What:** On-device network monitoring app
-- **Why:** See network activity directly on phone
-- **How:** Install, monitor connections, verify no connections to domain
+- **What:** On-device network monitoring app with TLS decryption support
+- **Why:** See network activity directly on phone, decrypt encrypted traffic
+- **How:**
+  1. Install PCAPdroid from F-Droid
+  2. For TLS decryption: Install PCAPdroid MITM addon from IzzyOnDroid repository (see [`fdroid-setup.md`](fdroid-setup.md))
+  3. Start capture and monitor connections
+  4. Verify no connections to blocked domain
+  5. Use TLS decryption to see encrypted traffic content
+- **Advanced:** Export PCAP files for analysis in Wireshark
 
 **TrackerControl:**
 
 - **What:** Tracker blocking and monitoring app
-- **Why:** Identify and block trackers
-- **How:** Install, check tracker list, verify domain blocked
+- **Why:** Identify and block trackers, see tracking activity
+- **How:**
+  1. Install TrackerControl from F-Droid
+  2. Enable VPN when prompted
+  3. Browse apps to see tracker information
+  4. Check tracker list, verify domain blocked
+  5. Monitor real-time tracker activity
+
+**NetGuard:**
+
+- **What:** No-root firewall with traffic logging
+- **Why:** Block apps from internet, log connections
+- **How:**
+  1. Install NetGuard from F-Droid
+  2. Configure app rules (allow/block)
+  3. Enable logging (PRO feature)
+  4. Monitor network activity
+  5. Export PCAP files for analysis
+
+**Learn more:** See [`advanced-fdroid-apps.md`](advanced-fdroid-apps.md) for comprehensive guide to on-device monitoring tools.
 
 **Real-world example:**
 
@@ -355,3 +379,5 @@ Success
 **Read:**
 
 - **Enforcement patterns:** [`../../pi-hole/docs/hardcoded-dns.md`](../../pi-hole/docs/hardcoded-dns.md)
+- **Advanced F-Droid apps:** [`advanced-fdroid-apps.md`](advanced-fdroid-apps.md)
+- **IzzyOnDroid setup:** [`fdroid-setup.md`](fdroid-setup.md)

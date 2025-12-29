@@ -72,9 +72,15 @@ This module helps you reduce background telemetry and bloat on Android devices s
    - Master investigation techniques
 
 5. **OEM domains + Pi-hole regex:** [`docs/oem-domains.md`](docs/oem-domains.md)
+
    - Learn about vendor telemetry domains
    - Understand Pi-hole blocking strategies
    - Apply regex deny rules
+
+6. **Advanced F-Droid apps (optional):** [`docs/advanced-fdroid-apps.md`](docs/advanced-fdroid-apps.md)
+   - Learn about on-device monitoring tools
+   - Understand PCAPdroid, TrackerControl, NetGuard
+   - Set up IzzyOnDroid repository for advanced tools
 
 ### For Quick Reference
 
@@ -321,6 +327,8 @@ After completing this module, you'll be able to:
 - Pi-hole running on your network
 - Understanding of DNS and networking
 - Backup of important data
+- On-device monitoring tools (PCAPdroid, TrackerControl, NetGuard)
+- F-Droid installed with IzzyOnDroid repository (for advanced tools like PCAPdroid MITM)
 
 ### Why Each Prerequisite Matters
 
@@ -347,6 +355,19 @@ After completing this module, you'll be able to:
 - **Why helpful:** Shows telemetry domains
 - **What happens without:** Harder to identify telemetry
 - **Real-world:** Like a security camera showing what's happening
+
+**On-Device Monitoring Tools (Optional):**
+
+- **Why helpful:** Monitor network activity directly on Android device, decrypt TLS traffic
+- **What happens without:** Must rely on Pi-hole logs and ADB investigation
+- **Real-world:** Like having a network monitor built into your phone
+- **Tools available:**
+  - **PCAPdroid:** Network monitoring and TLS decryption (requires IzzyOnDroid repo for MITM addon)
+  - **TrackerControl:** Tracker detection and blocking
+  - **NetGuard:** Firewall with traffic logging
+  - **RethinkDNS:** DNS + Firewall + VPN solution
+- **Setup:** See [`docs/fdroid-setup.md`](docs/fdroid-setup.md) for IzzyOnDroid repository setup
+- **Learn more:** See [`docs/advanced-fdroid-apps.md`](docs/advanced-fdroid-apps.md) for comprehensive guide
 
 ---
 

@@ -13,6 +13,8 @@ Related:
 - Pi-hole enforcement patterns: [`../pi-hole/docs/hardcoded-dns.md`](../pi-hole/docs/hardcoded-dns.md)
 - DNS fundamentals: [`../networking/docs/dns.md`](../networking/docs/dns.md)
 - Prefer a systematic reading path: [`docs/README.md`](docs/README.md)
+- Advanced F-Droid apps: [`docs/advanced-fdroid-apps.md`](docs/advanced-fdroid-apps.md)
+- IzzyOnDroid setup: [`docs/fdroid-setup.md`](docs/fdroid-setup.md)
 
 ---
 
@@ -330,12 +332,180 @@ adb shell dumpsys activity services
 
 ## Phase 3: On-device monitoring tools
 
-If you want visibility without a PC:
+If you want visibility without a PC, these on-device tools can help monitor and analyze network traffic directly on your Android device.
 
-- **PCAPdroid**: local VPN that logs connections and can export PCAPs
-  - F-Droid: [PCAPdroid](https://f-droid.org/en/packages/com.emanuelef.remote_capture/)
-- **TrackerControl**: identifies/blocks trackers via signatures
-  - F-Droid: [TrackerControl](https://f-droid.org/en/packages/net.kollnig.missioncontrol.fdroid/)
+### PCAPdroid
+
+**What it is:** A privacy-friendly, no-root network monitor and traffic dump tool that logs connections and can export PCAP files for analysis.
+
+**Features:**
+
+- **Connection logging:** Logs all network connections made by apps
+- **PCAP export:** Export traffic dumps for analysis in Wireshark
+- **TLS decryption:** Decrypt HTTPS/TLS traffic with the PCAPdroid MITM addon
+- **App attribution:** See which app made each connection
+- **Filtering:** Filter connections by app, domain, protocol
+
+**Installation:**
+
+- **PCAPdroid:** Available from F-Droid main repository: [PCAPdroid](https://f-droid.org/en/packages/com.emanuelef.remote_capture/)
+- **PCAPdroid MITM addon:** Required for TLS decryption, available from IzzyOnDroid repository (see [`docs/fdroid-setup.md`](docs/fdroid-setup.md) for setup instructions)
+
+**Why use it:**
+
+- **On-device monitoring:** See network activity directly on your phone
+- **TLS decryption:** Decrypt encrypted traffic to see what apps are sending
+- **No root required:** Works without root access
+- **Detailed analysis:** Export PCAP files for deeper analysis
+
+**How to use:**
+
+1. Install PCAPdroid from F-Droid
+2. Grant VPN permission when prompted
+3. Start capture to begin monitoring
+4. View connections in the app
+5. For TLS decryption: Install PCAPdroid MITM addon from IzzyOnDroid repo
+
+**Use cases:**
+
+- **Telemetry investigation:** See which apps connect to which domains
+- **Traffic analysis:** Analyze network behavior of apps
+- **Debugging:** Troubleshoot network issues
+- **Privacy audit:** Check what data apps are sending
+
+**Learn more:** See [`docs/advanced-fdroid-apps.md`](docs/advanced-fdroid-apps.md) for detailed usage guide.
+
+### TrackerControl
+
+**What it is:** An app that monitors and controls hidden data collection (tracking) in mobile apps.
+
+**Features:**
+
+- **Tracker detection:** Identifies tracking domains using Disconnect blocklist and in-house analysis
+- **Selective blocking:** Block tracking selectively per app
+- **GDPR information:** Educates about data protection rights
+- **Company attribution:** Shows which companies are behind tracking
+- **Purpose identification:** Identifies tracking purposes (analytics, advertising, etc.)
+
+**Installation:**
+
+- Available from F-Droid main repository: [TrackerControl](https://f-droid.org/en/packages/net.kollnig.missioncontrol.fdroid/)
+
+**Why use it:**
+
+- **Privacy protection:** Block hidden tracking in apps
+- **Transparency:** See what trackers apps use
+- **Selective control:** Choose which trackers to block
+- **No root required:** Works without root access
+
+**How to use:**
+
+1. Install TrackerControl from F-Droid
+2. Enable VPN when prompted
+3. Browse apps to see tracker information
+4. Configure blocking rules per app
+5. Monitor tracker activity in real-time
+
+**Use cases:**
+
+- **Privacy audit:** See which apps use trackers
+- **Tracker blocking:** Prevent data collection
+- **Research:** Analyze tracking practices
+- **GDPR compliance:** Understand your data protection rights
+
+**Learn more:** See [`docs/advanced-fdroid-apps.md`](docs/advanced-fdroid-apps.md) for detailed usage guide.
+
+### NetGuard
+
+**What it is:** A simple, no-root firewall that blocks internet access per application.
+
+**Features:**
+
+- **Per-app blocking:** Block apps from accessing WiFi and/or mobile data
+- **Traffic logging:** Log all outgoing traffic (PRO feature)
+- **Per-address rules:** Allow/block individual addresses per app (PRO)
+- **PCAP export:** Export PCAP files for analysis (PRO)
+- **No root required:** Works without root access
+
+**Installation:**
+
+- Available from F-Droid main repository: [NetGuard](https://f-droid.org/en/packages/eu.faircode.netguard/)
+
+**Why use it:**
+
+- **Data saving:** Block apps from using mobile data
+- **Privacy:** Prevent apps from connecting to internet
+- **Battery optimization:** Reduce background network activity
+- **Firewall control:** Fine-grained network control
+
+**How to use:**
+
+1. Install NetGuard from F-Droid
+2. Enable VPN when prompted
+3. Configure app rules (allow/block WiFi/mobile)
+4. Enable logging if needed (PRO feature)
+5. Monitor network activity
+
+**Use cases:**
+
+- **Data management:** Control which apps use mobile data
+- **Privacy:** Block apps from internet access
+- **Battery saving:** Reduce background network activity
+- **Traffic analysis:** Log and analyze app connections
+
+**Learn more:** See [`docs/advanced-fdroid-apps.md`](docs/advanced-fdroid-apps.md) for detailed usage guide.
+
+### RethinkDNS
+
+**What it is:** A comprehensive DNS + Firewall + VPN solution for Android.
+
+**Features:**
+
+- **DNS customization:** Use custom DNS servers (300+ locations worldwide)
+- **Firewall:** Block apps from internet access
+- **WireGuard VPN:** Secure VPN connections
+- **Malware blocking:** Block malicious domains
+- **Traffic monitoring:** Monitor network activity
+
+**Installation:**
+
+- Available from F-Droid main repository: [RethinkDNS](https://f-droid.org/en/packages/com.celzero.bravedns/)
+
+**Why use it:**
+
+- **All-in-one solution:** DNS, firewall, and VPN in one app
+- **Privacy:** Encrypt DNS queries and block tracking
+- **Security:** Block malware and malicious domains
+- **Censorship circumvention:** Bypass DNS-based censorship
+
+**How to use:**
+
+1. Install RethinkDNS from F-Droid
+2. Configure DNS servers
+3. Set up firewall rules
+4. Configure VPN if needed
+5. Monitor network activity
+
+**Use cases:**
+
+- **Comprehensive network security:** DNS + firewall + VPN
+- **Censorship circumvention:** Bypass DNS blocking
+- **Privacy protection:** Encrypt DNS and block trackers
+- **Malware protection:** Block malicious domains
+
+**Learn more:** See [`docs/advanced-fdroid-apps.md`](docs/advanced-fdroid-apps.md) for detailed usage guide.
+
+### Setting Up IzzyOnDroid Repository
+
+Some advanced tools (like PCAPdroid MITM addon) require the IzzyOnDroid repository. See [`docs/fdroid-setup.md`](docs/fdroid-setup.md) for step-by-step setup instructions.
+
+**Quick reference:**
+
+- **Repository URL:** `https://apt.izzysoft.de/fdroid/repo`
+- **Fingerprint (optional):** `3BF0D6ABFEAE2F401707B6D966BE743BF0EEE49C2561B9BA39073711F628937A`
+- **Why needed:** Access to apps not in main F-Droid repository (like PCAPdroid MITM)
+
+**Learn more:** See [`docs/advanced-fdroid-apps.md`](docs/advanced-fdroid-apps.md) for comprehensive guide to advanced F-Droid apps.
 
 ---
 
