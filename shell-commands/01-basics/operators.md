@@ -319,7 +319,7 @@ done
 deploy_with_retry() {
     local max_attempts=3
     local attempt=1
-    
+
     until sf project deploy start --target-org $1 || [ $attempt -eq $max_attempts ]; do
         echo "Deploy failed, attempt $attempt of $max_attempts"
         echo "Waiting 30 seconds..."
@@ -365,6 +365,8 @@ for i in {1..5}; do echo "Count: $i"; done
 
 **Purpose**: Run command in background
 
+**Important Note:** Using `&` alone does NOT detach the process from the terminal. The process will terminate when the terminal closes. To keep processes running after terminal closure, use `disown`, `nohup`, or `setsid`. See [Process Detachment](../03-combinations/chaining.md#process-detachment-keeping-processes-running-after-terminal-closes) for details.
+
 ### Examples
 
 **Beginner:**
@@ -383,6 +385,9 @@ long_process > output.log 2>&1 &
 
 # Get job PID
 long_process & echo $!
+
+# Detach from terminal (survives terminal closure)
+long_process > output.log 2>&1 & disown
 ```
 
 **Advanced:**
@@ -392,6 +397,11 @@ for file in *.txt; do
     process_file "$file" &
 done
 wait  # Wait for all background jobs
+
+# Detached parallel processing (survives terminal closure)
+for file in *.txt; do
+    nohup process_file "$file" > ${file}.log 2>&1 & disown
+done
 ```
 
 ---

@@ -236,6 +236,334 @@ If it launches successfully, the AppImage itself is working correctly.
 
 ---
 
+## Running Applications in Background and Detaching from Terminal
+
+**What process detachment means:** Running applications or commands in a way that they continue running even after you close the terminal, log out, or disconnect from SSH.
+
+**Why this matters for package management:**
+
+- **Long-running installations:** Package installations that take time
+- **AppImage updates:** Updating AppImages in the background
+- **Flatpak operations:** Long-running Flatpak installs or updates
+- **Background services:** Applications that should run continuously
+
+**Real-world scenarios:**
+
+- Installing large Flatpak applications
+- Running AppImages that perform long operations
+- Updating multiple packages
+- Running applications that should survive terminal closure
+
+### Background Execution with `&`
+
+**Basic background execution:**
+
+```bash
+# Run AppImage in background
+~/.local/bin/myapp &
+
+# Run Flatpak install in background
+flatpak install flathub org.gimp.GIMP &
+
+# Run package update in background
+paru -Syu &
+```
+
+**What this does:**
+
+- **`&`:** Runs command in background
+- **Terminal free:** You can continue using terminal
+- **Output visible:** Output still appears in terminal
+- **⚠️ Limitation:** Process terminates when terminal closes
+
+**Real-world example:**
+
+```bash
+# Start AppImage in background
+~/.local/bin/myapp &
+
+# Terminal returns immediately
+# You can run other commands
+# But closing terminal kills the app ❌
+```
+
+### Detaching Processes: `disown`
+
+**What `disown` does:** Removes a job from the shell's job table, preventing SIGHUP from being sent when terminal closes.
+
+**Basic usage:**
+
+```bash
+# Start and immediately detach
+~/.local/bin/myapp & disown
+
+# Or detach existing background job
+~/.local/bin/myapp &
+disown %1  # Disown job number 1
+disown $!  # Disown last background process
+```
+
+**What this does:**
+
+- **`&`:** Starts process in background
+- **`disown`:** Removes from shell's job table
+- **Result:** Process survives terminal closure ✅
+
+**Real-world example:**
+
+```bash
+# Start AppImage, detach from terminal
+~/.local/bin/myapp & disown
+
+# Close terminal - app continues running ✅
+```
+
+**With output redirection:**
+
+```bash
+# Detach and redirect output to log file
+~/.local/bin/myapp > app.log 2>&1 & disown
+
+# Output goes to app.log, not terminal
+# Process survives terminal closure
+```
+
+### Using `nohup` for Long-Running Tasks
+
+**What `nohup` does:** Runs a command immune to "hangup" signals (SIGHUP), automatically redirecting output to `nohup.out`.
+
+**Basic usage:**
+
+```bash
+# Run with nohup
+nohup ~/.local/bin/myapp &
+
+# Output goes to nohup.out
+```
+
+**Custom output file:**
+
+```bash
+# Redirect to custom file
+nohup ~/.local/bin/myapp > app.log 2>&1 &
+
+# Both stdout and stderr to file
+```
+
+**Real-world examples:**
+
+**Long-running Flatpak installation:**
+
+```bash
+# Install large Flatpak app, survive terminal closure
+nohup flatpak install flathub org.gimp.GIMP > install.log 2>&1 & disown
+
+# Close terminal - installation continues ✅
+# Check progress: tail -f install.log
+```
+
+**AppImage update:**
+
+```bash
+# Update AppImage in background
+nohup appimageupdate ~/.local/bin/myapp > update.log 2>&1 & disown
+
+# Close terminal - update continues ✅
+```
+
+**Package updates:**
+
+```bash
+# System update in background
+nohup paru -Syu > update.log 2>&1 & disown
+
+# Close terminal - update continues ✅
+# Check progress: tail -f update.log
+```
+
+### Using `setsid` for Complete Detachment
+
+**What `setsid` does:** Runs a command in a new session, completely detached from the controlling terminal.
+
+**Basic usage:**
+
+```bash
+# Run in new session
+setsid ~/.local/bin/myapp
+
+# With output redirection
+setsid ~/.local/bin/myapp > app.log 2>&1
+```
+
+**Real-world example:**
+
+```bash
+# Start AppImage in new session
+setsid ~/.local/bin/myapp > app.log 2>&1 &
+
+# Completely detached from terminal ✅
+```
+
+### Comparison Table
+
+| Method               | Survives Terminal Close      | Output Handling              | Best For               |
+| -------------------- | ---------------------------- | ---------------------------- | ---------------------- |
+| `&` alone            | ❌ No                        | Terminal                     | Short background tasks |
+| `& disown`           | ✅ Yes                       | Terminal (unless redirected) | Quick detachment       |
+| `nohup ... &`        | ✅ Yes                       | `nohup.out` (or custom)      | Long-running tasks     |
+| `setsid`             | ✅ Yes                       | Must redirect manually       | Complete detachment    |
+| `nohup ... & disown` | ✅✅ Yes (double protection) | Custom file                  | Critical processes     |
+
+### Best Practices for Package Management
+
+**1. Always redirect output for long operations:**
+
+```bash
+# Good: Redirect output
+nohup flatpak install flathub org.gimp.GIMP > install.log 2>&1 & disown
+
+# Bad: Output goes to terminal
+flatpak install flathub org.gimp.GIMP & disown
+```
+
+**2. Use `nohup` for installations and updates:**
+
+```bash
+# Good: Use nohup for long operations
+nohup paru -Syu > update.log 2>&1 & disown
+
+# Less ideal: Just & disown
+paru -Syu & disown
+```
+
+**3. Track PIDs for monitoring:**
+
+```bash
+# Good: Save PID for later reference
+nohup flatpak install flathub org.gimp.GIMP > install.log 2>&1 &
+PID=$!
+disown $PID
+echo $PID > install.pid
+
+# Later: check if still running
+if ps -p $(cat install.pid) > /dev/null; then
+    echo "Installation still running"
+else
+    echo "Installation completed"
+fi
+```
+
+**4. Use `setsid` for services:**
+
+```bash
+# Good: Complete detachment for services
+setsid ~/.local/bin/myapp </dev/null >app.log 2>&1 &
+```
+
+**5. Combine methods for critical operations:**
+
+```bash
+# Good: Maximum protection
+setsid nohup flatpak install flathub org.gimp.GIMP > install.log 2>&1 & disown
+```
+
+### Real-World Examples
+
+#### Example 1: Detached AppImage Launch
+
+```bash
+# Start AppImage, survive terminal closure
+nohup ~/.local/bin/myapp > app.log 2>&1 & disown
+
+# Close terminal - app continues running ✅
+# Check logs: tail -f app.log
+```
+
+#### Example 2: Background Flatpak Installation
+
+```bash
+# Install large Flatpak app in background
+nohup flatpak install flathub org.gimp.GIMP > install.log 2>&1 & disown
+
+# Close terminal - installation continues ✅
+# Monitor: tail -f install.log
+```
+
+#### Example 3: Multiple Package Updates
+
+```bash
+# Update multiple packages, survive terminal closure
+nohup paru -S package1 package2 package3 > updates.log 2>&1 & disown
+
+# Close terminal - updates continue ✅
+```
+
+#### Example 4: AppImage Update with Monitoring
+
+```bash
+# Update AppImage, track progress
+nohup appimageupdate ~/.local/bin/myapp > update.log 2>&1 &
+UPDATE_PID=$!
+disown $UPDATE_PID
+
+echo "Update started with PID: $UPDATE_PID"
+echo $UPDATE_PID > update.pid
+
+# Monitor: tail -f update.log
+# Check status: ps -p $(cat update.pid)
+```
+
+#### Example 5: Silent Background Service
+
+```bash
+# Start AppImage as background service
+setsid ~/.local/bin/myapp </dev/null >app.log 2>&1 &
+
+# Completely silent, detached service ✅
+```
+
+### Troubleshooting
+
+**Problem: Process still dies after terminal closure**
+
+**Solutions:**
+
+1. **Use `disown`:** `command & disown`
+2. **Use `nohup`:** `nohup command &`
+3. **Use `setsid`:** `setsid command &`
+4. **Combine methods:** `nohup command & disown`
+
+**Problem: Output still appears in terminal**
+
+**Solutions:**
+
+1. **Redirect to file:** `command > output.log 2>&1 & disown`
+2. **Redirect to `/dev/null`:** `command </dev/null >/dev/null 2>&1 & disown`
+3. **Use `nohup`:** Automatically redirects to `nohup.out`
+
+**Problem: Can't check if process completed**
+
+**Solutions:**
+
+1. **Save PID:** `command & PID=$!; disown $PID; echo $PID > process.pid`
+2. **Check logs:** `tail -f output.log`
+3. **Check process:** `ps -p $(cat process.pid)`
+
+### Related Commands
+
+- **`jobs`:** List background jobs (won't show disowned jobs)
+- **`fg`:** Bring job to foreground (won't work for disowned jobs)
+- **`bg`:** Resume stopped job in background
+- **`screen`:** Terminal multiplexer for detachable sessions
+- **`tmux`:** Terminal multiplexer alternative
+
+**Learn more:**
+
+- **Process management:** See [`../shell-commands/02-commands/ps.md`](../shell-commands/02-commands/ps.md)
+- **Process detachment:** See [`../shell-commands/03-combinations/chaining.md#process-detachment-keeping-processes-running-after-terminal-closes`](../shell-commands/03-combinations/chaining.md#process-detachment-keeping-processes-running-after-terminal-closes)
+
+---
+
 ## Placing the AppImage in a Stable Location
 
 Do **not** leave AppImages in the `Downloads` directory.
@@ -488,12 +816,31 @@ mv ~/Downloads/MyApp-x86_64.AppImage ~/.local/bin/myapp
 chmod +x ~/.local/bin/myapp
 ```
 
+**Note:** If the application is running in the background or detached from terminal, you may need to stop it first:
+
+```bash
+# Find and stop running AppImage
+pkill -f myapp
+
+# Or if you saved the PID earlier:
+kill $(cat app.pid)
+```
+
 #### Step 4: Test the new version
 
 Launch the application to ensure it works correctly:
 
 ```bash
 ~/.local/bin/myapp
+```
+
+**For long-running updates:** If updating takes time, you can run the update in the background:
+
+```bash
+# Update AppImage in background, survive terminal closure
+nohup appimageupdate ~/.local/bin/myapp > update.log 2>&1 & disown
+
+# Monitor progress: tail -f update.log
 ```
 
 If issues occur, restore the backup:
@@ -809,6 +1156,15 @@ Using an AUR helper:
 
 ```bash
 paru -S appimagelauncher-bin
+```
+
+**For long-running installations:** If the installation takes time, you can run it in the background:
+
+```bash
+# Install in background, survive terminal closure
+nohup paru -S appimagelauncher-bin > install.log 2>&1 & disown
+
+# Monitor progress: tail -f install.log
 ```
 
 Recommended choice:
