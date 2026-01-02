@@ -16,7 +16,7 @@ Follow the structured path in [`docs/README.md`](docs/README.md) for a complete 
    - [`docs/installation-setup.md`](docs/installation-setup.md)
 3. **VM networking** (NAT, bridges, DHCP, firewall)
    - [`docs/networking.md`](docs/networking.md)
-4. **Performance tuning** (CPU, memory, graphics, guest agent)
+4. **Performance tuning** (CPU, memory, graphics, guest agents)
    - [`docs/performance.md`](docs/performance.md)
 5. **Video & display** (Virtio vs QXL, 3D acceleration, SPICE vs VNC)
    - [`docs/video-display.md`](docs/video-display.md)
@@ -75,9 +75,17 @@ Before starting, ensure you have:
    ⚠️ **Log out and log back in** for this to take effect.
 
 5. **Launch virt-manager:**
+
    ```bash
    virt-manager
    ```
+
+6. **After creating your first VM, install guest agents inside the VM:**
+
+   - **qemu-guest-agent:** For VM management and state reporting
+   - **spice-vdagent:** For SPICE display features (clipboard, resizing, mouse)
+
+   See [`docs/installation-setup.md`](docs/installation-setup.md) for installation instructions.
 
 For detailed explanations and troubleshooting, see [`docs/installation-setup.md`](docs/installation-setup.md).
 
@@ -117,7 +125,8 @@ For detailed explanations and troubleshooting, see [`docs/installation-setup.md`
 - **NAT:** Network Address Translation (default VM networking mode)
 - **virbr0:** libvirt's default virtual bridge for NAT networking
 - **qcow2:** Copy-on-write disk image format (supports snapshots)
-- **Guest Agent:** Service inside VM for better host↔guest integration
+- **qemu-guest-agent:** Service inside VM for guest-host communication (IP reporting, shutdown, time sync)
+- **spice-vdagent:** SPICE guest agent for display features (clipboard, resizing, mouse integration)
 
 For full definitions, see [`../docs/GLOSSARY.md`](../docs/GLOSSARY.md).
 

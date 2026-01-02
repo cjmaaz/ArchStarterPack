@@ -443,6 +443,59 @@ virt-manager
 
 ---
 
+## Post-Installation: Guest Agents
+
+After installing the guest OS, install guest agents for better integration:
+
+### Install Guest Agents Inside the VM
+
+**1. QEMU Guest Agent (Essential):**
+
+```bash
+# Debian/Ubuntu
+sudo apt install -y qemu-guest-agent
+sudo systemctl enable --now qemu-guest-agent
+
+# Arch Linux
+sudo pacman -S qemu-guest-agent
+sudo systemctl enable --now qemu-guest-agent
+
+# Fedora/RHEL/CentOS
+sudo dnf install qemu-guest-agent
+sudo systemctl enable --now qemu-guest-agent
+```
+
+**What it provides:** IP reporting, clean shutdown, time synchronization, VM state reporting.
+
+**2. SPICE Guest Agent (For SPICE Display):**
+
+```bash
+# Debian/Ubuntu
+sudo apt install -y spice-vdagent
+sudo systemctl enable --now spice-vdagentd
+
+# Arch Linux
+sudo pacman -S spice-vdagent
+sudo systemctl enable --now spice-vdagentd
+
+# Fedora/RHEL/CentOS
+sudo dnf install spice-vdagent
+sudo systemctl enable --now spice-vdagentd
+```
+
+**What it provides:** Clipboard sharing, automatic display resizing, seamless mouse integration.
+
+**Note:** `spice-vdagent` only works with SPICE display protocol (default in virt-manager). If using VNC, it won't provide these features.
+
+**Reboot the VM once after installing both agents.**
+
+**Learn more:**
+
+- Guest agents explained: [`performance.md`](performance.md)
+- SPICE features: [`video-display.md`](video-display.md)
+
+---
+
 ## Recommended Defaults
 
 ### Disk Format: `qcow2`

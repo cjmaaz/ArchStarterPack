@@ -415,6 +415,133 @@ Without it:
 
 ---
 
+## SPICE Guest Agent: spice-vdagent (Required for SPICE Features)
+
+### What Is SPICE Guest Agent?
+
+**`spice-vdagent`** is the SPICE-specific guest agent that provides display and input integration features when using the SPICE display protocol.
+
+**Why it's needed:**
+
+- **SPICE is the default** display protocol in virt-manager
+- **Without it:** Clipboard, display resizing, and mouse integration don't work
+- **With it:** Full SPICE feature set enabled
+
+### Install It
+
+Inside the VM (for SPICE display protocol):
+
+**Debian/Ubuntu:**
+
+```bash
+sudo apt install -y spice-vdagent
+sudo systemctl enable --now spice-vdagentd
+```
+
+**Arch Linux:**
+
+```bash
+sudo pacman -S spice-vdagent
+sudo systemctl enable --now spice-vdagentd
+```
+
+**Fedora/RHEL/CentOS:**
+
+```bash
+sudo dnf install spice-vdagent
+sudo systemctl enable --now spice-vdagentd
+```
+
+**Reboot once after installation.**
+
+### What It Provides
+
+**1. Clipboard Sharing:**
+
+- **Bidirectional copy/paste** between host and guest
+- Works for text and images
+- No manual file transfer needed
+
+**2. Display Resizing:**
+
+- **Automatic resolution adjustment** when VM window is resized
+- Guest display adapts to host window size
+- No manual resolution changes needed
+
+**3. Mouse Integration:**
+
+- **Seamless mouse movement** between host and guest
+- No need to capture/release cursor
+- Mouse works naturally across VM boundary
+
+**4. Better SPICE Performance:**
+
+- Optimized display updates
+- Reduced bandwidth usage
+- Improved responsiveness
+
+### Relationship with qemu-guest-agent
+
+**Both packages work together:**
+
+- **`qemu-guest-agent`:** Guest-host communication (IP reporting, shutdown, time sync, VM state)
+- **`spice-vdagent`:** SPICE-specific features (clipboard, display resizing, mouse integration)
+
+**For full guest integration, install both:**
+
+- `qemu-guest-agent` → Essential for VM management
+- `spice-vdagent` → Essential for SPICE display features
+
+**Important:** `spice-vdagent` only works with **SPICE** display protocol. If using VNC, it won't provide these features.
+
+### Verify Installation
+
+**Check if service is running:**
+
+```bash
+systemctl status spice-vdagentd
+```
+
+**Check if per-session agent is running:**
+
+```bash
+ps aux | grep spice-vdagent
+```
+
+**Test clipboard:**
+
+- Copy text in host → Paste in guest (should work)
+- Copy text in guest → Paste in host (should work)
+
+**Test display resizing:**
+
+- Resize VM window → Guest display should adjust automatically
+
+### Troubleshooting SPICE Features
+
+**Clipboard not working:**
+
+- Verify `spice-vdagentd` service is running: `systemctl status spice-vdagentd`
+- Check if per-session agent is running: `ps aux | grep spice-vdagent`
+- Ensure VM is using SPICE display (not VNC)
+- Reboot VM after installation
+
+**Display not resizing:**
+
+- Verify `spice-vdagent` is installed and running
+- Check if VM is using SPICE display protocol
+- Try manually resizing VM window to trigger resize
+
+**Mouse integration issues:**
+
+- Ensure `spice-vdagent` is installed
+- Verify SPICE display is being used
+- Check virt-manager display settings
+
+**Learn more:** [`troubleshooting.md`](troubleshooting.md)
+
+---
+
 ## Recommended Profiles
 
 ### General Linux Desktop VM (Ubuntu, Kali, Arch)
@@ -424,7 +551,7 @@ Without it:
 - Animations: **Reduced or off**
 - CPU: **Host passthrough**
 - Memory: **Fixed**
-- Guest Agent: **Enabled**
+- Guest Agents: **Both `qemu-guest-agent` and `spice-vdagent` enabled**
 
 ---
 
@@ -435,6 +562,7 @@ Without it:
 - Animations: **Off**
 - CPU: **Host passthrough**
 - Memory: **Fixed**
+- Guest Agents: **Both `qemu-guest-agent` and `spice-vdagent` enabled**
 
 ---
 

@@ -579,6 +579,20 @@ sudo systemctl enable --now qemu-guest-agent
 
 It does **not** affect networking or security.
 
+### Note: Two Guest Agents for Full Integration
+
+**For complete guest integration, you need both:**
+
+- **`qemu-guest-agent`:** Handles guest-host communication (IP reporting, shutdown, time sync, VM state)
+- **`spice-vdagent`:** Handles SPICE-specific features (clipboard sharing, display resizing, mouse integration)
+
+**What each does:**
+
+- **`qemu-guest-agent`:** Network/IP reporting, VM management, time synchronization
+- **`spice-vdagent`:** Display and input features (clipboard, resizing, mouse) - only works with SPICE protocol
+
+**Install both for full functionality.** See [`video-display.md`](video-display.md) for `spice-vdagent` installation.
+
 **Learn more:** [`performance.md`](performance.md)
 
 ---

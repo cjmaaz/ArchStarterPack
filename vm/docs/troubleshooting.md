@@ -24,6 +24,9 @@ Common VM issues, symptoms, root causes, and solutions.
 | VM feels slow                | Desktop animations                 | Reduce/disable animations       |
 | Cursor lag                   | 3D acceleration unstable           | Disable 3D acceleration         |
 | Window stutter               | Compositor overloaded              | Disable compositor/animations   |
+| Clipboard not working        | SPICE guest agent missing          | Install spice-vdagent           |
+| Display not resizing         | SPICE guest agent missing          | Install spice-vdagent           |
+| Mouse integration issues     | SPICE guest agent missing          | Install spice-vdagent           |
 
 ---
 
@@ -428,6 +431,147 @@ virsh qemu-agent-command <vm-name> '{"execute":"guest-info"}'
 ```
 
 **Learn more:** [`performance.md`](performance.md)
+
+---
+
+## SPICE Display Issues
+
+### Clipboard Not Working
+
+**Symptoms:**
+
+- Cannot copy/paste between host and guest
+- Clipboard appears empty
+- Text copied in host doesn't paste in guest (or vice versa)
+
+**Root cause:** SPICE guest agent (`spice-vdagent`) not installed or not running
+
+**Solution:**
+
+**Install SPICE guest agent:**
+
+```bash
+# Inside VM
+# Debian/Ubuntu
+sudo apt install -y spice-vdagent
+sudo systemctl enable --now spice-vdagentd
+
+# Arch Linux
+sudo pacman -S spice-vdagent
+sudo systemctl enable --now spice-vdagentd
+
+# Fedora/RHEL/CentOS
+sudo dnf install spice-vdagent
+sudo systemctl enable --now spice-vdagentd
+```
+
+**Reboot VM after installation.**
+
+**Verify:**
+
+```bash
+# Check service status
+systemctl status spice-vdagentd
+
+# Check if per-session agent is running
+ps aux | grep spice-vdagent
+```
+
+**Important:** `spice-vdagent` only works with SPICE display protocol. If using VNC, clipboard features won't work.
+
+**Learn more:** [`video-display.md`](video-display.md)
+
+---
+
+### Display Not Resizing Automatically
+
+**Symptoms:**
+
+- VM display doesn't adjust when window is resized
+- Must manually change resolution
+- Display stays at fixed size
+
+**Root cause:** SPICE guest agent (`spice-vdagent`) not installed or not running
+
+**Solution:**
+
+**Install SPICE guest agent:**
+
+```bash
+# Inside VM
+# Debian/Ubuntu
+sudo apt install -y spice-vdagent
+sudo systemctl enable --now spice-vdagentd
+
+# Arch Linux
+sudo pacman -S spice-vdagent
+sudo systemctl enable --now spice-vdagentd
+
+# Fedora/RHEL/CentOS
+sudo dnf install spice-vdagent
+sudo systemctl enable --now spice-vdagentd
+```
+
+**Reboot VM after installation.**
+
+**Verify:**
+
+```bash
+# Check service status
+systemctl status spice-vdagentd
+
+# Try resizing VM window - display should adjust automatically
+```
+
+**Note:** Display resizing only works with SPICE protocol. VNC doesn't support automatic resizing.
+
+**Learn more:** [`video-display.md`](video-display.md)
+
+---
+
+### Mouse Integration Issues
+
+**Symptoms:**
+
+- Must capture/release mouse cursor manually
+- Mouse doesn't move seamlessly between host and guest
+- Mouse cursor stuck in VM window
+
+**Root cause:** SPICE guest agent (`spice-vdagent`) not installed or not running
+
+**Solution:**
+
+**Install SPICE guest agent:**
+
+```bash
+# Inside VM
+# Debian/Ubuntu
+sudo apt install -y spice-vdagent
+sudo systemctl enable --now spice-vdagentd
+
+# Arch Linux
+sudo pacman -S spice-vdagent
+sudo systemctl enable --now spice-vdagentd
+
+# Fedora/RHEL/CentOS
+sudo dnf install spice-vdagent
+sudo systemctl enable --now spice-vdagentd
+```
+
+**Reboot VM after installation.**
+
+**Verify:**
+
+```bash
+# Check service status
+systemctl status spice-vdagentd
+
+# Mouse should move seamlessly between host and guest
+```
+
+**Note:** Seamless mouse integration only works with SPICE protocol. VNC requires manual cursor capture.
+
+**Learn more:** [`video-display.md`](video-display.md)
 
 ---
 

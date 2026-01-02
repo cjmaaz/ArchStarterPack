@@ -392,6 +392,68 @@ virsh qemu-agent-command <vm-name> '{"execute":"guest-info"}'
 
 ---
 
+## SPICE Guest Integration: spice-vdagent
+
+### Install It
+
+Inside the VM (for SPICE display protocol):
+
+**Debian/Ubuntu:**
+
+```bash
+sudo apt install -y spice-vdagent
+sudo systemctl enable --now spice-vdagentd
+```
+
+**Arch Linux:**
+
+```bash
+sudo pacman -S spice-vdagent
+sudo systemctl enable --now spice-vdagentd
+```
+
+**Fedora/RHEL/CentOS:**
+
+```bash
+sudo dnf install spice-vdagent
+sudo systemctl enable --now spice-vdagentd
+```
+
+**Reboot once.**
+
+### What It Provides
+
+- **Clipboard sharing:** Bidirectional copy/paste between host and guest
+- **Display resizing:** Automatic resolution adjustment when VM window is resized
+- **Mouse integration:** Seamless mouse movement (no need to capture/release cursor)
+- **Better SPICE performance:** Optimized display updates and reduced bandwidth
+
+### Relationship with qemu-guest-agent
+
+**Both packages work together but serve different purposes:**
+
+- **`qemu-guest-agent`:** Guest-host communication (IP reporting, shutdown, time sync, VM state)
+- **`spice-vdagent`:** SPICE-specific features (clipboard, display resizing, mouse integration)
+
+**For full guest integration, install both:**
+
+- `qemu-guest-agent` → Essential for VM management and state reporting
+- `spice-vdagent` → Essential for SPICE display features (clipboard, resizing, mouse)
+
+**Note:** `spice-vdagent` only works with SPICE display protocol. If using VNC, it won't provide these features.
+
+**Verify:**
+
+```bash
+# Check if spice-vdagent service is running
+systemctl status spice-vdagentd
+
+# Check if spice-vdagent process is running (per-session)
+ps aux | grep spice-vdagent
+```
+
+---
+
 ## Why the VM Felt Slow Before (Root Cause Summary)
 
 The VM was not slow because of:
@@ -425,7 +487,7 @@ Once those were fixed:
 - Video: Virtio
 - 3D Accel: Test → disable if unstable
 - Animations: Reduced or off
-- Guest Agent: Enabled
+- Guest Agents: Both `qemu-guest-agent` and `spice-vdagent` enabled
 
 ### Stability-First VM
 
@@ -434,7 +496,7 @@ Once those were fixed:
 - Video: QXL
 - 3D Accel: Off
 - Animations: Off
-- Guest Agent: Enabled
+- Guest Agents: Both `qemu-guest-agent` and `spice-vdagent` enabled
 
 ---
 
