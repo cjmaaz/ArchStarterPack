@@ -317,7 +317,7 @@ From `usb-sysfs.txt`:
 Device: 2-4 vendor:05e3 product:0610
 ```
 
-**Use:** `USB_BLACKLIST="05e3:0610"` in TLP config
+**Use:** `USB_DENYLIST="05e3:0610"` in TLP config
 
 ### Checking Display Connection
 
@@ -388,7 +388,7 @@ Use this script's output to populate hardware-specific settings in `/etc/tlp.d/0
 
    # Add discovered values:
    RUNTIME_PM_BLACKLIST="pci:0000:01:00.0"
-   USB_BLACKLIST="05e3:0610 05e3:0625"
+   USB_DENYLIST="05e3:0610 05e3:0625 0bda:5411 046d:c548"
    ```
 
 5. **Restart TLP:**

@@ -250,9 +250,9 @@ This ensures AC = performance and Battery = powersave.
 
 ```bash
 sudo bash -c 'cat >/etc/tlp.d/01-custom.conf <<EOF
-# ---------------- TLP Custom Config -----------------
+# /etc/tlp.d/01-custom.conf
+# ---------------- TLP Custom Config (max performance on AC) -----------------
 
-# MAX performance on AC
 CPU_SCALING_GOVERNOR_ON_AC=performance
 CPU_BOOST_ON_AC=1
 CPU_ENERGY_PERF_POLICY_ON_AC=performance
@@ -262,23 +262,54 @@ CPU_SCALING_GOVERNOR_ON_BAT=schedutil
 CPU_BOOST_ON_BAT=0
 CPU_ENERGY_PERF_POLICY_ON_BAT=powersave
 
-# Platform profile (ASUS-supported)
+# Platform profile (supported on ASUS)
 PLATFORM_PROFILE_ON_AC=performance
 PLATFORM_PROFILE_ON_BAT=low-power
 
-# Runtime power management
-RUNTIME_PM_ON_AC=on
+# Runtime PM
+# RUNTIME_PM_ON_AC=off (Device was alive even after shutdown)
+RUNTIME_PM_ON_AC=auto
 RUNTIME_PM_ON_BAT=auto
 
-# Nvidia GPU power mgmt
-NVIDIA_ASPM=1
+# Disable Nvidia ASPM
+NVIDIA_ASPM=0
 
-# Autosuspend USB devices on battery
+# USB autosuspend & exceptions
 USB_AUTOSUSPEND=1
+# USB_AUTOSUSPEND_ON_AC=0 (Device was alive even after shutdown)
+USB_AUTOSUSPEND_ON_AC=1
+USB_AUTOSUSPEND_ON_BAT=1
 
-# Battery care (improves battery life)
-START_CHARGE_THRESH_BAT0=75
-STOP_CHARGE_THRESH_BAT0=90
+# Keep your USB hubs + Logitech receiver awake
+USB_DENYLIST="05e3:0610 05e3:0625 0bda:5411 046d:c548"
+# Prevent monitor USB hub(s) from being autosuspended (Genesys Logic hubs: 05e3:0610, 05e3:0625)
+# Run: lsusb  (or check diagnostics.sh output for device IDs)
+
+# SATA link power
+SATA_LINKPWR_ON_AC=max_performance
+SATA_LINKPWR_ON_BAT=min_power
+
+# WiFi power saving
+WIFI_PWR_ON_AC=off
+WIFI_PWR_ON_BAT=on
+
+# Battery care
+START_CHARGE_THRESH_BAT0=60
+STOP_CHARGE_THRESH_BAT0=80
+
+
+
+# Prevent Nvidia device from runtime PM
+RUNTIME_PM_BLACKLIST="pci:0000:01:00.0"
+# ---------------- Hardware-Specific Power Management Fixes -----------------
+# NOTE: Update these values for your hardware by running diagnostics.sh:
+#   1. For NVIDIA GPU PCI address: Look for "01:00.0" pattern in PCI devices section
+#   2. For USB device IDs: Check "USB Devices (lsusb)" section for vendor:product IDs
+#   3. Format: RUNTIME_PM_BLACKLIST uses "pci:0000:XX:YY.Z" notation
+#   4. Format: USB_DENYLIST uses "VENDOR_ID:PRODUCT_ID" space-separated list
+
+# Prevent GPU PCI device from being runtime-suspended (NVIDIA GPU at PCI address 01:00.0)
+# Run: sudo lspci -nn | grep -i vga  (or check diagnostics.sh output)
 EOF'
 ```
 
