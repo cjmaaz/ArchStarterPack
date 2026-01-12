@@ -36,7 +36,7 @@ show_main_menu() {
     echo -e "${GREEN}3.${NC} Data Processing (4 commands)"
     echo -e "${GREEN}4.${NC} Archives (3 commands)"
     echo -e "${GREEN}5.${NC} Network (4 commands)"
-    echo -e "${GREEN}6.${NC} System (4 commands)"
+    echo -e "${GREEN}6.${NC} System (5 commands)"
     echo -e "${GREEN}7.${NC} Utilities (5 commands)"
     echo ""
     echo -e "${CYAN}8.${NC} View Progress"
@@ -202,6 +202,7 @@ show_system_menu() {
     echo -e "${GREEN}2.${NC} top - Process monitoring (8 exercises)"
     echo -e "${GREEN}3.${NC} df/du - Disk usage (12 exercises)"
     echo -e "${GREEN}4.${NC} env - Environment variables (10 exercises)"
+    echo -e "${GREEN}5.${NC} udevadm - Device management (10 exercises)"
     echo -e "${CYAN}b.${NC} Back"
     echo ""
     read -p "Choose command: " cmd
@@ -211,6 +212,7 @@ show_system_menu() {
         2) ./commands/top-practice.sh ;;
         3) ./commands/df-du-practice.sh ;;
         4) ./commands/env-practice.sh ;;
+        5) ./commands/udevadm-practice.sh ;;
         b|B) show_main_menu ;;
         *) echo -e "${RED}Invalid${NC}"; sleep 1; show_system_menu ;;
     esac

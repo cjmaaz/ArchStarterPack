@@ -1,12 +1,14 @@
-## Linux udev Setup for VIA/WebHID Devices
+# Linux udev Setup for VIA/WebHID Devices
 
 By default, Linux does not allow non-root applications (including browsers) to open raw HID devices such as keyboards. VIA’s web configurator uses the **WebHID API** in the browser, which still requires underlying access to `/dev/hidraw*` devices.
 
 This section explains how to grant your user permission to access your keyboard *without* root, using **udev rules**.
 
+For a deeper dive into udev commands and syntax, see [`../shell-commands/02-commands/udevadm.md`](../shell-commands/02-commands/udevadm.md).
+
 ---
 
-### Why This Is Necessary
+## Why This Is Necessary
 
 When you connect your keyboard on Linux and open VIA in the browser (Chrome/Chromium), you may see errors like:
 
@@ -41,7 +43,7 @@ Create a udev rule that gives your user access to hidraw devices for your specif
 
    Replace the `idVendor` and `idProduct` values with your device’s USB IDs if they differ.
 
-   Explanation of fields:
+   **Explanation of fields:**
 
    * `SUBSYSTEM=="hidraw"`
      Matches hidraw devices (raw USB HID interfaces).
@@ -56,7 +58,7 @@ Create a udev rule that gives your user access to hidraw devices for your specif
 
 ## Reload and Activate the Rule
 
-After saving the file:
+After saving the file, you must reload the udev rules and trigger them (or unplug/replug the device).
 
 ```bash
 sudo udevadm control --reload-rules
@@ -96,7 +98,6 @@ Check that the device corresponding to your keyboard is now user-accessible.
 To use VIA with WebHID on Linux:
 
 * Use **Google Chrome** or **Chromium**
-
   * Firefox does *not* support WebHID fully.
 * Ensure the browser is not sandboxed in a way that blocks `hidraw` access (some Snap/Flatpak builds may be restricted).
 * Open VIA at:

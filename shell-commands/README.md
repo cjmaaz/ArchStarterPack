@@ -84,6 +84,7 @@ graph TD
 - [ps - Process Status](./02-commands/ps.md) - Display running processes
 - [top - System Monitor](./02-commands/top.md) - Real-time process monitoring
 - [df/du - Disk Usage](./02-commands/df-du.md) - Filesystem and directory space
+- [udevadm - Device Management](./02-commands/udevadm.md) - Manage device events and rules
 
 **Archives & Compression:**
 
