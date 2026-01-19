@@ -274,6 +274,15 @@ https://raw.githubusercontent.com/ShadowWhisperer/BlockLists/RAW/ads.txt
 - **What it is:** Collection of pihole lists (blacklist and whitelist)
 - **Note:** Includes both blocklists and whitelists
 
+### 8. Local Custom Blocklists
+
+**Social Media Combined List:**
+
+- **Location:** [`../blocklists/social-media-combined.txt`](../blocklists/social-media-combined.txt)
+- **Content:** Combined blocklist for Facebook, Instagram, Snapchat (sourced from AdGuard and AnudeepND).
+- **Domains:** ~4,000 unique domains.
+- **Usage:** Can be served via a local web server for Pi-hole to consume, or added manually if using file:// URI support (if available/configured).
+
 ---
 
 ## How to Add Blocklists to Pi-hole
