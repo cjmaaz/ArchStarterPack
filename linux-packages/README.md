@@ -1,6 +1,6 @@
 # Linux Package Management & Installation
 
-**Complete guide to installing and managing applications on Arch-based systems, covering AppImage, Flatpak, and common package installation issues.**
+**Complete guide to installing and managing applications on Arch-based systems, covering AppImage, Flatpak, AUR packages, and common installation issues.**
 
 This document explains:
 
@@ -8,6 +8,11 @@ This document explains:
 - **How to run AppImages on Arch-based systems**
 - **How to properly integrate applications into KDE Application Launcher**
 - **Common Flatpak sandboxing issues and solutions**
+
+**Related guides:**
+
+- **[AUR Package Installation](./AUR_INSTALLATION.md)** - Building and maintaining packages from the Arch User Repository
+- **[Flatpak Sandboxing Issues](./FLATPAK_SANDBOXING.md)** - Troubleshooting browser settings and data persistence
 
 It is written for:
 
@@ -1146,6 +1151,45 @@ This gives you the benefits of both: centralized management for common apps and 
 
 ---
 
+## AUR Package Installation
+
+For software not available as AppImage or Flatpak, the **Arch User Repository (AUR)** provides community-maintained build scripts. This is the native Arch way to install third-party software.
+
+**When to use AUR:**
+
+- Application only provides source code or AUR package
+- You need tight system integration
+- You prefer native packages over containerized formats
+- The software isn't available in other formats
+
+**Common AUR packages:**
+
+| Application | AUR Package |
+|-------------|-------------|
+| Notion | `notion-app-electron` |
+| Spotify | `spotify` |
+| Discord | `discord` |
+| Visual Studio Code | `visual-studio-code-bin` |
+| Zoom | `zoom` |
+
+**Quick install with paru:**
+
+```bash
+paru -S package-name
+```
+
+**Manual installation:**
+
+```bash
+git clone https://aur.archlinux.org/package-name.git
+cd package-name
+makepkg -si
+```
+
+For a complete guide including security considerations, updating AUR packages, and troubleshooting, see **[AUR_INSTALLATION.md](./AUR_INSTALLATION.md)**.
+
+---
+
 ## Optional: Automatic Integration with AppImageLauncher
 
 If you use multiple AppImages, **AppImageLauncher** can automate menu integration.
@@ -1195,6 +1239,7 @@ This is optional but convenient.
 - Verify checksums and download from trusted sources
 - Use AppImageLauncher if managing many AppImages
 - Consider Flatpak for applications that benefit from automatic updates
+- Use **AUR** for native Arch packages not in official repos (see [AUR_INSTALLATION.md](./AUR_INSTALLATION.md))
 
 ### Mental Model
 
